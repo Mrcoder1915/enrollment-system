@@ -1,0 +1,6 @@
+# Utilities, helpers, and MongoDB connection
+# MongoDB connection (Mongoose)
+# Auth helper functions
+# Axios instance (API configuration)
+# Logging utilities
+# Generic utilities
