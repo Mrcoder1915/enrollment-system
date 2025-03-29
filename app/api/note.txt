@@ -1,2 +1,2 @@
-# Next.js App Router (for Next.js 13+)
+
 # API Routes (Server Actions or Route Handlers)
