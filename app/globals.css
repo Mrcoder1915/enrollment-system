@@ -1,1 +1,20 @@
 @import "tailwindcss";
+
+@layer utilities{
+    /* this css code is for layouts of sidebar and main content */
+    .layout{
+        display: grid;
+        width: 100%;
+        height: 100vh;
+        grid-template: 1fr / 300px 1fr;
+        grid-template-areas: 
+            "sidebar main"
+        ;
+    }
+    .main{
+        grid-area: main;
+    }
+    .sidebar{
+        grid-area: sidebar;
+    }
+}
