@@ -9,7 +9,7 @@ const layout = ({children}) => {
     <DashboardProvider>
         <div className='layout'>
             <SideBar />
-            <div className='main bg-red-300'>
+            <div className='main bg-white'>
                 {children}
             </div>
         </div>
