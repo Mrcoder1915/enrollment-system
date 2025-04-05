@@ -1,7 +1,58 @@
 @import "tailwindcss";
 
+@layer components{
+    /* this is for div or main background of the  page  */
+    .bg-gradient-primary{
+        background-image: linear-gradient(to right, #DC1212, #D16B6B, #FABCBC, #F5F5F5);
+    }
+    .bg-gradient-secondary{
+        background-image: linear-gradient(to top, #FABCBC, #d16b6b, #8b0606);
+    }
+    .bg-primary{
+        @apply bg-[#ffd700];
+    }
+    .bg-primary-light{
+        @apply bg-[#d6b715];
+    }
+    .bg-secondary{
+        @apply bg-[#dc1212];
+    }
+    .bg-secondary-light{
+        @apply bg-[#af2525];
+    }
+    .background-rare-1{
+        @apply bg-[#fabcbc];
+    }
+    .background-rare-2{
+        @apply bg-[#d16b6b];
+    }
+    .background-rare-3{
+        @apply bg-[#d9d9d9];
+    }
+
+    /*this is for buttons background colors */
+    .btn-danger{
+        @apply bg-[#8b0606];
+    }
+    .btn-success{
+        @apply bg-[#ffd700];
+    }
+
+    /* this for text colors */
+    .text-primary{
+        @apply text-black;
+    }
+    .text-secondary{
+        @apply text-white;
+    }
+    .text-info{
+        @apply text-[#8b0606];
+    }
+
+}
+
 @layer utilities{
-    /* this css code is for layouts of sidebar and main content */
+    /* this css code is for dashboard layouts of sidebar and main content */
     .layout{
         display: grid;
         width: 100%;
