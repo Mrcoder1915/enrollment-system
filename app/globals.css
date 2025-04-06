@@ -29,6 +29,12 @@
     .background-rare-3{
         @apply bg-[#d9d9d9];
     }
+    .bg-side{
+        @apply bg-[#a70505];
+    }
+    .bg-tertiary{
+        @apply bg-[#8b0606];
+    }
 
     /*this is for buttons background colors */
     .btn-danger{
@@ -39,6 +45,11 @@
     }
 
     /* this for text colors */
+    .text-gradient-primary{
+        background-image: linear-gradient(to top, #ffd700,  #ffffff);
+        color: transparent;
+        background-clip: text;
+    }
     .text-primary{
         @apply text-black;
     }
@@ -48,7 +59,54 @@
     .text-info{
         @apply text-[#8b0606];
     }
+    /* flex-layouts */
+    .flex-jcenter{
+        @apply flex justify-center;
+    }
+    .flex-icenter{
+        @apply flex items-center;
+    }
+    .flex-center{
+        @apply flex justify-center  items-center;
+    }
+    .flex-column{
+        @apply flex flex-col;
+    }
+    .flex-rows{
+        @apply flex flex-row;
+    }
 
+    .w-h-full{
+        @apply w-full h-full;
+    }
+    .side li{
+        @apply h-15 w-full flex  justify-center items-center text-[27px] gap-3 transition-colors duration-[.5s] cursor-pointer;
+    }
+    .side li:hover{
+        @apply bg-[#0000001a] ;
+    }
+    .side li:hover div{
+        @apply  text-white;
+    }
+    .side div{
+        @apply w-[50%] text-white;
+    }
+    /* table */
+    .table{
+        @apply  w-full border-separate !border-spacing-0;
+    }
+     .table td, .table th{
+        @apply !border-[1px] border-solid border-black h-10 text-center ;
+    }
+    .table th{
+        @apply sticky top-0 z-10 bg-white  ;
+    }
+    .table td:first-child, .table th:first-child{
+        @apply !border-l-0 ;
+    }
+    .table td:last-child, .table th:last-child{
+        @apply !border-r-0;
+    }
 }
 
 @layer utilities{
@@ -57,7 +115,7 @@
         display: grid;
         width: 100%;
         height: 100vh;
-        grid-template: 1fr / 300px 1fr;
+        grid-template: 1fr / 270px 1fr;
         grid-template-areas: 
             "sidebar main"
         ;
@@ -68,4 +126,5 @@
     .sidebar{
         grid-area: sidebar;
     }
+
 }
