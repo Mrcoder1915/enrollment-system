@@ -1,9 +1,14 @@
 "use client"
 import React, { useContext } from 'react'
+import {dashboardContext} from '../providers/dashboardProvider'
+import EnrollmentStatus from '../components/ui/enrollmentStatus'
 
 const page = () => {
+  const {show, userAccess} = useContext(dashboardContext);
+  console.log(userAccess);
+  console.log("from children: ",show)
   return (
-    <div className='w-full min-h-[100vh] h-auto'>
+    <div className='w-full min-h-[100vh] h-auto pt-[70px]'>
         
         {/* INSTRUCTIONS!!!
 
@@ -19,6 +24,11 @@ const page = () => {
              </div>
              
         */}
+        {
+          userAccess === "registrar" &&  <EnrollmentStatus /> 
+        }
+        
+        
     </div>
   )
 }
