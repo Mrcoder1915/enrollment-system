@@ -4,10 +4,9 @@ import {dashboardContext} from '@/app/providers/dashboardProvider'
 // this is static data only
 const enrollStudent = [
   {id: 1, lastname: "doe", firstname: "john", middlename: "mill", studentid: "U25-124", yearlevel: 1, program: "BSIT"},
-  { id: 1, lastname: "smith", firstname: "alice", middlename: "jane", studentid: "U25-125", yearlevel: 2, program: "BSCS" },
-  { id: 2, lastname: "miller", firstname: "bob", middlename: "lee", studentid: "U25-126", yearlevel: 3, program: "BSEE" },
-  { id: 2, lastname: "miller", firstname: "bob", middlename: "lee", studentid: "U25-126", yearlevel: 3, program: "BSEE" },
-  { id: 3, lastname: "jones", firstname: "carol", middlename: "dawn", studentid: "U25-127", yearlevel: 4, program: "BSA" }
+  { id: 2, lastname: "smith", firstname: "alice", middlename: "jane", studentid: "U25-125", yearlevel: 2, program: "BSCS" },
+  { id: 2, lastname: "miller", firstname: "bob", middlename: "lee", studentid: "U25-126", yearlevel: 3, program: "BSE" },
+  { id: 3, lastname: "jones", firstname: "carol", middlename: "dawn", studentid: "U25-127", yearlevel: 4, program: "BSBA" }
 ]
 
 const enrollmentStatus = () => {

@@ -4,9 +4,8 @@ import {dashboardContext} from '../providers/dashboardProvider'
 import EnrollmentStatus from '../components/ui/enrollmentStatus'
 
 const page = () => {
-  const {show, userAccess} = useContext(dashboardContext);
-  console.log(userAccess);
-  console.log("from children: ",show)
+  const { userAccess} = useContext(dashboardContext);
+
   return (
     <div className='w-full min-h-[100vh] h-auto pt-[70px]'>
         
@@ -24,10 +23,24 @@ const page = () => {
              </div>
              
         */}
+        
         {
-          userAccess === "registrar" &&  <EnrollmentStatus /> 
+          userAccess === "registrar" && <>
+               <EnrollmentStatus />
+           </>
         }
         
+        {
+           userAccess === "instructor" && <>
+          
+             </>
+        } 
+        
+        {
+          userAccess === "student" && <>
+          
+            </>
+        }
         
     </div>
   )

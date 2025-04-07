@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import SideBar from '../components/ui/sideBar'
+import SideBar from '../components/ui/Sidebar/sideBar'
 import DashboardProvider from '../providers/dashboardProvider'
 
 const layout = ({children}) => {
