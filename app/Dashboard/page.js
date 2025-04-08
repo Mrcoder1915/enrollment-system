@@ -1,7 +1,7 @@
 "use client"
 import React, { useContext } from 'react'
 import {dashboardContext} from '../providers/dashboardProvider'
-import EnrollmentStatus from '../components/ui/enrollmentStatus'
+import EnrollmentStatus from '../components/ui/enrollment-status/enrollmentStatus'
 
 const page = () => {
   const { userAccess} = useContext(dashboardContext);
