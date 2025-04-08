@@ -2,7 +2,6 @@
 import React, { useContext } from 'react'
 import {dashboardContext} from '../providers/dashboardProvider'
 import EnrollmentStatus from '../components/ui/enrollment-status/enrollmentStatus'
-import EnrollmentStatus from '../components/ui/enrollmentStatus'
 import FacultyAccount from '../components/ui/facultyAccounts'
 
 const page = () => {
