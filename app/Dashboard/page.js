@@ -7,7 +7,7 @@ const page = () => {
   const { userAccess} = useContext(dashboardContext);
 
   return (
-    <div className='w-full min-h-[100vh] h-auto pt-[70px]'>
+    <div className='w-full min-h-[100vh] h-auto pt-[70px] relative'>
         
         {/* INSTRUCTIONS!!!
 
