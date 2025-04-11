@@ -1,3 +1,4 @@
+"use client"
 import React, { useContext } from 'react'
 import {dashboardContext} from '@/app/providers/dashboardProvider'
 import Table from './table'
