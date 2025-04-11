@@ -1,23 +1,22 @@
 import mongoose from "mongoose";
-import Student from "./student.model";
 
 const programSchema = new mongoose.Schema({
-    ProgramID:{
+    departmentID:{
         type:String,
         required:true,
         unique: true
     },
     programName: {
-        type: Number,
+        type: String,
         required: true
     },
     programCode: {
-        type: Number,
+        type: String,
         required: true
     },
 
 })
 
-const Program = new mongoose.model("Program", admissionSchema);
+const Program = mongoose.models.Program || mongoose.model("Program", programSchema);
 
 export default Program

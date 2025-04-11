@@ -6,7 +6,7 @@ import FacultyAccount from '../components/ui/facultyAccounts'
 import GradeEntry from '../components/ui/GradeEntry'
 
 const page = () => {
-  const { userAccess} = useContext(dashboardContext);
+  const { userAccess } = useContext(dashboardContext);
 
   return (
     <div className='w-full min-h-[100vh] h-auto pt-[70px] relative'>
