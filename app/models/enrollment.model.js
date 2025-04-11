@@ -1,17 +1,23 @@
 import mongoose from "mongoose";
-import Student from "./student.model";
 
 const enrollmentSchema = new mongoose.Schema({
     studentID:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Student"
+        ref: "Student",
+        required: true
     },
-    coureID:{
-        type :mongoose.Schema.Types.ObjectId,
-        ref: Course
+    courseID:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course",
+        required: true
     },
+    // scheduleID: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "Schhedule",
+    //     required: true
+    // },
     academicYear: {
-        type: String,
+        type: Number,
         required: true
     },
     enrollmentDate: {
@@ -20,6 +26,6 @@ const enrollmentSchema = new mongoose.Schema({
     }
 })
 
-const Enrollment = new mongoose.model("Enrollment", admissionSchema);
+const Enrollment = mongoose.models.Enrollment || mongoose.model("Enrollment", enrollmentSchema);
 
 export default Enrollment
