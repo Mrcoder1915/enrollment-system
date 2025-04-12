@@ -3,6 +3,7 @@ import React, { useContext } from 'react'
 import {dashboardContext} from '../providers/dashboardProvider'
 import EnrollmentStatus from '../components/ui/enrollment-status/enrollmentStatus'
 import FacultyAccount from '../components/ui/facultyAccounts'
+import Dashboard from '../components/ui/dashboard'
 
 const page = () => {
   const { userAccess} = useContext(dashboardContext);
@@ -27,6 +28,7 @@ const page = () => {
         
         {
           userAccess === "registrar" && <>
+               <Dashboard />
                <EnrollmentStatus />
                <FacultyAccount />
            </>
