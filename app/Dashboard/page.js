@@ -4,9 +4,10 @@ import {dashboardContext} from '../providers/dashboardProvider'
 import EnrollmentStatus from '../components/ui/enrollment-status/enrollmentStatus'
 import FacultyAccount from '../components/ui/facultyAccounts'
 import Dashboard from '../components/ui/dashboard'
+import GradeEntry from '../components/ui/GradeEntry'
 
 const page = () => {
-  const { userAccess} = useContext(dashboardContext);
+  const { userAccess } = useContext(dashboardContext);
 
   return (
     <div className='w-full min-h-[100vh] h-auto pt-[70px] relative'>
@@ -36,7 +37,7 @@ const page = () => {
         
         {
            userAccess === "instructor" && <>
-          
+                <GradeEntry />
              </>
         } 
         
