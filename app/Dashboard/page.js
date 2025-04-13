@@ -5,6 +5,7 @@ import EnrollmentStatus from '../components/ui/enrollment-status/enrollmentStatu
 import FacultyAccount from '../components/ui/facultyAccounts'
 import Dashboard from '../components/ui/dashboard'
 import GradeEntry from '../components/ui/GradeEntry'
+import StudentList from '../components/ui/StudentList'
 
 const page = () => {
   const { userAccess } = useContext(dashboardContext);
@@ -38,6 +39,7 @@ const page = () => {
         {
            userAccess === "instructor" && <>
                 <GradeEntry />
+                <StudentList />
              </>
         } 
         
