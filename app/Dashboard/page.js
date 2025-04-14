@@ -11,7 +11,7 @@ const page = () => {
   const { userAccess } = useContext(dashboardContext);
 
   return (
-    <div className='w-full min-h-[100vh] h-auto pt-[70px] relative'>
+    <div className='w-full min-h-[100vh] overflow-hidden h-auto pt-[70px] relative'>
         
         {/* INSTRUCTIONS!!!
 

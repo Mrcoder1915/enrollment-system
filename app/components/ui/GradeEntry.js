@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useContext } from 'react';
 import { dashboardContext } from '@/app/providers/dashboardProvider';
 
@@ -77,36 +78,38 @@ const GradeTable = () => {
   const remarks = getRemarks(grades);
 
   return (
-    <div className={`w-full h-[80vh] absolute flex items-center justify-center flex-col transition-all ease-in duration-300 ${
+    <div className={`w-full h-[80vh] absolute flex items-center  justify-center flex-col transition-all ease-in duration-300 ${
       show === 4 ? 'translate-x-0 visible' : '-translate-x-[200%]'
     }`}>
-      <div className="mb-3 mr-205">
-        <label htmlFor="semester" className="font-bold mr-2">Semester:</label>
-        <select id="semester" className="p-2 border rounded">
-          <option value="">Select</option>
-          <option>1st Semester</option>
-          <option>2nd Semester</option>
-        </select>
-      </div>
-
-      <div className="bg-red-800 text-white text-2xl font-bold p-4 flex justify-between w-[95%] border-collapse shadow-[4px_4px_10px_rgba(0,0,0,0.2),_-4px_4px_10px_rgba(0,0,0,0.2)]  overflow-hidden">
+      <div className='w-[95%] h-[95%]'>
+        <div className='w-full'>
+          <div className="mb-3 mr-205 w-full">
+            <label htmlFor="semester" className="font-bold mr-2">Semester:</label>
+            <select id="semester" className="p-2 border rounded">
+              <option value="">Select</option>
+              <option>1st Semester</option>
+              <option>2nd Semester</option>
+            </select>
+          </div>
+        </div>
+      <div className="w-full bg-red-800 text-white text-2xl font-bold p-4 flex justify-between  border-collapse shadow-[4px_4px_10px_rgba(0,0,0,0.2),_-4px_4px_10px_rgba(0,0,0,0.2)]  overflow-hidden">
         <span>BSIT</span>
         <span className="flex-1 text-center">Academic Year:</span>
       </div>
 
-      <div className="bg-gray-100 p-3 text-lg font-medium w-[95%] border-collapse shadow-[4px_4px_10px_rgba(0,0,0,0.2),_-4px_4px_10px_rgba(0,0,0,0.2)] overflow-hidden">
+      <div className="w-full bg-gray-100 p-3 text-lg font-medium  border-collapse shadow-[4px_4px_10px_rgba(0,0,0,0.2),_-4px_4px_10px_rgba(0,0,0,0.2)] overflow-hidden">
         Course: CC100 - Introduction to Computing
       </div>
-
-      <table className="w-[95%] border-collapse shadow-[4px_4px_10px_rgba(0,0,0,0.2),_-4px_4px_10px_rgba(0,0,0,0.2)] goverflow-hidden">
-        <thead>
-          <tr>
-            <th className="border px-4 py-2 bg-gray-200 text-center">Student ID</th>
-            <th className="border px-4 py-2 bg-gray-200 text-center">Student Name</th>
-            <th className="border px-4 py-2 bg-gray-200 text-center">Midterm</th>
-            <th className="border px-4 py-2 bg-gray-200 text-center">Final</th>
-            <th className="border px-4 py-2 bg-gray-200 text-center">Semester Grade</th>
-            <th className="border px-4 py-2 bg-gray-200 text-center">Remarks</th>
+      <div className='w-full h-[80%] shadow-[4px_4px_10px_rgba(0,0,0,0.2),_-4px_4px_10px_rgba(0,0,0,0.2)] overflow-y-scroll hide-scrollbar'>
+      <table className="w-full  border-collapse ">
+        <thead className='sticky'>
+          <tr >
+            <th className="border sticky top-0 px-4 py-2 bg-gray-200 text-center">Student ID</th>
+            <th className="border sticky top-0 px-4 py-2 bg-gray-200 text-center">Student Name</th>
+            <th className="border sticky top-0 px-4 py-2 bg-gray-200 text-center">Midterm</th>
+            <th className="border sticky top-0 px-4 py-2 bg-gray-200 text-center">Final</th>
+            <th className="border sticky top-0 px-4 py-2 bg-gray-200 text-center">Semester Grade</th>
+            <th className="border sticky top-0 px-4 py-2 bg-gray-200 text-center">Remarks</th>
           </tr>
         </thead>
         <tbody>
@@ -144,12 +147,17 @@ const GradeTable = () => {
               {remarks.text}
             </td>
           </tr>
+         
         </tbody>
       </table>
-
-      <button className="bg-red-800 text-yellow-300 p-2 rounded-md mt-5 hover:bg-red-700 ml-240 border border-yellow">
-        Upload
-      </button>
+      </div>
+      </div>
+      <div className='w-[95%] relative top-13  pt-5 flex justify-end'>
+        <button className="bg-red-800 text-yellow-300 p-2 rounded-md hover:bg-red-700 border border-yellow">
+          Upload
+        </button>
+      </div>
+      
     </div>
   );
 };
