@@ -3,6 +3,7 @@ import React, { useContext } from 'react'
 import {dashboardContext} from '../providers/dashboardProvider'
 import EnrollmentStatus from '../components/ui/enrollment-status/enrollmentStatus'
 import FacultyAccount from '../components/ui/facultyAccounts'
+import MasterList from '../components/ui/master-list/masterlist'
 
 const page = () => {
   const { userAccess} = useContext(dashboardContext);
@@ -28,7 +29,9 @@ const page = () => {
         {
           userAccess === "registrar" && <>
                <EnrollmentStatus />
+               <MasterList />
                <FacultyAccount />
+               
            </>
         }
         
