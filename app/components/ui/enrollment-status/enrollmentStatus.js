@@ -42,7 +42,7 @@ const enrollmentStatus = () => {
                 <h1>Enrollment Status</h1>
             </div>
             {/* tables */}
-            <div className='flex w-full  h-full absolute overflow-y-scroll ' style={{scrollbarWidth: "none"}}>
+            <div className='flex w-full  h-full absolute overflow-y-scroll hide-scrollbar' >
               <Table />
             </div>
         </div>
