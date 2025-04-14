@@ -8,7 +8,6 @@ const StudentList = () => {
 
   const students = [
     { id: 1, program: "BSIT", yearLevel: "2nd Year", section: "BSIT-2A", course: "Data Structures", enrolled: true },
-
   ];
 
 
@@ -43,16 +42,16 @@ const StudentList = () => {
         </div>
 
         
-        <div className="max-w-10xl mx-auto bg-white shadow-md rounded-lg overflow-hidden">
-          <div className="overflow-y-auto hide-scrollbar max-h-[375px]">
+        <div className="max-w-10xl mx-auto bg-white shadow-[4px_4px_10px_rgba(0,0,0,0.40)] rounded-lg overflow-hidden ">
+          <div className="overflow-y-auto hide-scrollbar max-h-[510px]">
             <table className="w-full table-auto border-collapse">
               <thead>
-                <tr className="bg-red-800 text-white">
+                <tr className="bg-red-800 text-white sticky top-0 z-20">
                   <th colSpan="6" className="py-3 text-xl font-bold text-left pl-5">
                     Student List
                   </th>
                 </tr>
-                <tr className="bg-gray-300">
+                <tr className="bg-gray-300 sticky top-[52] z-10 text-center">
                   <th className="px-5 py-3 text-left border-r">Program</th>
                   <th className="px-5 py-3 text-left border-r">Year Level</th>
                   <th className="px-5 py-3 text-left border-r">Section</th>
@@ -77,7 +76,7 @@ const StudentList = () => {
                   </tr>
                 ))}
 
-                {Array.from({ length: Math.max(0, 5 - courseList.length) }).map((_, index) => (
+                {Array.from({ length: Math.max(0, 8 - courseList.length) }).map((_, index) => (
                   <tr key={`empty-${index}`} className="border-b">
                     <td className="px-5 py-3 text-center border-r">&nbsp;</td>
                     <td className="px-5 py-3 text-center border-r">&nbsp;</td>
