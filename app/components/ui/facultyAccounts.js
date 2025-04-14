@@ -14,12 +14,12 @@ const facultyList = [
   },
   {
     _id: 2,
-    lastName: "Dela Cruz", 
+    lastName: "Dela Cruz",
     firstName: "Janine",
     middleName: "O.",
     contact: "09159130770",
-    email: "maisd@gmail.com"
-  }
+    email: "maisd@gmail.com",
+  },
 ];
 
 const FacultyAccount = () => {
@@ -32,51 +32,51 @@ const FacultyAccount = () => {
       }`}
     >
       <div className="w-[95%] min-h-[95%] relative overflow-hidden bg-white shadow-[4px_4px_10px_rgba(0,0,0,.40)] z-0">
-        {/* header */}
-        <div className="w-full h-8 bg-tertiary flex-icenter pl-1 text-white">
-          <h1>Faculty Accounts</h1>
+        {/* Header */}
+        <div className="w-full h-16 bg-tertiary flex items-center text-secondary font-bold text-xl px-4 rounded-t-lg">
+          <h1>Faculty Account</h1>
         </div>
 
-        {/* table */}
-        <div
-          className="flex w-full absolute overflow-y-scroll"
-          style={{ scrollbarWidth: "none" }}
-        >
-          <table className="table overflow-y-hidden">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Last Name</th>
-                <th>First Name</th>
-                <th>Middle Name</th>
-                <th>Contact</th>
-                <th>Email</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {facultyList.map((faculty) => (
-                <tr key={faculty._id}>
-                  <td>{faculty._id}</td>
-                  <td>{faculty.lastName}</td>
-                  <td>{faculty.firstName}</td>
-                  <td>{faculty.middleName}</td>
-                  <td>{faculty.contact}</td>
-                  <td>{faculty.email}</td>
-                  <td>
-                    <div className="flex gap-2 justify-center">
-                      <button className="w-[80px] border border-[#8b0606] text-info font-medium rounded-[5px] btn-success">
-                        Approved
-                      </button>
-                      <button className="w-[70px] border border-[#8b0606] text-[#ffd700] font-medium rounded-[5px] btn-danger ml-2.5">
-                        Failed
-                      </button>
-                    </div>
-                  </td>
+        {/* Table Container */}
+        <div className="flex w-full h-[calc(100%-64px)] mt-0">
+          {/* Table */}
+          <div className="w-full h-[calc(100%-48px)] overflow-y-scroll hide-scrollbar">
+            <table className="table w-full rounded-b-lg shadow-[0px_4px_10px_rgba(0,0,0,0.2)] border-collapse">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Last Name</th>
+                  <th>First Name</th>
+                  <th>Middle Name</th>
+                  <th>Contact</th>
+                  <th>Email</th>
+                  <th>Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {facultyList.map((faculty) => (
+                  <tr key={faculty._id}>
+                    <td>{faculty._id}</td>
+                    <td>{faculty.lastName}</td>
+                    <td>{faculty.firstName}</td>
+                    <td>{faculty.middleName}</td>
+                    <td>{faculty.contact}</td>
+                    <td>{faculty.email}</td>
+                    <td>
+                      <div className="flex gap-2 justify-center">
+                        <button className="btn-success px-4 py-1 border border-yellow-600 text-info font-medium rounded-md hover:bg-primary-light">
+                          Approved
+                        </button>
+                        <button className="btn-danger px-4 py-1 border border-red-600 text-secondary font-medium rounded-md hover:bg-secondary-light">
+                          Failed
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
