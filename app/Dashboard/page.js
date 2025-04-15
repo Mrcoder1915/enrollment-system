@@ -6,6 +6,7 @@ import FacultyAccount from '../components/ui/facultyAccounts'
 import Dashboard from '../components/ui/dashboard'
 import GradeEntry from '../components/ui/GradeEntry'
 import StudentList from '../components/ui/StudentList'
+import GradeView from '../components/ui/GradeView'
 
 const page = () => {
   const { userAccess } = useContext(dashboardContext);
@@ -45,6 +46,7 @@ const page = () => {
         
         {
           userAccess === "student" && <>
+              <GradeView />
           
             </>
         }
