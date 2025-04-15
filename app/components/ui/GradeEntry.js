@@ -77,7 +77,7 @@ const GradeTable = () => {
   const remarks = getRemarks(grades);
 
   return (
-    <div className={`w-full h-[80vh] absolute flex items-center justify-center flex-col transition-all ease-in duration-300 ${
+    <div className={`w-full h-[80vh]  absolute flex items-center justify-center flex-col transition-all ease-in duration-300 ${
       show === 4 ? 'translate-x-0 visible' : '-translate-x-[200%]'
     }`}>
       <div className="mb-3 mr-205">
@@ -98,7 +98,8 @@ const GradeTable = () => {
         Course: CC100 - Introduction to Computing
       </div>
 
-      <table className="w-[95%] border-collapse shadow-[4px_4px_10px_rgba(0,0,0,0.2),_-4px_4px_10px_rgba(0,0,0,0.2)] goverflow-hidden">
+      <table className="w-[95%] h-[400px] border-collapse shadow-[4px_4px_10px_rgba(0,0,0,0.2),_-4px_4px_10px_rgba(0,0,0,0.2)] overflow-hidden">
+
         <thead>
           <tr>
             <th className="border px-4 py-2 bg-gray-200 text-center">Student ID</th>
@@ -110,41 +111,59 @@ const GradeTable = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className="border px-4 py-2 text-center">U25-124</td>
-            <td className="border px-4 py-2 text-center">Dela Cruz, Marian Pallarca</td>
-            <td className="border px-4 py-2 text-center">
-              <input
-                type="number"
-                name="midterm"
-                value={grades.midterm}
-                onChange={handleGradeChange}
-                className="w-16 border border-gray-400 px-1 py-1 rounded m-auto text-center bg-gray-200"
-              />
-            </td>
-            <td className="border px-4 py-2 text-center">
-              <input
-                type="number"
-                name="finals"
-                value={grades.finals}
-                onChange={handleGradeChange}
-                className="w-16 border border-gray-400 px-1 py-1 rounded m-auto text-center bg-gray-200"
-              />
-            </td>
-            <td className="border px-4 py-2 text-center">
-              <input
-                type="text"
-                name="semester"
-                value={grades.semester}
-                readOnly
-                className="w-16 border border-gray-400 px-1 py-1 rounded m-auto text-center bg-gray-100"
-              />
-            </td>
-            <td className={`border px-4 py-2 text-center font-bold ${remarks.color}`}>
-              {remarks.text}
-            </td>
-          </tr>
-        </tbody>
+  <tr>
+    <td className="border px-4 text-center min-h-[80px]">U25-124</td>
+    <td className="border px-4 text-center">Dela Cruz, Marian Pallarca</td>
+    <td className="border px-4 text-center">
+      <input
+        type="number"
+        name="midterm"
+        value={grades.midterm}
+        onChange={handleGradeChange}
+        className="w-16 border border-gray-400 px-1 py-1 rounded m-auto text-center bg-gray-200"
+      />
+    </td>
+    <td className="border px-4 py-4 text-center">
+      <input
+        type="number"
+        name="finals"
+        value={grades.finals}
+        onChange={handleGradeChange}
+        className="w-16 border border-gray-400 px-1 py-1 rounded m-auto text-center bg-gray-200"
+      />
+    </td>
+    <td className="border px-4 py-4 text-center">
+      <input
+        type="text"
+        name="semester"
+        value={grades.semester}
+        readOnly
+        className="w-16 border border-gray-400 px-1 py-1 rounded m-auto text-center bg-gray-100"
+      />
+    </td>
+    <td className={`border px-4 py-4 text-center font-bold ${remarks.color}`}>
+      {remarks.text}
+    </td>
+  </tr>
+
+  <tr>
+    <td className="border px-4 py-25 text-center min-h-[80px]"></td>
+    <td className="border px-4 py-25 text-center"></td>
+    <td className="border px-4 py-25 text-center">
+     
+    </td>
+    <td className="border px-4 py-4 text-center">
+   
+    </td>
+    <td className="border px-4 py-4 text-center">
+     
+    </td>
+    <td className={`border px-4 py-4 text-center font-bold ${remarks.color}`}>
+     
+    </td>
+  </tr>
+</tbody>
+
       </table>
 
       <button className="bg-red-800 text-yellow-300 p-2 rounded-md mt-5 hover:bg-red-700 ml-240 border border-yellow">
