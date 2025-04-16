@@ -5,21 +5,238 @@ import { dashboardContext } from "@/app/providers/dashboardProvider";
 
 const facultyList = [
   {
-    _id: 1,
+    _id: 2,
     lastName: "Dela Cruz",
     firstName: "Janine",
     middleName: "O.",
     contact: "09159130770",
-    email: "mryndc@gmail.com",
+    email: "maisd@gmail.com",
   },
   {
     _id: 2,
-    lastName: "Dela Cruz", 
+    lastName: "Dela Cruz",
     firstName: "Janine",
     middleName: "O.",
     contact: "09159130770",
-    email: "maisd@gmail.com"
-  }
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },{
+    _id: 2,
+    lastName: "Dela Cruz",
+    firstName: "Janine",
+    middleName: "O.",
+    contact: "09159130770",
+    email: "maisd@gmail.com",
+  },
 ];
 
 const FacultyAccount = () => {
@@ -31,39 +248,41 @@ const FacultyAccount = () => {
         show === 5 ? "translate-x-[0] visible" : "translate-x-[-200%]"
       }`}
     >
-      <div className="w-[95%] min-h-[95%] relative overflow-hidden bg-white shadow-[4px_4px_10px_rgba(0,0,0,.40)] z-0">
-        {/* header */}
-        <div className="w-full h-8 bg-tertiary flex-icenter pl-1 text-white">
-          <h1>Faculty Accounts</h1>
+      <div className="w-[95%] min-h-[95%] relative overflow-hidden bg-white rounded-lg shadow-lg z-0">
+        {/* Header */}
+        <div className="w-full h-15 bg-tertiary flex-icenter pl-1 text-white">
+          <h1 className="text-2xl p-2">Faculty Accounts</h1>
         </div>
 
-        {/* table */}
-        <div
-          className="flex w-full absolute overflow-y-scroll"
-          style={{ scrollbarWidth: "none" }}
-        >
-          <table className="table overflow-y-hidden">
-            <thead>
+        {/* Table */}
+        <div className="overflow-hidden">
+          <table className="table table-fixed w-full border-collapse border border-gray-300 rounded-t-lg">
+            <thead className="sticky top-0 bg-white z-10 shadow-md">
               <tr>
-                <th>ID</th>
-                <th>Last Name</th>
-                <th>First Name</th>
-                <th>Middle Name</th>
-                <th>Contact</th>
-                <th>Email</th>
-                <th>Action</th>
+                <th className="w-[5%]">ID</th>
+                <th className="w-[15%]">Last Name</th>
+                <th className="w-[15%]">First Name</th>
+                <th className="w-[15%]">Middle Name</th>
+                <th className="w-[15%]">Contact</th>
+                <th className="w-[17%]">Email</th>
+                <th className="w-[20%]">Action</th>
               </tr>
             </thead>
+          </table>
+        </div>
+
+        <div className="overflow-y-scroll max-h-[60vh] hide-scrollbar">
+          <table className="table table-fixed w-full border-collapse border border-gray-300 rounded-b-lg">
             <tbody>
-              {facultyList.map((faculty) => (
-                <tr key={faculty._id}>
-                  <td>{faculty._id}</td>
-                  <td>{faculty.lastName}</td>
-                  <td>{faculty.firstName}</td>
-                  <td>{faculty.middleName}</td>
-                  <td>{faculty.contact}</td>
-                  <td>{faculty.email}</td>
-                  <td>
+              {facultyList.map((faculty, index) => (
+                <tr key={index}>
+                  <td className="w-[5%]">{faculty._id}</td>
+                  <td className="w-[15%]">{faculty.lastName}</td>
+                  <td className="w-[15%]">{faculty.firstName}</td>
+                  <td className="w-[15%]">{faculty.middleName}</td>
+                  <td className="w-[15%]">{faculty.contact}</td>
+                  <td className="w-[17%]">{faculty.email}</td>
+                  <td className="w-[20%]">
                     <div className="flex gap-2 justify-center">
                       <button className="w-[80px] border border-[#8b0606] text-info font-medium rounded-[5px] btn-success">
                         Approved
