@@ -47,7 +47,6 @@ const page = () => {
         {
           userAccess === "student" && <>
               <GradeView />
-          
             </>
         }
         

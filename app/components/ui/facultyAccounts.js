@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useContext } from "react";
 import { dashboardContext } from "@/app/providers/dashboardProvider";
 
@@ -28,8 +30,7 @@ const FacultyAccount = () => {
       middleName: "O.",
       contact: "09159130770",
       email: "edwardnelson0099@gmail.com",
-    },
-    // Add more data as needed
+    }
   ];
 
   return (
@@ -41,7 +42,7 @@ const FacultyAccount = () => {
       <div className="w-[95%] min-h-[95%] relative overflow-hidden bg-white rounded-lg shadow-lg z-0">
         {/* Header */}
         <div className="w-full h-15 bg-tertiary flex-icenter pl-1 text-white">
-          <h1 className="text-2xl font-semibold">Faculty Accounts</h1>
+          <h1 className="pl-3 text-2xl">Faculty Account</h1>
         </div>
 
         {/* Table */}
