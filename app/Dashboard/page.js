@@ -1,13 +1,18 @@
 "use client"
 import React, { useContext } from 'react'
 import {dashboardContext} from '../providers/dashboardProvider'
-import EnrollmentStatus from '../components/ui/enrollmentStatus'
+import EnrollmentStatus from '../components/ui/enrollment-status/enrollmentStatus'
+import FacultyAccount from '../components/ui/facultyAccounts'
+import Dashboard from '../components/ui/dashboard'
+import GradeEntry from '../components/ui/GradeEntry'
+import StudentList from '../components/ui/StudentList'
+import GradeView from '../components/ui/GradeView'
 
 const page = () => {
-  const { userAccess} = useContext(dashboardContext);
+  const { userAccess } = useContext(dashboardContext);
 
   return (
-    <div className='w-full min-h-[100vh] h-auto pt-[70px] relative'>
+    <div className='w-full min-h-[100vh] overflow-hidden h-auto pt-[70px] relative'>
         
         {/* INSTRUCTIONS!!!
 
@@ -26,18 +31,22 @@ const page = () => {
         
         {
           userAccess === "registrar" && <>
+               <Dashboard />
                <EnrollmentStatus />
+               <FacultyAccount />
            </>
         }
         
         {
            userAccess === "instructor" && <>
-          
+                <GradeEntry />
+                <StudentList />
              </>
         } 
         
         {
           userAccess === "student" && <>
+              <GradeView />
           
             </>
         }

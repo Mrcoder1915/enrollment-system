@@ -39,28 +39,26 @@ const sideBar = () => {
             </h1>
           </div>
 
-          <div className='w-full h-[65%]'>
-            <ul className='side flex-column gap-2'>
-                {
-                  nav.map((item, index) =>{
-                    if(item.condition === false) return null
-                    return (
-                      <li key={index} className={
-                          `${activeColor(item.id, "btn-success hover:bg-[#ffd700]")}`}
-                          onClick={() => showDetails(item.id)}>
-                          <i>{item.icon}</i>
-                          <div className={
-                              `${activeColor(item.id, "text-[#8b0606] ")}`}>
-                              {item.text}
-                          </div>
-                      </li>
-                  )})
-                }
-            </ul>
-          </div>
-      </aside>
-     } 
-   </>
+        <div className='w-full h-[65%]'>
+          <ul className='side flex-column gap-2'>
+              {
+                nav.map((item, index) =>{
+                  if(item.condition === false) return null
+                  return (
+                    <li key={index} className={
+                        `${activeColor(item.id, "btn-success hover:bg-[#ffd700]")}`}
+                        onClick={() => showDetails(item.id)}>
+                        <i>{item.icon}</i>
+                        <div className={
+                            `${activeColor(item.id, "text-[#8b0606] ")}`}>
+                            {item.text}
+                        </div>
+                    </li>
+                )})
+              }
+          </ul>
+        </div>
+    </aside>
   )
 }
 
