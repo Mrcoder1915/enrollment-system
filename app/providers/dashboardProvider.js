@@ -26,7 +26,7 @@ const dashboardProvider = ({children}) => {
     const userAccess = "registrar";
 
 const showDetails = (position) => {
-    setShow(prev => prev = position)
+    setShow((prev) => prev = position)
 }
 const value = {
     show,
