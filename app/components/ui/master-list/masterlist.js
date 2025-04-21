@@ -18,9 +18,10 @@ const masterlist = () => {
              </div>
             </div> 
 <div>
-       <div>
-        <input type="text"name='search' id='searchh' className='shadow xl shadow-slate-500 w-[75%] h-10 p-2 
-        outline-none' placeholder="Search" />
+       <div className='mb-6 flex-justify-end'>
+        <label>Search:</label>
+        <input type="text"name='search' id='searchh' className='shadow xl shadow-slate-500 w-[75%] h-7 p-2 
+        outline ' placeholder="Search" />
        </div>
        <div></div>
 </div>                
