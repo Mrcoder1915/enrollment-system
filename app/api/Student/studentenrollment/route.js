@@ -1,10 +1,10 @@
-import connection from "../../lib/config/connection";
+import connection from "../../../lib/config/connection";
 import Admission from "@/app/models/Admission.model";
 import Enrollment from "@/app/models/enrollment.model";
-import Course from '../../models/course.model'
+import Course from '../../../models/course.model'
 import { NextResponse } from "next/server";
-import Student from "../../models/student.model";
-import Program from '../../models/program.model'
+import Student from "../../../models/student.model";
+import Program from '../../../models/program.model'
 
 export async function POST(Req){
     const {YearLevel, Semester, AdmissionId} = await Req.json(); 
