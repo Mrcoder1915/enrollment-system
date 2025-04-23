@@ -16,7 +16,9 @@ import { useContext } from "react";
         ? registrar
         :userAccess == "instructor"
         ? instructor
-        : student;
+        :userAccess == "student"
+        ? student
+        : null
    };
 
  const nav = [
