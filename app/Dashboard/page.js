@@ -10,6 +10,7 @@ import GradeView from '../components/ui/GradeView'
 import EnrollmentForm from '../components/ui/EnrollmentForm'
 import AdmissionTable from '../components/ui/admission'
 
+
 const page = () => {
   const { userAccess } = useContext(dashboardContext);
 
@@ -37,6 +38,7 @@ const page = () => {
                <AdmissionTable />
                <EnrollmentStatus />
                <FacultyAccount />
+
            </>
         }
         
