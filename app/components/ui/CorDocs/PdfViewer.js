@@ -6,7 +6,7 @@ import { PDFViewer } from '@react-pdf/renderer'
 const PdfViewer = () => {
   return (
     <div >
-    <div className='w-full h-[100vh] overflow-hidden'>
+    <div className='w-full h-[100vh] overflow-hidden bg-black'>
         <PDFViewer width="100%" height="842px">
             <Docs />
         </PDFViewer>

@@ -5,7 +5,7 @@ const CorDocs = dynamic(() => import("../components/ui/CorDocs/PdfViewer"), { ss
 
 const page = () => {
   return (
-   <div>
+   <div className="w-full h-[100vh]">
         <CorDocs />
     </div>
   )

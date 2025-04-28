@@ -107,7 +107,7 @@ import { Document , Page, Text, View, StyleSheet, Image} from '@react-pdf/render
         EnrollHeader:{
             width: "100%",
             height: 20,
-
+            backgroundColor: "#dc1212",
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
@@ -115,26 +115,49 @@ import { Document , Page, Text, View, StyleSheet, Image} from '@react-pdf/render
         },
         CourseCode: {
             width: 60,
-        
+            fontSize: 8,
         },
         CourseTitle: {
             width: 150,
-        
+            fontSize: 10,
+            wordBreak: 'break-word', // ⭐ important  
         },
         CourseUnit: {
             width: 80,
-            
         },
         Units: {
             width: "100%",
             display: 'flex',
             flexDirection: "row",
             justifyContent: "center",
-            gap: 5
+            gap: 5,
+            fontSize: 8,
+        },
+        UnitsVal: {
+            width: 80,
+            display: 'flex',
+            flexDirection: "row",
+            justifyContent: "center",
+            gap: 5,
+            fontSize: 8,
         },
         Section: {
             width: "40",
-            
+            fontSize: 8
+        },
+        Faculty: {
+            width: 100,
+            fontSize: 8
+        },
+        EnrollContentCon: {
+            width: "100%",
+            marginTop: 3
+        },
+        EnrollContent: {
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            gap: 10
         }
     })
 
@@ -245,35 +268,82 @@ const Docs= () =>
                             <View style={Style.EnrolledCon}>
                                 <View style={Style.EnrollHeader}>
                                     <View style={Style.CourseCode}>
-                                        <Text style={{fontSize: "10px"}}>
+                                        <Text style={{fontSize: "10px", color: "white"}}>
                                             Course Code
                                         </Text>
                                     </View>
                                     <View style={Style.CourseTitle}>
-                                        <Text style={{fontSize: "10px"}}>
+                                        <Text style={{fontSize: "10px", color: "white"}}>
                                             Course Title
                                         </Text>
                                     </View>
                                     <View style={Style.CourseUnit}>
-                                        <Text style={{fontSize: "10px",textAlign: "center"}}>
+                                        <Text style={{fontSize: "10px",textAlign: "center", color: "white"}}>
                                             Unit
                                         </Text>
                                         <View style={Style.Units}>
-                                            <Text style={{fontSize: "10px"}}>
+                                            <Text style={{fontSize: "10px", color: "white"}}>
                                                 Lec
                                             </Text>
-                                            <Text style={{fontSize: "10px"}}>
+                                            <Text style={{fontSize: "10px", color: "white"}}>
                                                    Lab
                                             </Text>
-                                            <Text style={{fontSize: "10px"}}>
+                                            <Text style={{fontSize: "10px", color: "white"}}>
                                                 Credits
                                             </Text>
                                         </View>
                                     </View>
                                     <View style={Style.Section}>
-                                        <Text style={{fontSize: "10px"}}>
+                                        <Text style={{fontSize: "10px", color: "white"}}>
                                             Section
                                         </Text>
+                                    </View>
+                                    <View style={Style.Faculty}>
+                                        <Text style={{fontSize: "10px", color: "white"}}>
+                                            Faculty Signature
+                                        </Text>
+                                    </View>
+                                </View>
+                                <View style={Style.EnrollContentCon}>
+                                    <View style={Style.EnrollContent}>
+                                        <View style={Style.CourseCode}>
+                                            <Text>cc101</Text>
+                                        </View>
+                                        <View style={Style.CourseTitle}>
+                                            <Text >computer prog 1sssss sssssssss ssssssssss ssssssssss</Text>
+                                        </View>
+                                        <View style={Style.UnitsVal}>
+                                            <Text>1.00</Text>
+                                            <Text>1.00</Text>
+                                            <Text>1.00</Text>
+                                        </View>
+                                        <View style={Style.Section}>
+                                            <Text >BSIT-1B</Text>
+                                        </View>
+                                        <View style={Style.Faculty}>
+                                            <Text style={{textDecoration: "underline"}}>juan carlos</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                                <View style={Style.EnrollContentCon}>
+                                    <View style={Style.EnrollContent}>
+                                        <View style={Style.CourseCode}>
+                                            <Text>cc101</Text>
+                                        </View>
+                                        <View style={Style.CourseTitle}>
+                                            <Text >computer progaming fundamentals</Text>
+                                        </View>
+                                        <View style={Style.UnitsVal}>
+                                            <Text>1.00</Text>
+                                            <Text>1.00</Text>
+                                            <Text>1.00</Text>
+                                        </View>
+                                        <View style={Style.Section}>
+                                            <Text >BSIT-1B</Text>
+                                        </View>
+                                        <View style={Style.Faculty}>
+                                            <Text style={{textDecoration: "underline"}}>juan carlos</Text>
+                                        </View>
                                     </View>
                                 </View>
                             </View>
