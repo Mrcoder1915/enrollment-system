@@ -66,6 +66,7 @@ import { Document , Page, Text, View, StyleSheet, Image} from '@react-pdf/render
             width: "95%",
             height: "100%",
             border: "1px solid black",
+            padding: 3
         },
         mainHeader: {
             width: "100%",
@@ -119,11 +120,12 @@ import { Document , Page, Text, View, StyleSheet, Image} from '@react-pdf/render
         },
         CourseTitle: {
             width: 150,
-            fontSize: 10,
+            fontSize: 8,
             wordBreak: 'break-word', // ⭐ important  
         },
         CourseUnit: {
             width: 80,
+
         },
         Units: {
             width: "100%",
@@ -151,13 +153,97 @@ import { Document , Page, Text, View, StyleSheet, Image} from '@react-pdf/render
         },
         EnrollContentCon: {
             width: "100%",
-            marginTop: 3
+            marginTop: 3,
+            marginBottom: 3,
+            display: "flex",
+            gap: 5
         },
         EnrollContent: {
             width: "100%",
             display: "flex",
             flexDirection: "row",
             gap: 10
+        },
+        Ass_LeterCon: {
+            width: "100%",
+            
+            display: "flex",
+            flexDirection: "row",
+            gap: 5
+        },
+        AssesCon: {
+            width: "40%",
+            display: "flex",
+            gap: 5,
+            border: "1px solid black"
+        },
+        LeterCon: {
+            width: "60%",
+            fontSize: 8,
+            display: "flex",
+            justifyContent: "center",
+            padding: 10
+        },
+        AssesHeader: {
+            position: "relative",
+            width: "100%",
+            backgroundColor: "#dc1212",
+            color: "white",
+            fontSize: 10,
+            height: 15
+        },
+        AssProg: {
+            fontSize: 10,
+            width: "100%",
+            paddingLeft: 5
+        },
+        FeesCon: {
+            width: "100%",
+            paddingBottom: 5,
+            paddingLeft: 5,
+            paddingRight: 5,
+        },
+        SingleFeeCon: {
+            width: "100%",
+            display: "flex",
+            flexDirection: "row"
+        },
+        FeeFieldsCon: {
+            fontSize: 8,
+            width: "50%",
+        },
+        feeCon: {
+            fontSize: 8,
+            width: "50%",
+            display: "flex",
+            alignItems: "flex-end",
+        },
+        TotalFee: {
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            fontSize: 10,
+            paddingBottom: 10,
+            paddingRight: 5,
+            fontWeight: "bold"
+        },
+        SigCon: {
+            width: "100%",
+            display: "flex",
+            alignItems: "flex-end",
+            marginTop: 20
+        },
+        underCon: {
+            width: 100,
+            display: "flex",
+            alignItems: "center"
+        },
+        Underline: {
+            width: 100,
+            borderBottom: 1,
+            borderBottomColor: "black",
+            borderBottomStyle: "solid"
         }
     })
 
@@ -168,7 +254,7 @@ const Docs= () =>
                     <View style={Style.headers}>
                         <View style={Style.header1stContainer}>
                             <View style={Style.LogoContainer}>
-                                <Image src="/neustlogo-nobg.png" />                          
+                                <Image src="/usnelogo.png" />                          
                             </View>
                         </View>
                         <View style={Style.headerTitleCon}>
@@ -268,27 +354,27 @@ const Docs= () =>
                             <View style={Style.EnrolledCon}>
                                 <View style={Style.EnrollHeader}>
                                     <View style={Style.CourseCode}>
-                                        <Text style={{fontSize: "10px", color: "white"}}>
+                                        <Text style={{fontSize: "8px", color: "white"}}>
                                             Course Code
                                         </Text>
                                     </View>
                                     <View style={Style.CourseTitle}>
-                                        <Text style={{fontSize: "10px", color: "white"}}>
+                                        <Text style={{fontSize: "8px", color: "white"}}>
                                             Course Title
                                         </Text>
                                     </View>
                                     <View style={Style.CourseUnit}>
-                                        <Text style={{fontSize: "10px",textAlign: "center", color: "white"}}>
+                                        <Text style={{fontSize: "8px",textAlign: "center", color: "white"}}>
                                             Unit
                                         </Text>
                                         <View style={Style.Units}>
-                                            <Text style={{fontSize: "10px", color: "white"}}>
+                                            <Text style={{fontSize: "8px", color: "white"}}>
                                                 Lec
                                             </Text>
-                                            <Text style={{fontSize: "10px", color: "white"}}>
+                                            <Text style={{fontSize: "8px", color: "white"}}>
                                                    Lab
                                             </Text>
-                                            <Text style={{fontSize: "10px", color: "white"}}>
+                                            <Text style={{fontSize: "8px", color: "white"}}>
                                                 Credits
                                             </Text>
                                         </View>
@@ -307,10 +393,10 @@ const Docs= () =>
                                 <View style={Style.EnrollContentCon}>
                                     <View style={Style.EnrollContent}>
                                         <View style={Style.CourseCode}>
-                                            <Text>cc101</Text>
+                                            <Text>cc104</Text>
                                         </View>
                                         <View style={Style.CourseTitle}>
-                                            <Text >computer prog 1sssss sssssssss ssssssssss ssssssssss</Text>
+                                            <Text >Information management</Text>
                                         </View>
                                         <View style={Style.UnitsVal}>
                                             <Text>1.00</Text>
@@ -324,14 +410,126 @@ const Docs= () =>
                                             <Text style={{textDecoration: "underline"}}>juan carlos</Text>
                                         </View>
                                     </View>
-                                </View>
-                                <View style={Style.EnrollContentCon}>
                                     <View style={Style.EnrollContent}>
                                         <View style={Style.CourseCode}>
-                                            <Text>cc101</Text>
+                                            <Text>cc104</Text>
                                         </View>
                                         <View style={Style.CourseTitle}>
-                                            <Text >computer progaming fundamentals</Text>
+                                            <Text >Information management</Text>
+                                        </View>
+                                        <View style={Style.UnitsVal}>
+                                            <Text>1.00</Text>
+                                            <Text>1.00</Text>
+                                            <Text>1.00</Text>
+                                        </View>
+                                        <View style={Style.Section}>
+                                            <Text >BSIT-1B</Text>
+                                        </View>
+                                        <View style={Style.Faculty}>
+                                            <Text style={{textDecoration: "underline"}}>juan carlos</Text>
+                                        </View>
+                                    </View>
+                                    <View style={Style.EnrollContent}>
+                                        <View style={Style.CourseCode}>
+                                            <Text>cc104</Text>
+                                        </View>
+                                        <View style={Style.CourseTitle}>
+                                            <Text >Information management</Text>
+                                        </View>
+                                        <View style={Style.UnitsVal}>
+                                            <Text>1.00</Text>
+                                            <Text>1.00</Text>
+                                            <Text>1.00</Text>
+                                        </View>
+                                        <View style={Style.Section}>
+                                            <Text >BSIT-1B</Text>
+                                        </View>
+                                        <View style={Style.Faculty}>
+                                            <Text style={{textDecoration: "underline"}}>juan carlos</Text>
+                                        </View>
+                                    </View>
+                                    <View style={Style.EnrollContent}>
+                                        <View style={Style.CourseCode}>
+                                            <Text>cc104</Text>
+                                        </View>
+                                        <View style={Style.CourseTitle}>
+                                            <Text >Information management</Text>
+                                        </View>
+                                        <View style={Style.UnitsVal}>
+                                            <Text>1.00</Text>
+                                            <Text>1.00</Text>
+                                            <Text>1.00</Text>
+                                        </View>
+                                        <View style={Style.Section}>
+                                            <Text >BSIT-1B</Text>
+                                        </View>
+                                        <View style={Style.Faculty}>
+                                            <Text style={{textDecoration: "underline"}}>juan carlos</Text>
+                                        </View>
+                                    </View>
+                                    <View style={Style.EnrollContent}>
+                                        <View style={Style.CourseCode}>
+                                            <Text>cc104</Text>
+                                        </View>
+                                        <View style={Style.CourseTitle}>
+                                            <Text >Information management</Text>
+                                        </View>
+                                        <View style={Style.UnitsVal}>
+                                            <Text>1.00</Text>
+                                            <Text>1.00</Text>
+                                            <Text>1.00</Text>
+                                        </View>
+                                        <View style={Style.Section}>
+                                            <Text >BSIT-1B</Text>
+                                        </View>
+                                        <View style={Style.Faculty}>
+                                            <Text style={{textDecoration: "underline"}}>juan carlos</Text>
+                                        </View>
+                                    </View>
+                                    <View style={Style.EnrollContent}>
+                                        <View style={Style.CourseCode}>
+                                            <Text>cc104</Text>
+                                        </View>
+                                        <View style={Style.CourseTitle}>
+                                            <Text >Information management</Text>
+                                        </View>
+                                        <View style={Style.UnitsVal}>
+                                            <Text>1.00</Text>
+                                            <Text>1.00</Text>
+                                            <Text>1.00</Text>
+                                        </View>
+                                        <View style={Style.Section}>
+                                            <Text >BSIT-1B</Text>
+                                        </View>
+                                        <View style={Style.Faculty}>
+                                            <Text style={{textDecoration: "underline"}}>juan carlos</Text>
+                                        </View>
+                                    </View>
+                                    <View style={Style.EnrollContent}>
+                                        <View style={Style.CourseCode}>
+                                            <Text>cc104</Text>
+                                        </View>
+                                        <View style={Style.CourseTitle}>
+                                            <Text >Information management</Text>
+                                        </View>
+                                        <View style={Style.UnitsVal}>
+                                            <Text>1.00</Text>
+                                            <Text>1.00</Text>
+                                            <Text>1.00</Text>
+                                        </View>
+                                        <View style={Style.Section}>
+                                            <Text >BSIT-1B</Text>
+                                        </View>
+                                        <View style={Style.Faculty}>
+                                            <Text style={{textDecoration: "underline"}}>juan carlos</Text>
+                                        </View>
+                                    </View>
+                                    <View style={Style.EnrollContent}>
+                                        <View style={Style.CourseCode}>
+                                            <Text>cc104</Text>
+                                        </View>
+                                        <View style={Style.CourseTitle}>
+                                            <Text >Information management</Text>
                                         </View>
                                         <View style={Style.UnitsVal}>
                                             <Text>1.00</Text>
@@ -346,7 +544,134 @@ const Docs= () =>
                                         </View>
                                     </View>
                                 </View>
+                               
+                               
                             </View>
+                            <View style={Style.Ass_LeterCon}>
+                                    <View style={Style.AssesCon}>
+                                        <View style={Style.AssesHeader}>
+                                            <Text>Assessed Fees</Text>
+                                        </View>
+                                        <View style={Style.AssProg}>
+                                            <Text>Programs</Text>
+                                        </View>
+                                        <View style={Style.FeesCon}>
+                                            <View style={Style.SingleFeeCon}>
+                                                <View style={Style.FeeFieldsCon}>
+                                                    <Text>Laboratory Fees</Text>
+                                                </View>
+                                                <View style={Style.feeCon}>
+                                                    <Text>0.00</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={Style.FeesCon}>
+                                            <View style={Style.SingleFeeCon}>
+                                                <View style={Style.FeeFieldsCon}>
+                                                    <Text>Registration Fees</Text>
+                                                </View>
+                                                <View style={Style.feeCon}>
+                                                    <Text>100.00</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={Style.FeesCon}>
+                                            <View style={Style.SingleFeeCon}>
+                                                <View style={Style.FeeFieldsCon}>
+                                                    <Text>Athletic Fees</Text>
+                                                </View>
+                                                <View style={Style.feeCon}>
+                                                    <Text>790.00</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={Style.FeesCon}>
+                                            <View style={Style.SingleFeeCon}>
+                                                <View style={Style.FeeFieldsCon}>
+                                                    <Text>Development Fees</Text>
+                                                </View>
+                                                <View style={Style.feeCon}>
+                                                    <Text>245.00</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={Style.FeesCon}>
+                                            <View style={Style.SingleFeeCon}>
+                                                <View style={Style.FeeFieldsCon}>
+                                                    <Text>Library Fees</Text>
+                                                </View>
+                                                <View style={Style.feeCon}>
+                                                    <Text>100.00</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={Style.FeesCon}>
+                                            <View style={Style.SingleFeeCon}>
+                                                <View style={Style.FeeFieldsCon}>
+                                                    <Text>Tuition Fee</Text>
+                                                </View>
+                                                <View style={Style.feeCon}>
+                                                    <Text>5500.00</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={Style.FeesCon}>
+                                            <View style={Style.SingleFeeCon}>
+                                                <View style={Style.FeeFieldsCon}>
+                                                    <Text>Computer Fees</Text>
+                                                </View>
+                                                <View style={Style.feeCon}>
+                                                    <Text>790.00</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={Style.FeesCon}>
+                                            <View style={Style.SingleFeeCon}>
+                                                <View style={Style.FeeFieldsCon}>
+                                                    <Text>Guidance Fees</Text>
+                                                </View>
+                                                <View style={Style.feeCon}>
+                                                    <Text>50.00</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={Style.FeesCon}>
+                                            <View style={Style.SingleFeeCon}>
+                                                <View style={Style.FeeFieldsCon}>
+                                                    <Text>Medical & Dental Fees</Text>
+                                                </View>
+                                                <View style={Style.feeCon}>
+                                                    <Text>80.00</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={Style.FeesCon}>
+                                            <View style={Style.SingleFeeCon}>
+                                                <View style={Style.FeeFieldsCon}>
+                                                    <Text>Cultural Fees</Text>
+                                                </View>
+                                                <View style={Style.feeCon}>
+                                                    <Text>350.00</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={Style.TotalFee}>
+                                            <Text>Total Assessment:     </Text>
+                                            <Text>10000.00</Text>
+                                        </View>
+                                    </View>
+                                    <View style={Style.LeterCon}>
+                                            <Text>
+                                                 In due consideration of my admission and enrollment, I hereby willingly abide by and comply with all the rules, regulations, policies, and guidelines duly established by the institution and the department in which I am officially enrolled. I understand that it is my responsibility to uphold the standards and principles set forth throughout my stay as a student.
+                                            </Text>
+                                            <View style={Style.SigCon}>
+                                                <View style={Style.underCon}>
+                                                    <View style={Style.Underline}></View>
+                                                    <Text>Student Signature</Text>
+                                                </View>
+                                            </View>
+                                    </View>
+                                </View>
                         </View>
                     </View>
                 </Page>
