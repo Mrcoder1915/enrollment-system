@@ -88,9 +88,9 @@ const FacultyAccount = () => {
               {facultyList.map((faculty, index) => (
                 <tr key={faculty._id || index}>
                   <td className="w-[5%]">{faculty._id}</td>
-                  <td className="w-[15%]">{faculty.lastname}</td>
-                  <td className="w-[15%]">{faculty.firstname}</td>
-                  <td className="w-[15%]">{faculty.middlename}</td>
+                  <td className="w-[15%]">{faculty.lastName}</td>
+                  <td className="w-[15%]">{faculty.firstName}</td>
+                  <td className="w-[15%]">{faculty.middleName}</td>
                   <td className="w-[15%]">{faculty.contact}</td>
                   <td className="w-[20%]">{faculty.email}</td>
                   <td className="w-[15%]">
