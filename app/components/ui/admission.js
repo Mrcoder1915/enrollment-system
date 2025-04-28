@@ -59,8 +59,8 @@ const AdmissionTable = () => {
         show === 2 ? "translate-x-0 visible" : "-translate-x-[200%]"
       }`}
     >
-      <div className="flex h-[95%] w-full p-4 rounded shadow-md">
-        <main className="w-full">
+      <div className="flex h-full w-[95%] flex-col rounded  ">
+        
           <div className="mb-4 flex items-center">
             <label className="mr-2 font-semibold">Department:</label>
             <select
@@ -79,7 +79,7 @@ const AdmissionTable = () => {
             Admission
           </div>
 
-          <div className="hide-scrollbar overflow-auto border rounded-b shadow-md">
+          <div className=" hide-scrollbar overflow-y-scroll w-full h-[95%] border rounded-b shadow-2xl">
             <table className= 'table overflow-y-hidden '>
               <thead className="bg-gray-200 text-left">
                 <tr>
@@ -111,11 +111,11 @@ const AdmissionTable = () => {
                           VIEW
                         </button>
                       </td>
-                      <td classname ="flex gap-2 justify-center">
-                        <button className= 'w-[80px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>
+                      <td className ="flex gap-2 justify-center items-center">
+                        <button className= 'w-[80px] h-[27px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>
                           Approve
                         </button>
-                        <button className= 'w-[70px] border-[1px] border-solid border-[#8b0606] text-[#ffd700] font-medium rounded-[5px] btn-danger ml-2.5'>
+                        <button className= 'w-[70px] h-[27px] border-[1px] border-solid border-[#8b0606] text-[#ffd700] font-medium rounded-[5px] btn-danger ml-2.5'>
                           Failed
                         </button>
                         </td>
@@ -131,7 +131,7 @@ const AdmissionTable = () => {
               </tbody>
             </table>
           </div>
-        </main>
+        
       </div>
     </div>
   );
