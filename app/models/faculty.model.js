@@ -9,7 +9,7 @@ const facultySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  middlename: {
+  middleName: {
     type: String,
     required: true,
     unique: true,
@@ -28,7 +28,7 @@ const facultySchema = new mongoose.Schema({
     default: Date.now,
   },
 }, { 
-  collection: "facultyAccounts",
+  collection: "facultyList",
   timestamps: true
 });
 
