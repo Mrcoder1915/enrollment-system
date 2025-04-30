@@ -3,13 +3,10 @@ import React, { useContext ,useState} from 'react'
 import {dashboardContext} from '@/app/providers/dashboardProvider'
 import Table from './table'
 
-// this is static data only
-
 const enrollmentStatus = () => {
     const {show} = useContext(dashboardContext)
     const [program , setProgram] = useState("")
     const [semester, setSemester] = useState(0)
-    console.log("parent rerender");
     
   return (
     <div className={`w-full h-[80vh] absolute  flex-icenter flex-col transition-all ease-in duration-300 ${show == 3? "translate-x-[0] visible" : "translate-x-[-200%]" }`}>

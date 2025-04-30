@@ -5,8 +5,6 @@
   const enrollStatusTable = (props) => {
       const [enrollDetails, setEnrollDetails] = useState([])
       
-      console.log("table rerender");
-      
       useEffect(() => {
           async function enroll() {
               const enrollStudent = await fetch("http://localhost:3000/api/Student/studentenrollment");
