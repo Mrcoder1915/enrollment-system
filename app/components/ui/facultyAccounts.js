@@ -19,7 +19,7 @@ const sendEmail = async (email, status) => {
     randomPassword = generateRandomPassword();
   }
 
-  const response = await fetch("/api/send-email", {
+  const response = await fetch("/api/registrar/send-email", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -41,7 +41,7 @@ const FacultyAccount = () => {
   useEffect(() => {
     const fetchFaculty = async () => {
       try {
-        const res = await fetch("/api/facultyList");
+        const res = await fetch("/api/registrar/facultyList");
         const data = await res.json();
         setFacultyList(data);
       } catch (error) {
@@ -64,7 +64,7 @@ const FacultyAccount = () => {
           <h1 className="pl-3 text-2xl">Faculty Account</h1>
         </div>
 
-        {/* Table */}
+        {/* Table Header */}
         <div className="overflow-hidden">
           <table className="table table-fixed w-full border-collapse border border-gray-300 rounded-t-lg">
             <thead className="sticky top-0 bg-white z-10 shadow-md">
@@ -81,29 +81,29 @@ const FacultyAccount = () => {
           </table>
         </div>
 
-        {/* Scrollable Table Body */}
+        {/* Table Body */}
         <div className="overflow-y-scroll max-h-[60vh] hide-scrollbar">
           <table className="table table-fixed w-full border-collapse border border-gray-300 rounded-b-lg">
             <tbody>
               {facultyList.map((faculty, index) => (
                 <tr key={faculty._id || index}>
-                  <td className="w-[5%]">{faculty._id}</td>
+                  <td className="w-[5%]">{faculty.instructorID}</td>
                   <td className="w-[15%]">{faculty.lastName}</td>
                   <td className="w-[15%]">{faculty.firstName}</td>
                   <td className="w-[15%]">{faculty.middleName}</td>
-                  <td className="w-[15%]">{faculty.contact}</td>
-                  <td className="w-[20%]">{faculty.email}</td>
+                  <td className="w-[15%]">{faculty.contactNumber}</td>
+                  <td className="w-[20%]">{faculty.emailAddress}</td>
                   <td className="w-[15%]">
                     <div className="flex gap-2 justify-center">
                       <button
                         className="w-[80px] border border-[#8b0606] text-info font-medium rounded-[5px] btn-success"
-                        onClick={() => sendEmail(faculty.email, "approved")}
+                        onClick={() => sendEmail(faculty.emailAddress, "approved")}
                       >
                         Approved
                       </button>
                       <button
                         className="w-[70px] border border-[#8b0606] text-[#ffd700] font-medium rounded-[5px] btn-danger ml-2.5"
-                        onClick={() => sendEmail(faculty.email, "failed")}
+                        onClick={() => sendEmail(faculty.emailAddress, "failed")}
                       >
                         Failed
                       </button>
