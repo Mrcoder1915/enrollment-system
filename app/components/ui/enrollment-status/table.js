@@ -2,9 +2,10 @@
   import React, { useEffect, useState } from 'react'
 
 
-  const enrollStatusTable = () => {
+  const enrollStatusTable = (props) => {
       const [enrollDetails, setEnrollDetails] = useState([])
-      console.log(enrollDetails)
+      
+      console.log("table rerender");
       
       useEffect(() => {
           async function enroll() {
@@ -33,7 +34,15 @@
         };
 
       const ustudent = getUniqueEnrollments(enrollDetails)
-      console.log("inique: ",ustudent)
+      
+      const filterdstudents = ustudent.filter((student) => {
+        const filterByProgram = props.program? student.courseID.programID.programCode == props.program : true
+        const filterBySemester = props.semester? student.courseID.semester == props.semester : true
+
+        return filterByProgram && filterBySemester
+      })
+      
+      
       
     return (
       <table className='table overflow-y-hidden'>
@@ -51,7 +60,7 @@
               </tr>
           </thead>
           <tbody>
-          {ustudent?.map((info) => (
+          {filterdstudents?.map((info) => (
               <tr key={info._id}>
                   <td>{info._id}</td>
                   <td>{info.studentID?.lastName}</td>
@@ -84,4 +93,4 @@
     )
   }
 
-  export default enrollStatusTable
+  export default React.memo(enrollStatusTable)
