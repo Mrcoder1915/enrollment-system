@@ -1,16 +1,16 @@
 import mongoose from "mongoose";
-import Student from "./student.model";
 
 const courseSchema = new mongoose.Schema({
     programID:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: Program
-    },
-    couresCode: {
-        type: Number,
+        ref: "Program",
         required: true
     },
-    couresName: {
+    courseCode: {
+        type: String,
+        required: true
+    },
+    courseName: {
         type: String,
         required: true
     },
@@ -28,6 +28,6 @@ const courseSchema = new mongoose.Schema({
     }
 })
 
-const Coures = new mongoose.model("Coures", admissionSchema);
+const Course = mongoose.models.Course || mongoose.model("Course", courseSchema);
 
-export default Coures
+export default Course

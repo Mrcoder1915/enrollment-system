@@ -6,7 +6,7 @@ const masterlist = () => {
     const {show} = useContext(dashboardContext)
   return (
     <div className={`w-full h-[80vh] absolute  flex-icenter flex-col transition-all ease-in duration-300 ${show == 4? "translate-x-[0] visible" : "translate-x-[-200%]" }`}>
-         <div className='w-[95%] h-15 mb-2.5 flex-icenter gap-10'>
+         <div className='w-[95%] h-15 mb-2.5 flex-icenter gap-10  justify-between'>
             <div className='w-70 h-7 mb-5 flex-rows gap-1'>
               <label>Department:</label>
               <select className='w-[60%] border-[2px] border-solid border-black'>
@@ -16,22 +16,19 @@ const masterlist = () => {
                   <option>BSE</option>
               </select>
              </div>
-            </div> 
-<div>
-       <div className='mb-6 flex-justify-end'>
+            
+       <div className='mb-6'>
         <label>Search:</label>
-        <input type="text"name='search' id='searchh' className='shadow xl shadow-slate-500 w-[75%] h-7 p-2 
-        outline ' placeholder="Search" />
+        <input type="text"name='search' id='search' className='w-[60%] border-[2px] border-solid border-black'  />
        </div>
-       <div></div>
 </div>                
 <div className='w-[95%] h-10 mb-2.5 mt-10 flex-icenter gap-10'>
-<div className='w-[95%] min-h-[95%] relative overflow-hidden bg-white shadow-[4px_4px_10px_rgba(0,0,0,.40)] z-0 '>
+<div className='w-full min-h-[95%] relative overflow-hidden bg-white shadow-[4px_4px_10px_rgba(0,0,0,.40)] z-0 '>
 <div className='w-full h-8 bg-tertiary pl-1 text-white pt-0.5 '>
                 <h1>Master List</h1>
             </div>
 
-    <table className='table overflow-y-hidden '>
+    <table className='table overflow-y-hidden ' >
     <thead>
         
         <tr>
@@ -57,6 +54,18 @@ const masterlist = () => {
         <td> .</td>
         </tr>
         
+        <tr>
+                  <td className='h-[95%]  '></td>
+                  <td className='h-[95%] '></td>
+                  <td className='h-[95%] '></td>
+                  <td className='h-[95%] '></td>
+                  <td className='h-[95%] '></td>
+                  <td className='h-[95%] '></td>
+                  <td className='h-[95%] '></td>
+                  <td className='h-[95%] '></td>
+                  <td className='h-[95%] '></td>
+              </tr>
+        
     </tbody>
     </table>
     </div>
@@ -66,4 +75,4 @@ const masterlist = () => {
   )
 }
 
-export default masterlist
+export default masterlist  

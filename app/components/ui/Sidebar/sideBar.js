@@ -40,10 +40,10 @@ const sideBar = () => {
         <div className='w-full h-[65%]'>
           <ul className='side flex-column gap-2'>
               {
-                nav.map((item, index) =>{
+                nav.map((item) =>{
                   if(item.condition === false) return null
                   return (
-                    <li key={index} className={
+                    <li key={item.id} className={
                         `${activeColor(item.id, "btn-success hover:bg-[#ffd700]")}`}
                         onClick={() => showDetails(item.id)}>
                         <i>{item.icon}</i>

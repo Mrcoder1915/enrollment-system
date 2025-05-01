@@ -4,7 +4,8 @@ import Student from "./student.model";
 const admissionSchema = new mongoose.Schema({
     studentID:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Student"
+        ref: "Student",
+        require: true
     },
     remarks: {
         type:String,
