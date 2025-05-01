@@ -5,7 +5,6 @@ export async function GET() {
   try {
     console.log("Connecting to database...");
     await connection();
-
     const facultyList = await Faculty.find({}).lean();
 
     return new Response(JSON.stringify(facultyList), { status: 200 });
