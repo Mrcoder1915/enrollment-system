@@ -8,7 +8,7 @@
       
       useEffect(() => {
           async function enroll() {
-              const enrollStudent = await fetch("http://localhost:3000/api/studentenrollment");
+              const enrollStudent = await fetch("http://localhost:3000/api/Student/studentenrollment");
               const data = await enrollStudent.json()
               setEnrollDetails(prev => prev = data)         
           }
