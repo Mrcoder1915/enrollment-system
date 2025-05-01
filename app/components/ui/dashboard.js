@@ -9,14 +9,14 @@ import { IoIosPersonAdd } from "react-icons/io"
 
 
 const Dashboard = () => {
-    const { show, showDetails } = useContext(dashboardContext);
+    const { show, showDetails } = useContext(dashboardContext)
 
       const [enrollDetails, setEnrollDetails] = useState([])
       console.log(enrollDetails)
       
       useEffect(() => {
           async function enroll() {
-              const enrollStudent = await fetch("http://localhost:3000/api/Student/studentenrollment");
+              const enrollStudent = await fetch("http://localhost:3000/api/Student/studentenrollment")
               const data = await enrollStudent.json()
               setEnrollDetails(prev => prev = data)         
           }
@@ -24,26 +24,24 @@ const Dashboard = () => {
       }, [])
       
       const getUniqueEnrollments = (enrollments) => {
-          const uniqueEnrollmentKeys = new Set();
-          const uniqueEnrollmentData = [];
+          const uniqueEnrollmentKeys = new Set()
+          const uniqueEnrollmentData = []
       
           enrollments.forEach((enrollment) => {
-            // Create a unique key for each enrollment based on studentID and courseID.
-            const enrollmentKey = enrollment.studentID._id;
+
+            const enrollmentKey = enrollment.studentID._id
       
             if (!uniqueEnrollmentKeys.has(enrollmentKey)) {
               uniqueEnrollmentKeys.add(enrollmentKey);
               uniqueEnrollmentData.push(enrollment);
             }
-          });
+          })
           
           return uniqueEnrollmentData;
         }; 
           
         const s = getUniqueEnrollments(enrollDetails)
         console.log(s.length)
-
-
     
         const firstGrid = [
         {
@@ -113,7 +111,7 @@ const Dashboard = () => {
                                 </div>
                                 <div className="text-red-700 text-[17px]">{card.label}</div>
                                 <div className="col-start-2 text-black text-3xl flex items-center justify-center mb-6 mr-7">
-                                    {s.length} {/* this is hardcoded data */}
+                                    {s.length}
                                 </div>
                             </div>
                         </div>
