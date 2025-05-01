@@ -10,37 +10,38 @@ import { IoIosPersonAdd } from "react-icons/io"
 
 const Dashboard = () => {
     const { show, showDetails } = useContext(dashboardContext);
-   
-          const [enrollDetails, setEnrollDetails] = useState([])
-          console.log(enrollDetails)
+
+      const [enrollDetails, setEnrollDetails] = useState([])
+      console.log(enrollDetails)
+      
+      useEffect(() => {
+          async function enroll() {
+              const enrollStudent = await fetch("http://localhost:3000/api/Student/studentenrollment");
+              const data = await enrollStudent.json()
+              setEnrollDetails(prev => prev = data)         
+          }
+          enroll()
+      }, [])
+      
+      const getUniqueEnrollments = (enrollments) => {
+          const uniqueEnrollmentKeys = new Set();
+          const uniqueEnrollmentData = [];
+      
+          enrollments.forEach((enrollment) => {
+            // Create a unique key for each enrollment based on studentID and courseID.
+            const enrollmentKey = enrollment.studentID._id;
+      
+            if (!uniqueEnrollmentKeys.has(enrollmentKey)) {
+              uniqueEnrollmentKeys.add(enrollmentKey);
+              uniqueEnrollmentData.push(enrollment);
+            }
+          });
           
-          useEffect(() => {
-              async function enroll() {
-                  const enrollStudent = await fetch("http://localhost:3000/api/Student/studentenrollment");
-                  const data = await enrollStudent.json()
-                  setEnrollDetails(prev => prev = data)         
-              }
-              enroll()
-          }, [])
+          return uniqueEnrollmentData;
+        }; 
           
-          const getUniqueEnrollments = (enrollments) => {
-              const uniqueEnrollmentKeys = new Set();
-              const uniqueEnrollmentData = [];
-          
-              enrollments.forEach((enrollment) => {
-                // Create a unique key for each enrollment based on studentID and courseID.
-                const enrollmentKey = enrollment.studentID._id;
-          
-                if (!uniqueEnrollmentKeys.has(enrollmentKey)) {
-                  uniqueEnrollmentKeys.add(enrollmentKey);
-                  uniqueEnrollmentData.push(enrollment);
-                }
-              });
-              
-              return uniqueEnrollmentData;
-            };   
-            const s = getUniqueEnrollments(enrollDetails)
-            console.log(s.length)
+        const s = getUniqueEnrollments(enrollDetails)
+        console.log(s.length)
 
 
     
