@@ -1,5 +1,5 @@
 "use client"
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { dashboardContext } from "@/app/providers/dashboardProvider"
 
 import { RiGraduationCapFill } from "react-icons/ri"
@@ -7,10 +7,42 @@ import { SiGoogleforms } from "react-icons/si"
 import { GiOpenFolder } from "react-icons/gi"
 import { IoIosPersonAdd } from "react-icons/io"
 
+
 const Dashboard = () => {
     const { show, showDetails } = useContext(dashboardContext);
    
-       
+          const [enrollDetails, setEnrollDetails] = useState([])
+          console.log(enrollDetails)
+          
+          useEffect(() => {
+              async function enroll() {
+                  const enrollStudent = await fetch("http://localhost:3000/api/Student/studentenrollment");
+                  const data = await enrollStudent.json()
+                  setEnrollDetails(prev => prev = data)         
+              }
+              enroll()
+          }, [])
+          
+          const getUniqueEnrollments = (enrollments) => {
+              const uniqueEnrollmentKeys = new Set();
+              const uniqueEnrollmentData = [];
+          
+              enrollments.forEach((enrollment) => {
+                // Create a unique key for each enrollment based on studentID and courseID.
+                const enrollmentKey = enrollment.studentID._id;
+          
+                if (!uniqueEnrollmentKeys.has(enrollmentKey)) {
+                  uniqueEnrollmentKeys.add(enrollmentKey);
+                  uniqueEnrollmentData.push(enrollment);
+                }
+              });
+              
+              return uniqueEnrollmentData;
+            };   
+            const s = getUniqueEnrollments(enrollDetails)
+            console.log(s.length)
+
+
     
         const firstGrid = [
         {
@@ -80,7 +112,7 @@ const Dashboard = () => {
                                 </div>
                                 <div className="text-red-700 text-[17px]">{card.label}</div>
                                 <div className="col-start-2 text-black text-3xl flex items-center justify-center mb-6 mr-7">
-                                    10 {/* this is hardcoded data */}
+                                    {s.length} {/* this is hardcoded data */}
                                 </div>
                             </div>
                         </div>
