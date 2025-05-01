@@ -71,7 +71,7 @@ const FacultyAccount = () => {
           <h1 className="pl-3 text-2xl">Faculty Account</h1>
         </div>
 
-        {/* Table */}
+        {/* Table Header */}
         <div className="overflow-hidden">
           <table className="table table-fixed w-full border-collapse border border-gray-300 rounded-t-lg">
             <thead className="sticky top-0 bg-white z-10 shadow-md">
@@ -88,7 +88,7 @@ const FacultyAccount = () => {
           </table>
         </div>
 
-        {/* Scrollable Table Body */}
+        {/* Table Body */}
         <div className="overflow-y-scroll max-h-[60vh] hide-scrollbar">
           <table className="table table-fixed w-full border-collapse border border-gray-300 rounded-b-lg">
             <tbody>
