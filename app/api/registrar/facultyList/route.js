@@ -3,7 +3,9 @@ import Faculty from "@/app/models/faculty.model";
 
 export async function GET() {
   try {
+    console.log("Connecting to database...");
     await connection();
+    console.log("Database connected successfully.");
 
     const facultyList = await Faculty.find({}).lean();
 
