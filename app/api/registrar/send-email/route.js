@@ -22,11 +22,10 @@ export async function POST(req) {
     }
 
     const transporter = nodemailer.createTransport({
-      host: 'smtp.mailtrap.io', 
-      port: 587, 
+      service: 'gmail',
       auth: {
         user: 'edwardnelson0099@gmail.com', 
-        pass: 'Emailsender123.', 
+        pass: 'elswhdyrbmiqjkkx', 
       },
     });
 
