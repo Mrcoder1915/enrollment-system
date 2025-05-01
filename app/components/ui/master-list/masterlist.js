@@ -17,20 +17,20 @@ const masterlist = () => {
               </select>
              </div>
             
-       <div className='mb-6'>
-        <label>Search:</label>
-        <input type="text"name='search' id='search' className='w-[60%] border-[2px] border-solid border-black'  />
-       </div>
-</div>                
-<div className='w-[95%] h-10 mb-2.5 mt-10 flex-icenter gap-10'>
-<div className='w-full min-h-[95%] relative overflow-hidden bg-white shadow-[4px_4px_10px_rgba(0,0,0,.40)] z-0 '>
-<div className='w-full h-8 bg-tertiary pl-1 text-white pt-0.5 '>
+             <div className='mb-6'>
+                <label>Search:</label>
+                <input type="text"name='search' id='search' className='w-[60%] border-[2px] border-solid border-black'  />
+             </div>
+         </div>  
+
+        <div className='w-[95%] h-10 mb-2.5 mt-10 flex-icenter gap-10'>
+           <div className='w-full min-h-[95%] relative overflow-hidden bg-white shadow-[4px_4px_10px_rgba(0,0,0,.40)] z-0 '>
+            <div className='w-full h-8 bg-tertiary pl-1 text-white pt-0.5 '>
                 <h1>Master List</h1>
             </div>
-
+        <div className=" hide-scrollbar overflow-y-scroll w-full h-[95%] border rounded-b shadow-2xl">
     <table className='table overflow-y-hidden ' >
-    <thead>
-        
+    <thead>  
         <tr>
             <th>No.</th>
             <th>Last Name</th>
@@ -55,7 +55,8 @@ const masterlist = () => {
         </tr>
         
         <tr>
-                  <td className='h-[95%]  '></td>
+          
+                  <td className='h-[95%] '></td>
                   <td className='h-[95%] '></td>
                   <td className='h-[95%] '></td>
                   <td className='h-[95%] '></td>
@@ -66,10 +67,12 @@ const masterlist = () => {
                   <td className='h-[95%] '></td>
               </tr>
         
-    </tbody>
-    </table>
-    </div>
-    </div>
+          </tbody>
+          </table>
+         </div>
+
+       </div>
+      </div>
 
     </div>
   )
