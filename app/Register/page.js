@@ -5,18 +5,41 @@ import { FaUserLarge } from "react-icons/fa6";
 import { IoIosUnlock } from "react-icons/io";
 
 const Login = () => {
+  const [userName, setUsername] = useState("")
+    const [password, setPassword] = useState("")
+    console.log(JSON.stringify({userName}))
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const user = await fetch("api/studentLogin", {
+                method: "POST",
+                headers: {"Content-type": "application/json"},
+                body: JSON.stringify({userName, password})
+            })
+            if(user.ok){
+                console.log("Login Success")
+                router.push("/Dashboard")
+            }else{
+                console.log("invalid");
+                
+            }
+        } catch (error) {
+            
+        }
+    }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 bg-gradient-primary">
-     <h1 className="text-2xl font-bold text-white text-center text-gray-800 mb-6">
+     <h1 className="gtext-2xl font-bold text-white text-center text-gray-800 mb-6">
           Registration Portal
       </h1>
       <div className="w-full max-w-md p-8 bg-white rounded-[30px] h-[500px] shadow-[0_0_15px_rgba(0,0,0,0.50)]">
         
         <form className="space-y-4">
-          <img src="/logo.jpg" className="w-20"></img>
+          <img src="neustlogo-nopg" className="w-20"></img>
           <div className="w-full flex items-center justify-center text-info">
-             <h2 className="mt-30 text-3xl text-red-600 drop-shadow-[2px_2px_0px_#facc15]">UNIVERSITY OF SOUTHERN NUEVA ECIJA
+             <h2 className="mt-30 text-3xl text-red-600 drop-shadow-[2px_2px_0px_#facc15] textalign = center">UNIVERSITY OF SOUTHERN NUEVA ECIJA
               </h2>
           </div>
 
