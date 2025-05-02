@@ -56,6 +56,10 @@ const studentSchema = new mongoose.Schema({
         enum: ['BSIT', "BSBA", "BSE", "BSHM"],
 
     },
+    YearLevel:{
+        type: Number,
+        required: true
+    },
     requirements: {
         type: Array,
     
