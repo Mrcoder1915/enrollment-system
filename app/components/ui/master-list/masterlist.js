@@ -15,7 +15,7 @@ const masterlist = () => {
                   <option>BSBA</option>
                   <option>BSE</option>
               </select>
-             </div>
+          </div>
             
              <div className='mb-6'>
                 <label>Search:</label>
@@ -28,22 +28,23 @@ const masterlist = () => {
             <div className='w-full h-8 bg-tertiary pl-1 text-white pt-0.5 '>
                 <h1>Master List</h1>
             </div>
-        <div className=" hide-scrollbar overflow-y-scroll w-full h-[95%] border rounded-b shadow-2xl">
-    <table className='table overflow-y-hidden ' >
-    <thead>  
-        <tr>
-            <th>No.</th>
-            <th>Last Name</th>
-            <th>First Name</th>
-            <th>Middle Name</th>
-            <th>Student ID</th>
-            <th>Year Level</th>
-            <th>Program</th>
-            <th>Section</th>
-        </tr>
-    </thead>
+<div className="w-full h-[95%] relative">
+        <div className=" hide-scrollbar overflow-y-scroll w-full h-[95%] border rounded-b shadow-2xl flex absolute">
+           <table className='table' >
+              <thead>  
+                    <tr>
+                        <th>No.</th>
+                        <th>Last Name</th>
+                        <th>First Name</th>
+                        <th>Middle Name</th>
+                        <th>Student ID</th>
+                        <th>Year Level</th>
+                        <th>Program</th>
+                        <th>Section</th>
+                    </tr>
+              </thead>
     <tbody>
-        <tr>
+       <tr>
         <td> .</td>
         <td> .</td>
         <td> .</td>
@@ -54,7 +55,7 @@ const masterlist = () => {
         <td> .</td>
         </tr>
         
-        <tr>
+              <tr>
           
                   <td className='h-[95%] '></td>
                   <td className='h-[95%] '></td>
@@ -70,7 +71,7 @@ const masterlist = () => {
           </tbody>
           </table>
          </div>
-
+     </div>
        </div>
       </div>
 
