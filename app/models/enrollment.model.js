@@ -23,6 +23,11 @@ const enrollmentSchema = new mongoose.Schema({
     enrollmentDate: {
         type: Date,
         default: Date.now
+    },
+    status: {
+        type: Number,
+        enum: [0,1],
+        default: 0
     }
 })
 
