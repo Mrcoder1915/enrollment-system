@@ -1,9 +1,35 @@
   "use client"
-  import React, { useEffect, useState } from 'react'
+  import React, { useCallback, useEffect, useState } from 'react'
 
 
   const enrollStatusTable = (props) => {
       const [enrollDetails, setEnrollDetails] = useState([])
+    
+      const approveEnrollment =  useCallback(async (ID) => {
+         await fetch("/api/Student/studentenrollment/approveEnrollment",{
+          method: "POST",
+          headers: {
+            "content-type":"application/json"
+          },
+          body: JSON.stringify({status: 1, studentID: ID})
+        })
+        const enrollStudent = await fetch("http://localhost:3000/api/Student/studentenrollment");
+        const data = await enrollStudent.json()
+        setEnrollDetails(prev => prev = data) 
+      },)
+
+      const deleteEnrollment =  useCallback(async (ID) => {
+        await fetch("/api/Student/studentenrollment/deleteEnrollment",{
+          method: "POST",
+          headers: {
+            "content-type":"application/json"
+          },
+          body: JSON.stringify({studentID: ID})
+        })
+        const enrollStudent = await fetch("http://localhost:3000/api/Student/studentenrollment");
+        const data = await enrollStudent.json()
+        setEnrollDetails(prev => prev = data) 
+      },)
       
       useEffect(() => {
           async function enroll() {
@@ -69,8 +95,8 @@
                   <td>{info.courseID.programID.programCode}</td>
                   <td ><button className='w-[70px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>VIEW</button></td>
                   <td colSpan={2}>
-                      <button className='w-[80px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>Approved</button>
-                      <button className='w-[70px] border-[1px] border-solid border-[#8b0606] text-[#ffd700] font-medium rounded-[5px] btn-danger ml-2.5'>Failed</button>
+                      <button onClick={() =>  {approveEnrollment(info.studentID._id)}} className='w-[80px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>Approved</button>
+                      <button onClick={() =>  {deleteEnrollment(info.studentID._id)}} className='w-[70px] border-[1px] border-solid border-[#8b0606] text-[#ffd700] font-medium rounded-[5px] btn-danger ml-2.5'>Failed</button>
                   </td>
               </tr>
           ))}

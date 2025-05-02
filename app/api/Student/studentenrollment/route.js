@@ -96,7 +96,7 @@ export async function POST(Req){
 export async function GET(){
   await connection();
   try {
-    const enroll = await Enrollment.find()
+    const enroll = await Enrollment.find({status: 0})
     .populate({
       path: "studentID",
       model: "Student"
