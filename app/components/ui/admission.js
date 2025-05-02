@@ -1,57 +1,26 @@
 "use client"
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { dashboardContext } from "@/app/providers/dashboardProvider";
 
 const AdmissionTable = () => {
   const { show } = useContext(dashboardContext);
   const [selectedDept, setSelectedDept] = useState("");
+  const [Data,setData] = useState([])
 
-  const admissions = [
-    {
-      id: 1,
-      lastName: "Concha",
-      firstName: "Jhoven A.",
-      middleName: "Cordero",
-      program: "BSIT",
-      academicYear: "2024-2025",
-      yearLevel: "1st Year",
-      department: "CICT",
-    },
-    {
-      id: 2,
-      lastName: "Dela Cruz",
-      firstName: "Maria",
-      middleName: "Santos",
-      program: "BSBA",
-      academicYear: "2024-2025",
-      yearLevel: "2nd Year",
-      department: "CMBT",
-    },
-    {
-      id: 3,
-      lastName: "Reyes",
-      firstName: "Juan",
-      middleName: "Torres",
-      program: "BSE",
-      academicYear: "2024-2025",
-      yearLevel: "3rd Year",
-      department: "COE",
-    },
-    {
-      id: 4,
-      lastName: "Lopez",
-      firstName: "Ana",
-      middleName: "Marquez",
-      program: "BSCS",
-      academicYear: "2024-2025",
-      yearLevel: "1st Year",
-      department: "CICT",
-    },
-  ];
+  useEffect(() => {
+    const student = async () => {
+      const result = await fetch("http://localhost:3000/api/registrar/approvedadmission")
+      const data = await result.json()
+      setData(prev => prev = data)
+    }
+    student()
+  },[])
+  
+
 
   const filteredAdmissions = selectedDept
-    ? admissions.filter((item) => item.department === selectedDept)
-    : admissions;
+    ? Data.filter((item) => item.department === selectedDept)
+    : Data;
 
   return (
     <div
@@ -68,7 +37,7 @@ const AdmissionTable = () => {
               onChange={(e) => setSelectedDept(e.target.value)}
               className="border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="">All</option>
+              <option value=""></option>
               <option value="CICT">CICT</option>
               <option value="CMBT">CMBT</option>
               <option value="COE">COE</option>
@@ -97,15 +66,15 @@ const AdmissionTable = () => {
 
               <tbody>
                 {filteredAdmissions.length > 0 ? (
-                  filteredAdmissions.map((item) => (
-                    <tr key={item.id} className="border-t hover:bg-gray-50">
-                      <td className="px-4 py-2">{item.id}</td>
+                  filteredAdmissions?.map((item) => (
+                    <tr key={item._id} className="border-t hover:bg-gray-50">
+                      <td className="px-4 py-2">{item._id}</td>
                       <td className="px-4 py-2">{item.lastName}</td>
                       <td className="px-4 py-2">{item.firstName}</td>
                       <td className="px-4 py-2">{item.middleName}</td>
                       <td className="px-4 py-2">{item.program}</td>
-                      <td className="px-4 py-2">{item.academicYear}</td>
-                      <td className="px-4 py-2">{item.yearLevel}</td>
+                      <td className="px-4 py-2">{item.academicYear? item.academicYear: ""}</td>
+                      <td className="px-4 py-2">{item.yearLevel? item.yearLevel: ""}</td>
                       <td>
                         <button className = 'w-[70px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>
                           VIEW

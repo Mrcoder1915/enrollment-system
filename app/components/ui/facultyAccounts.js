@@ -41,7 +41,7 @@ const FacultyAccount = () => {
   useEffect(() => {
     const fetchFaculty = async () => {
       try {
-        const res = await fetch("/api/facultyList");
+        const res = await fetch("/api/registrar/facultyList");
         const data = await res.json();
         setFacultyList(data);
       } catch (error) {
