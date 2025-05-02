@@ -57,6 +57,7 @@ const page = () => {
           userAccess === "student" && <>
               <GradeView />
               <EnrollmentForm />
+              <ProfileForm />
           
             </>
         }
