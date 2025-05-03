@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const facultyAccountSchema = new mongoose.Schema({
-  email: {
+  userName: {
     type: String,
     required: true,
     unique: true,
@@ -15,7 +15,7 @@ const facultyAccountSchema = new mongoose.Schema({
     enum: ["pending", "approved", "declined"],
     default: "pending",
   },
-  facultyId: {
+  instructorID: {
     type: Number,
     required: true,
     unique: true,
