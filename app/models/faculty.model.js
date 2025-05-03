@@ -9,7 +9,7 @@ const facultySchema = new mongoose.Schema({
   emailAddress: { type: String, required: true, unique: true },
 }, {
   collection: "facultyList",
-  timestamps: true
+  timestamps: true,
   instructorID: {
     type: Number,
     required: true,
