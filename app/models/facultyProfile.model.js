@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { SiAsda } from 'react-icons/si';
 
 const facultyProfileSchema = new mongoose.Schema({
   facultyId: {
