@@ -1,8 +1,8 @@
 import connection from "@/app/lib/config/connection";
 import verifyPassword from "@/app/lib/auth/verifyPassword";
-import connection from "@/app/lib/config/connection";
-import Studentaccount from "@/app/models/studentAccount.model";
+import Registraraccount from "@/app/models/Registeracount.model";
 import { NextResponse } from "next/server";
+// import HashPassword from "@/app/lib/auth/hashpassword";
 import generateAccessToken from "@/app/lib/auth/generateAccessToken";
 import generateRefreshToken from "@/app/lib/auth/generateRefreshToken";
 
@@ -14,15 +14,15 @@ export async function POST(Req) {
         const role = "registrar"
         if(!userName || !password ) return NextResponse.json({message: "please fill all fields"}, {status: 401})
         
-        const Student = await  Studentaccount.findOne({userName})
-        if(!Student) return NextResponse.json({message: "Student Not Exist"}, {status: 404})
+        const Registrar = await  Registraraccount.findOne({userName})
+        if(!Registrar) return NextResponse.json({message: "Student Not Exist"}, {status: 404})
 
-        const passwordVerify = verifyPassword(password , Student.password)
+        const passwordVerify = verifyPassword(password , Registrar.password)
 
         if(!passwordVerify) return NextResponse.json({message: "invalid credentials"}, {status: 401})
 
-        const accessToken = generateAccessToken({studentID:Student.studentID,  role:role})
-        const refreshToken = generateRefreshToken({studentID:Student.studentID,  role:role})
+        const accessToken = generateAccessToken({registrarID:Registrar.registrarID,  role:role})
+        const refreshToken = generateRefreshToken({registrarID:Registrar.registrarID,  role:role})
 
         const res = NextResponse.json({message: "login", accessToken , refreshToken}, {status: 200})
 
@@ -34,3 +34,14 @@ export async function POST(Req) {
         return NextResponse.json({message: "cant Login", error: error.message}, {status: 400})
     }  
 }
+
+// export async function POST(Req) {
+//     const {userName, password} = await Req.json()
+//     const hashpass =await HashPassword(password)
+// await connection()
+//     await Registraraccount.insertOne({
+//         userName: userName,
+//         password: hashpass
+//     })
+//     return NextResponse.json({message: "sucess"})
+// }

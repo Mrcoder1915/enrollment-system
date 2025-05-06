@@ -4,7 +4,7 @@ const RegistrarAccountSchema = new mongoose.Schema({
      registrarID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Registrar",
-        required: true
+        // required: true
     },
     userName: {
         type: String,
