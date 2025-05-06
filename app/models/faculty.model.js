@@ -1,6 +1,23 @@
 import mongoose from "mongoose";
 
 const facultySchema = new mongoose.Schema({
+  instructorID: { type: Number, required: true, unique: true },
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  middleName: { type: String, required: true,},
+  contactNumber: { type: String, required: true },
+  emailAddress: { type: String, required: true, unique: true },
+}, {
+  collection: "facultyList",
+  timestamps: true,
+  instructorID: {
+    type: Number,
+    required: true,
+    unique: true,
+  },
+  departmentID: {
+    type: String,
+  },
   firstName: {
     type: String,
     required: true,
@@ -12,26 +29,20 @@ const facultySchema = new mongoose.Schema({
   middleName: {
     type: String,
     required: true,
-    unique: true,
   },
-  contact: {
+  contactNumber: {
     type: String,
     required: true,
   },
-  email: {
+  emailAddress: {
     type: String,
     required: true,
     unique: true,
-  },
-  hireDate: {
-    type: Date,
-    default: Date.now,
-  },
-}, { 
-  collection: "facultyList",
-  timestamps: true
+  }
+}, {
+  collection: "facultyAccounts",
+  timestamps: true,
 });
 
 const Faculty = mongoose.models.Faculty || mongoose.model("Faculty", facultySchema);
-
 export default Faculty;

@@ -19,6 +19,18 @@ const AdmissionTable = () => {
          const data = await result.json()
          setData(prev => prev = data)
         },)
+  const approveAdmission =  useCallback(async (ID) => {
+          await fetch("http://localhost:3000/api/registrar/approvedadmission",{
+            method: "POST",
+            headers: {
+              "content-type":"application/json"
+            },
+            body: JSON.stringify({studentID: ID, remarks: "approve"})
+          })
+          const result = await fetch("http://localhost:3000/api/registrar/approvedadmission")
+         const data = await result.json()
+         setData(prev => prev = data)
+        },)
 
   useEffect(() => {
     const student = async () => {
@@ -82,23 +94,23 @@ const AdmissionTable = () => {
                 {filteredAdmissions.length > 0 ? (
                   filteredAdmissions?.map((item) => (
                     <tr key={item._id} className="border-t hover:bg-gray-50">
-                      <td className="px-4 py-2">{item._id}</td>
-                      <td className="px-4 py-2">{item.lastName}</td>
-                      <td className="px-4 py-2">{item.firstName}</td>
-                      <td className="px-4 py-2">{item.middleName}</td>
-                      <td className="px-4 py-2">{item.program}</td>
-                      <td className="px-4 py-2">{`${item.academicYear} - ${item.academicYear + 1}`}</td>
-                      <td className="px-4 py-2">{item.yearLevel? item.yearLevel: ""}</td>
+                      <td className="px-4 py-2">{item.studentID._id}</td>
+                      <td className="px-4 py-2">{item.studentID.lastName}</td>
+                      <td className="px-4 py-2">{item.studentID.firstName}</td>
+                      <td className="px-4 py-2">{item.studentID.middleName}</td>
+                      <td className="px-4 py-2">{item.studentID.program}</td>
+                      <td className="px-4 py-2">{`${item.studentID.academicYear} - ${item.studentID.academicYear + 1}`}</td>
+                      <td className="px-4 py-2">{item.studentID.yearLevel? item.studentID.yearLevel: ""}</td>
                       <td>
                         <button className = 'w-[70px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>
                           VIEW
                         </button>
                       </td>
                       <td className ="flex gap-2 justify-center items-center">
-                        <button className= 'w-[80px] h-[27px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>
+                        <button onClick={() => approveAdmission(item.studentID._id)} className= 'w-[80px] h-[27px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>
                           Approve
                         </button>
-                        <button onClick={() => deleteAdmission(item._id)} className= 'w-[70px] h-[27px] border-[1px] border-solid border-[#8b0606] text-[#ffd700] font-medium rounded-[5px] btn-danger ml-2.5'>
+                        <button onClick={() => deleteAdmission(item.studentID._id)} className= 'w-[70px] h-[27px] border-[1px] border-solid border-[#8b0606] text-[#ffd700] font-medium rounded-[5px] btn-danger ml-2.5'>
                           Failed
                         </button>
                         </td>
