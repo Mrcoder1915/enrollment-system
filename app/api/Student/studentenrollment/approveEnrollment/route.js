@@ -1,19 +1,20 @@
 import connection from "@/app/lib/config/connection";
 import Enrollment from "@/app/models/enrollment.model";
+import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
 export async function POST(Req) {
-    const {studentID,status} = await Req.json()
-
+    const {studentID,approve} = await Req.json()
+    console.log(approve);
+    
     await connection()
     try {
-        if(!status) return NextResponse.json({message: "no status value"}, {status: 404})
-
-         await Enrollment.updateMany({studentID: studentID}, {$set: {status: 1}})
+         const en = await Enrollment.updateOne({studentID: studentID}, {$set: {approve: approve}})
+         console.log("deleted", en)
         
          return NextResponse.json({message: "approve"}, {status: 200})
     } catch (error) {
-        return NextResponse.json({message: "Internal Server Error"}, {status: 500})
+        return NextResponse.json({message: "Internal Server Error", error: error.message}, {status: 500})
     }
     
 }
