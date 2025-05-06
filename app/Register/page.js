@@ -66,7 +66,8 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
 
               id="pass"
-              className={`mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 ${err? "border-red-500":"border-gray-300"}`}
+              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+>>>>>>> master
               placeholder="Password"
             />
           </div>
