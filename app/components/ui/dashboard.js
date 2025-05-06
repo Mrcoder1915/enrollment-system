@@ -12,45 +12,32 @@ const Dashboard = () => {
     const { show, showDetails } = useContext(dashboardContext);
 
       const [enrollDetails, setEnrollDetails] = useState([])
+      const [admissionDetails, setadmissionEnrollDetails] = useState([])
       console.log(enrollDetails)
       
       useEffect(() => {
           async function enroll() {
-              const enrollStudent = await fetch("http://localhost:3000/api/Student/studentenrollment");
+              const enrollStudent = await fetch("http://localhost:3000/api/registrar/dashboard/totalEnrollment");
               const data = await enrollStudent.json()
               setEnrollDetails(prev => prev = data)         
+              const admissionStudent = await fetch("http://localhost:3000/api/registrar/dashboard/totalAdmission")
+              const adata = await admissionStudent.json()
+              setadmissionEnrollDetails(prev => prev = adata)         
           }
           enroll()
       }, [])
-      
-      const getUniqueEnrollments = (enrollments) => {
-          const uniqueEnrollmentKeys = new Set();
-          const uniqueEnrollmentData = [];
-      
-          enrollments.forEach((enrollment) => {
-            // Create a unique key for each enrollment based on studentID and courseID.
-            const enrollmentKey = enrollment.studentID._id;
-      
-            if (!uniqueEnrollmentKeys.has(enrollmentKey)) {
-              uniqueEnrollmentKeys.add(enrollmentKey);
-              uniqueEnrollmentData.push(enrollment);
-            }
-          });
-          
-          return uniqueEnrollmentData;
-        }; 
-          
-        const s = getUniqueEnrollments(enrollDetails)
-        console.log(s.length)
+        const totalAdmission = admissionDetails.filter((s) => s.remarks == "pending")
+        const totalEnrollment = enrollDetails.filter((s) => s.approve == false)
+        const totalstudents= enrollDetails.filter((s) => s.approve == true)
 
 
-    
         const firstGrid = [
         {
             label: "For Admission",
             icon: (
                 <RiGraduationCapFill className="bg-red-300 text-black text-8xl rounded-md p-2" />
             ),
+            total: totalAdmission.length,
             onclick: () => showDetails(2)
         },
         { 
@@ -58,6 +45,7 @@ const Dashboard = () => {
             icon: (
                 <SiGoogleforms className="bg-yellow-400 text-black text-8xl rounded-md p-2" />
             ),
+            total: totalEnrollment.length,
             onclick: () => showDetails(3)
         },
         {
@@ -65,6 +53,7 @@ const Dashboard = () => {
             icon: (
                 <GiOpenFolder className="bg-red-600 text-black text-8xl rounded-md p-2" />
             ),
+            total: totalstudents.length,
             onclick: () => showDetails(4)
         },
     ]
@@ -113,7 +102,7 @@ const Dashboard = () => {
                                 </div>
                                 <div className="text-red-700 text-[17px]">{card.label}</div>
                                 <div className="col-start-2 text-black text-3xl flex items-center justify-center mb-6 mr-7">
-                                    {s.length}
+                                   {card.total && card.total}
                                 </div>
                             </div>
                         </div>

@@ -70,6 +70,9 @@ export async function GET(){
     .populate({
       path: "studentID",
       model: "Student"
+    }).populate({
+      path: "admissionID",
+      model: "Admission"
     })
 
     if(!enroll && enroll.length === 0) return NextResponse.json({message: "no enrollment"})
