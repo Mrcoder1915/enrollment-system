@@ -1,10 +1,35 @@
   "use client"
-  import React, { useEffect, useState } from 'react'
+  import React, { useCallback, useEffect, useState } from 'react'
 
 
-  const enrollStatusTable = () => {
+  const enrollStatusTable = (props) => {
       const [enrollDetails, setEnrollDetails] = useState([])
-      console.log(enrollDetails)
+    
+      const approveEnrollment =  useCallback(async (ID) => {
+         await fetch("/api/Student/studentenrollment/approveEnrollment",{
+          method: "POST",
+          headers: {
+            "content-type":"application/json"
+          },
+          body: JSON.stringify({ studentID: ID, approve: true})
+        })
+        const enrollStudent = await fetch("http://localhost:3000/api/Student/studentenrollment");
+        const data = await enrollStudent.json()
+        setEnrollDetails(prev => prev = data) 
+      },)
+
+      const deleteEnrollment =  useCallback(async (ID) => {
+        await fetch("/api/Student/studentenrollment/deleteEnrollment",{
+          method: "POST",
+          headers: {
+            "content-type":"application/json"
+          },
+          body: JSON.stringify({studentID: ID})
+        })
+        const enrollStudent = await fetch("http://localhost:3000/api/Student/studentenrollment");
+        const data = await enrollStudent.json()
+        setEnrollDetails(prev => prev = data) 
+      },)
       
       useEffect(() => {
           async function enroll() {
@@ -15,25 +40,20 @@
           enroll()
       }, [])
       
-      const getUniqueEnrollments = (enrollments) => {
-          const uniqueEnrollmentKeys = new Set();
-          const uniqueEnrollmentData = [];
-      
-          enrollments.forEach((enrollment) => {
-            // Create a unique key for each enrollment based on studentID and courseID.
-            const enrollmentKey = enrollment.studentID._id;
-      
-            if (!uniqueEnrollmentKeys.has(enrollmentKey)) {
-              uniqueEnrollmentKeys.add(enrollmentKey);
-              uniqueEnrollmentData.push(enrollment);
-            }
-          });
-      
-          return uniqueEnrollmentData;
-        };
 
-      const ustudent = getUniqueEnrollments(enrollDetails)
-      console.log("inique: ",ustudent)
+      const ustudent = enrollDetails
+      const u = ustudent.map((s) => s.studentID._id)
+      console.log("ID: ",  u);
+      
+      
+      const filterdstudents = ustudent.filter((student) => {
+        const filterByProgram = props.program? student.studentID.program == props.program : true
+        const filterBySemester = props.semester? student.courseID.semester == props.semester : true
+
+        return filterByProgram && filterBySemester
+      })
+      
+      
       
     return (
       <table className='table overflow-y-hidden'>
@@ -51,19 +71,19 @@
               </tr>
           </thead>
           <tbody>
-          {ustudent?.map((info) => (
+          {filterdstudents?.map((info) => (
               <tr key={info._id}>
                   <td>{info._id}</td>
                   <td>{info.studentID?.lastName}</td>
                   <td>{info.studentID?.firstName}</td>
                   <td>{info.studentID?.middleName}</td>
                   <td>{info.studentID?._id}</td>
-                  <td>{info.courseID.year}</td>
-                  <td>{info.courseID.programID.programCode}</td>
+                  <td>{info.studentID.yearLevel}</td>
+                  <td>{info.studentID.program}</td>
                   <td ><button className='w-[70px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>VIEW</button></td>
                   <td colSpan={2}>
-                      <button className='w-[80px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>Approved</button>
-                      <button className='w-[70px] border-[1px] border-solid border-[#8b0606] text-[#ffd700] font-medium rounded-[5px] btn-danger ml-2.5'>Failed</button>
+                      <button onClick={() =>  {approveEnrollment(info.studentID?._id)}} className='w-[80px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>Approved</button>
+                      <button onClick={() =>  {deleteEnrollment(info.studentID?._id)}} className='w-[70px] border-[1px] border-solid border-[#8b0606] text-[#ffd700] font-medium rounded-[5px] btn-danger ml-2.5'>Failed</button>
                   </td>
               </tr>
           ))}
@@ -84,4 +104,4 @@
     )
   }
 
-  export default enrollStatusTable
+  export default React.memo(enrollStatusTable)

@@ -6,110 +6,76 @@ import { NextResponse } from "next/server";
 import Student from "../../../models/student.model";
 import Program from '../../../models/program.model'
 
-export async function POST(Req){
-    const {YearLevel, Semester, AdmissionId} = await Req.json(); 
-    
-    if(!YearLevel || !Semester || !AdmissionId) return new Response(JSON.stringify({message: "no input body"}))
-    
-    await connection();
+export async function POST(Req) {
+  const { YearLevel, Semester, AdmissionId } = await Req.json();
 
-    try {
-        const admission = await Admission.find({remarks: "approve", _id: AdmissionId}).populate("studentID");
-        
-        for(const aprovedAdmission of admission){
-            if(aprovedAdmission && aprovedAdmission.studentID.program){
-              const foundCourses = await Course.aggregate([
-                {
-                  $match: {$and: [{ year: YearLevel},{semester: Semester } ]},
-                  
-                },
-                {
-                  $lookup: {
-                    from: "programs", 
-                    localField: "programID",
-                    foreignField: "_id",
-                    as: "programData"
-                  }
-                },
-                {
-                    $match: {
-                      "programData.programCode": aprovedAdmission.studentID.program,
-                    },
-                  },
-                  {
-                    $unwind: "$programData",
-                  },
-                  {
-                      $project:{
-                          _id:1,
-                          year:1,
-                          semester:1,
-                          courseCode:1,
-                          courseName:1,
-                          credits:1,
-                          programID: "$programData"
-                      }
-                  }
-                ]);
-                if(foundCourses && foundCourses.length > 0){
-                  const acadYear = new Date().getFullYear()
-                  const existingEnrollment = await Enrollment.find({studentID: aprovedAdmission.studentID._id, academicYear: acadYear})
-                  
-                  if(existingEnrollment.length === 0){
-                    const enrollmentCourse = foundCourses.map((courses) => ({
-                        
-                        studentID : aprovedAdmission.studentID._id,
-                        courseID: courses._id,
-                        academicYear: acadYear,
-                        enrollmentDate: Date.now()
-                        
-                    }))
-                 
-                    if(enrollmentCourse.length > 0){
-                      
-                      try {
-                        await Enrollment.insertMany(enrollmentCourse);
-                      } catch (error) {
-                        return NextResponse.json({message: "Cant Insert Enrollment"})
-                      }
-                      
-                      return NextResponse.json(enrollmentCourse)
-                    }else{
-                      return NextResponse.json({message: "no enrollment"})
-                    }  
-                  }else{
-                    return NextResponse.json({message: "already enroll"})
-                  }
-                }else{
-                  return NextResponse.json({message: "Course not found"})
-                }  
-            }
-        }
-        
-       
-       
-    } catch (error) {
-        return NextResponse.json({message: "cant find anything in admission", error: error.message})
-    }
+  if (!YearLevel || !Semester || !AdmissionId) {
+    return NextResponse.json({ message: "no input body" });
+  }
+
+  await connection();
+
+  try {
+    const admission = await Admission.find({
+      remarks: "approve",
+      _id: AdmissionId
+    }).populate("studentID");
+
+    
+
+    const programCode = admission[0].studentID.program;
+
+    const program = await Program.findOne({ programCode });
+
+    const acadYear = new Date().getFullYear();
+
+    const existingEnrollment = await Enrollment.find({studentID: admission[0].studentID._id, academicYear: acadYear})
+
+    if(existingEnrollment.length > 0) return NextResponse.json({message: "You are already enroll"})
+
+    const foundCourse = await Course.find({
+      _id: { $in: program.courseIDs },
+      year: YearLevel,
+      semester: Semester
+    });
+
+    const courseIDs = foundCourse.map(course => course._id);
+    console.log(courseIDs);
+    
+     await Enrollment.create({
+      studentID: admission[0].studentID._id,
+      admissionID: admission[0]._id,
+      programID: program._id,
+      academicYear: acadYear,
+      enrolldate: Date.now(),
+      approved: false,
+      courseIDs: courseIDs
+    });
+
+    return NextResponse.json({message: "sucess"});
+    
+  } catch (error) {
+    return NextResponse.json({
+      message: "Error inserting enrollment",
+      error: error.message
+    });
+  }
 }
 
 export async function GET(){
   await connection();
   try {
-    const enroll = await Enrollment.find()
+
+    const enroll = await Enrollment.find({approve: false})
     .populate({
       path: "studentID",
       model: "Student"
     })
-    .populate({
-      path: "courseID",
-      model: "Course",
-      populate: {
-        path: "programID",
-        model: "Program"
-      }
-    })
+
     if(!enroll && enroll.length === 0) return NextResponse.json({message: "no enrollment"})
+
+      // console.log(enroll);
+      
    
    return NextResponse.json(enroll)
   } catch (error) {
