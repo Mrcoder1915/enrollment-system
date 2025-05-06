@@ -1,11 +1,24 @@
 "use client"
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState , useCallback} from "react";
 import { dashboardContext } from "@/app/providers/dashboardProvider";
 
 const AdmissionTable = () => {
   const { show } = useContext(dashboardContext);
   const [selectedDept, setSelectedDept] = useState("");
   const [Data,setData] = useState([])
+
+  const deleteAdmission =  useCallback(async (ID) => {
+          await fetch("http://localhost:3000/api/registrar/deleteadmission",{
+            method: "POST",
+            headers: {
+              "content-type":"application/json"
+            },
+            body: JSON.stringify({studentID: ID})
+          })
+          const result = await fetch("http://localhost:3000/api/registrar/approvedadmission")
+         const data = await result.json()
+         setData(prev => prev = data)
+        },)
 
   useEffect(() => {
     const student = async () => {
@@ -17,7 +30,8 @@ const AdmissionTable = () => {
   },[])
   
 
-
+  console.log(Data);
+  
   const filteredAdmissions = selectedDept
     ? Data.filter((item) => item.department === selectedDept)
     : Data;
@@ -73,7 +87,7 @@ const AdmissionTable = () => {
                       <td className="px-4 py-2">{item.firstName}</td>
                       <td className="px-4 py-2">{item.middleName}</td>
                       <td className="px-4 py-2">{item.program}</td>
-                      <td className="px-4 py-2">{item.academicYear? item.academicYear: ""}</td>
+                      <td className="px-4 py-2">{`${item.academicYear} - ${item.academicYear + 1}`}</td>
                       <td className="px-4 py-2">{item.yearLevel? item.yearLevel: ""}</td>
                       <td>
                         <button className = 'w-[70px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>
@@ -84,7 +98,7 @@ const AdmissionTable = () => {
                         <button className= 'w-[80px] h-[27px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>
                           Approve
                         </button>
-                        <button className= 'w-[70px] h-[27px] border-[1px] border-solid border-[#8b0606] text-[#ffd700] font-medium rounded-[5px] btn-danger ml-2.5'>
+                        <button onClick={() => deleteAdmission(item._id)} className= 'w-[70px] h-[27px] border-[1px] border-solid border-[#8b0606] text-[#ffd700] font-medium rounded-[5px] btn-danger ml-2.5'>
                           Failed
                         </button>
                         </td>
