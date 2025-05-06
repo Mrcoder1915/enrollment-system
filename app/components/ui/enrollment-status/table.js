@@ -11,7 +11,7 @@
           headers: {
             "content-type":"application/json"
           },
-          body: JSON.stringify({status: 1, studentID: ID})
+          body: JSON.stringify({ studentID: ID, approve: true})
         })
         const enrollStudent = await fetch("http://localhost:3000/api/Student/studentenrollment");
         const data = await enrollStudent.json()
@@ -40,27 +40,14 @@
           enroll()
       }, [])
       
-      const getUniqueEnrollments = (enrollments) => {
-          const uniqueEnrollmentKeys = new Set();
-          const uniqueEnrollmentData = [];
-      
-          enrollments.forEach((enrollment) => {
-            // Create a unique key for each enrollment based on studentID and courseID.
-            const enrollmentKey = enrollment.studentID._id;
-      
-            if (!uniqueEnrollmentKeys.has(enrollmentKey)) {
-              uniqueEnrollmentKeys.add(enrollmentKey);
-              uniqueEnrollmentData.push(enrollment);
-            }
-          });
-      
-          return uniqueEnrollmentData;
-        };
 
-      const ustudent = getUniqueEnrollments(enrollDetails)
+      const ustudent = enrollDetails
+      const u = ustudent.map((s) => s.studentID._id)
+      console.log("ID: ",  u);
+      
       
       const filterdstudents = ustudent.filter((student) => {
-        const filterByProgram = props.program? student.courseID.programID.programCode == props.program : true
+        const filterByProgram = props.program? student.studentID.program == props.program : true
         const filterBySemester = props.semester? student.courseID.semester == props.semester : true
 
         return filterByProgram && filterBySemester
@@ -91,12 +78,12 @@
                   <td>{info.studentID?.firstName}</td>
                   <td>{info.studentID?.middleName}</td>
                   <td>{info.studentID?._id}</td>
-                  <td>{info.courseID.year}</td>
-                  <td>{info.courseID.programID.programCode}</td>
+                  <td>{info.studentID.yearLevel}</td>
+                  <td>{info.studentID.program}</td>
                   <td ><button className='w-[70px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>VIEW</button></td>
                   <td colSpan={2}>
-                      <button onClick={() =>  {approveEnrollment(info.studentID._id)}} className='w-[80px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>Approved</button>
-                      <button onClick={() =>  {deleteEnrollment(info.studentID._id)}} className='w-[70px] border-[1px] border-solid border-[#8b0606] text-[#ffd700] font-medium rounded-[5px] btn-danger ml-2.5'>Failed</button>
+                      <button onClick={() =>  {approveEnrollment(info.studentID?._id)}} className='w-[80px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>Approved</button>
+                      <button onClick={() =>  {deleteEnrollment(info.studentID?._id)}} className='w-[70px] border-[1px] border-solid border-[#8b0606] text-[#ffd700] font-medium rounded-[5px] btn-danger ml-2.5'>Failed</button>
                   </td>
               </tr>
           ))}
