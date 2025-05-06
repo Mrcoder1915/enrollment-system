@@ -2,6 +2,30 @@
 import React from "react";
 
 const Login = () => {
+  const [userName, setUsername] = useState("")
+    const [password, setPassword] = useState("")
+    console.log(JSON.stringify({userName}))
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const user = await fetch("api/studentLogin", {
+                method: "POST",
+                headers: {"Content-type": "application/json"},
+                body: JSON.stringify({userName, password})
+            })
+            if(user.ok){
+                console.log("Login Success")
+                router.push("/Dashboard")
+            }else{
+                console.log("invalid");
+                
+            }
+        } catch (error) {
+            
+        }
+    }
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 bg-gradient-primary">
      <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
@@ -21,6 +45,7 @@ const Login = () => {
             </label>
             <input
               type="text"
+              onChange={(e) => setUsername(e.target.value)}
               id="uname"
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="Username"
@@ -33,6 +58,8 @@ const Login = () => {
             </label>
             <input
               type="password"
+              onChange={(e) => setPassword(e.target.value)}
+
               id="pass"
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="Password"

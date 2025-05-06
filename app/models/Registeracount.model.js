@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const RegistrarAccountSchema = new mongoose.Schema({
-    studentID: {
+     registrarID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Registrar",
         required: true

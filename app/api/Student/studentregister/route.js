@@ -5,8 +5,6 @@ import Studentaccount from "@/app/models/studentAccount.model";
 import { NextResponse } from "next/server";
 import generateAccessToken from "@/app/lib/auth/generateAccessToken";
 import generateRefreshToken from "@/app/lib/auth/generateRefreshToken";
-import { getUserAccess } from "@/app/lib/userAccess/getUserAccess";
-import jwt from "jsonwebtoken";
 
 
 export async function POST(Req) {
