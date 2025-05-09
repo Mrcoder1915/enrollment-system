@@ -10,10 +10,17 @@
   },
   "type": "module",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "@react-pdf/renderer": "^4.3.0",
     "dotenv": "^16.5.0",
+<<<<<<< HEAD
     "express": "^5.1.0",
+=======
+    "jsonwebtoken": "^9.0.2",
+>>>>>>> master
     "mongoose": "^8.14.1",
     "next": "15.2.4",
+    "nodemailer": "^6.10.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0"

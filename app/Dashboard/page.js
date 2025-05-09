@@ -8,6 +8,9 @@ import GradeEntry from '../components/ui/GradeEntry'
 import StudentList from '../components/ui/StudentList'
 import GradeView from '../components/ui/GradeView'
 import EnrollmentForm from '../components/ui/EnrollmentForm'
+import InstructorSchedule from "../components/ui/instructorSchedule"
+import AdmissionTable from '../components/ui/admission'
+
 import StudentProfile from '../components/ui/studentProfile'
 
 const page = () => {
@@ -34,8 +37,10 @@ const page = () => {
         {
           userAccess === "registrar" && <>
                <Dashboard />
+               <AdmissionTable />
                <EnrollmentStatus />
                <FacultyAccount />
+
            </>
         }
         
@@ -43,6 +48,7 @@ const page = () => {
            userAccess === "instructor" && <>
                 <GradeEntry />
                 <StudentList />
+                <InstructorSchedule />
              </>
         } 
         

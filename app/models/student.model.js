@@ -11,11 +11,16 @@ const studentSchema = new mongoose.Schema({
     },
     middleName: {
         type: String,
-        required: false
+    
     },
     birthDate: {
+<<<<<<< HEAD
         type: String,
         required: true
+=======
+        type: Date,
+    
+>>>>>>> master
     },
     emailAddress: {
         type: String,
@@ -23,41 +28,50 @@ const studentSchema = new mongoose.Schema({
     },
     age: {
         type: Number,
+<<<<<<< HEAD
        
+=======
+    
+>>>>>>> master
     },
     gender: {
         type: String,
         enum: ['male', 'female'],
-        required: true
+    
     },
     temporaryAddress: {
         type: String,
-        required: true
+    
     },
     permanentAddress: {
         type: String,
-        required: true
+    
     },
     fatherName: {
         type: String,
-        required: true
+        
     },
     motherName: {
         type: String,
-        required: true
+    
     },
     educationalAttainment:{
         type:String,
         enum: ['High School', 'College', 'University'],
-        required: true
+    
     },
     program: {
         type: String,
         enum: ['BSIT', "BSBA", "BSE", "BSHM"],
+
+    },
+    YearLevel:{
+        type: Number,
         required: true
     },
     requirements: {
         type: Array,
+<<<<<<< HEAD
         required: true
     } ,
     religion: {
@@ -109,6 +123,10 @@ const studentSchema = new mongoose.Schema({
         required: true
     },
 
+=======
+    
+    }
+>>>>>>> master
 })
 
 const Student = mongoose.models.Student || mongoose.model("Student", studentSchema);
