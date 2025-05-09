@@ -28,6 +28,7 @@ useEffect( () => {
 
 console.log (user)
 
+// condition
 if(!user) {
   return;
 }
