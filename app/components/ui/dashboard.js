@@ -1,5 +1,5 @@
 "use client"
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { dashboardContext } from "@/app/providers/dashboardProvider"
 
 import { RiGraduationCapFill } from "react-icons/ri"
@@ -7,27 +7,54 @@ import { SiGoogleforms } from "react-icons/si"
 import { GiOpenFolder } from "react-icons/gi"
 import { IoIosPersonAdd } from "react-icons/io"
 
-const Dashboard = () => {
-    const { show } = useContext(dashboardContext);
 
-    const firstGrid = [
+const Dashboard = () => {
+    const { show, showDetails } = useContext(dashboardContext);
+
+      const [enrollDetails, setEnrollDetails] = useState([])
+      const [admissionDetails, setadmissionEnrollDetails] = useState([])
+      console.log(enrollDetails)
+      
+      useEffect(() => {
+          async function enroll() {
+              const enrollStudent = await fetch("http://localhost:3000/api/registrar/dashboard/totalEnrollment");
+              const data = await enrollStudent.json()
+              setEnrollDetails(prev => prev = data)         
+              const admissionStudent = await fetch("http://localhost:3000/api/registrar/dashboard/totalAdmission")
+              const adata = await admissionStudent.json()
+              setadmissionEnrollDetails(prev => prev = adata)         
+          }
+          enroll()
+      }, [])
+        const totalAdmission = admissionDetails.filter((s) => s.remarks == "pending")
+        const totalEnrollment = enrollDetails.filter((s) => s.approve == false)
+        const totalstudents= enrollDetails.filter((s) => s.approve == true)
+
+
+        const firstGrid = [
         {
             label: "For Admission",
             icon: (
                 <RiGraduationCapFill className="bg-red-300 text-black text-8xl rounded-md p-2" />
             ),
+            total: totalAdmission.length,
+            onclick: () => showDetails(2)
         },
-        {
+        { 
             label: "For Enrollment",
             icon: (
                 <SiGoogleforms className="bg-yellow-400 text-black text-8xl rounded-md p-2" />
             ),
+            total: totalEnrollment.length,
+            onclick: () => showDetails(3)
         },
         {
             label: "Total Students",
             icon: (
                 <GiOpenFolder className="bg-red-600 text-black text-8xl rounded-md p-2" />
             ),
+            total: totalstudents.length,
+            onclick: () => showDetails(4)
         },
     ]
 
@@ -67,14 +94,15 @@ const Dashboard = () => {
                         <div
                             key={index}
                             className="bg-white p-4 text-white text-center rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.35)] z-0 w-[270px] h-[120px] cursor-pointer"
+                            onClick = {card.onclick}
                         >
-                            <div className="grid grid-cols-2 grid-rows-2 gap-4 rounded-lg h-full">
+                            <div  className="grid grid-cols-2 grid-rows-2 gap-4 rounded-lg h-full">
                                 <div className="row-span-2 flex justify-center items-center w-full h-full">
                                     {card.icon}
                                 </div>
                                 <div className="text-red-700 text-[17px]">{card.label}</div>
                                 <div className="col-start-2 text-black text-3xl flex items-center justify-center mb-6 mr-7">
-                                    10 {/* this is hardcoded data */}
+                                   {card.total && card.total}
                                 </div>
                             </div>
                         </div>

@@ -6,6 +6,13 @@ const programSchema = new mongoose.Schema({
         required:true,
         unique: true
     },
+    courseIDs: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Course",
+            required: true
+        }
+       ],
     programName: {
         type: String,
         required: true
