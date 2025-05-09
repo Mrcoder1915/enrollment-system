@@ -12,7 +12,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const user = await fetch("api/Student/studentregister", {
+            const user = await fetch("api/registrar/registrarLogin", {
                 method: "POST",
                 headers: {"Content-type": "application/json"},
                 body: JSON.stringify({userName, password})

@@ -1,6 +1,6 @@
 import connection from "@/app/lib/config/connection";
 import verifyPassword from "@/app/lib/auth/verifyPassword";
-import Registraraccount from "@/app/models/Registeracount.model";
+import Registraraccount from "@/app/models/Registraraccount.model";
 import { NextResponse } from "next/server";
 // import HashPassword from "@/app/lib/auth/hashpassword";
 import generateAccessToken from "@/app/lib/auth/generateAccessToken";
