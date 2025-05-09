@@ -9,7 +9,7 @@ import { useState, useEffect} from "react";
 const Studentuser = () => {
   const { show } = useContext(dashboardContext);
   
-  const [user, setuser]=useState([])
+  const [user, setuser]=useState(null)
 
 useEffect( () => {
   const showdata = async ()=>{
@@ -28,6 +28,9 @@ useEffect( () => {
 
 console.log (user)
 
+if(!user) {
+  return;
+}
 
   return (
     <div

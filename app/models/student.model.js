@@ -14,13 +14,8 @@ const studentSchema = new mongoose.Schema({
     
     },
     birthDate: {
-<<<<<<< HEAD
-        type: String,
-        required: true
-=======
         type: Date,
     
->>>>>>> master
     },
     emailAddress: {
         type: String,
@@ -28,11 +23,7 @@ const studentSchema = new mongoose.Schema({
     },
     age: {
         type: Number,
-<<<<<<< HEAD
-       
-=======
     
->>>>>>> master
     },
     gender: {
         type: String,
@@ -71,62 +62,8 @@ const studentSchema = new mongoose.Schema({
     },
     requirements: {
         type: Array,
-<<<<<<< HEAD
-        required: true
-    } ,
-    religion: {
-        type: String,
-        
-    },
-    birthPlace: {
-        type: String,
-        required: true
-    },
-    cellphone: {
-        type: String,
-        required: true
-    },
-    citizenship: {
-        type: String,
-        required: true
-    },
-    civilStatus: {
-        type: String,
-        required: true
-    },
-    campus: {
-        type: String,
-        required: true
-    },
-    department: {
-        type: String,
-        required: true
-    },
-    extensionName: {
-        type: String,
-        required: true
-    },
-    height: {
-        type: String,
-        
-    },
-    weight: {
-        type: String,
-        
-    },
-    landline: {
-        type: String,
-        
-    },
-    lrn: {
-        type: String,
-        required: true
-    },
-
-=======
     
     }
->>>>>>> master
 })
 
 const Student = mongoose.models.Student || mongoose.model("Student", studentSchema);

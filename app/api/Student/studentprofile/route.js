@@ -1,10 +1,8 @@
 import express from "express";
 import connect from "@/app/lib/config/connection.js";
-import Student from "../../../models/student.model.js";
+import Student from "@/app/models/student.model.js";
 import { NextResponse } from "next/server.js";
  
-const app=express();
-app.use(express.json());
 
 export async function GET() {
     await connect()

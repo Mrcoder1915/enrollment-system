@@ -13,11 +13,8 @@
     "bcryptjs": "^3.0.2",
     "@react-pdf/renderer": "^4.3.0",
     "dotenv": "^16.5.0",
-<<<<<<< HEAD
     "express": "^5.1.0",
-=======
     "jsonwebtoken": "^9.0.2",
->>>>>>> master
     "mongoose": "^8.14.1",
     "next": "15.2.4",
     "nodemailer": "^6.10.1",
