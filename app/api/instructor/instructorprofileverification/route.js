@@ -4,8 +4,7 @@ import Instructor from '@/app/models/instructor.model';
 
 export async function POST(Req) {
   const {firstName, lastName, middleName, emailAddress,contact} = await Req.json()
-     // Connect to MongoDB
- // Log the raw request body
+     
     if(!firstName) return NextResponse.json({message: "s"}, {status: 404})
     try {
       await connection();
@@ -22,5 +21,5 @@ export async function POST(Req) {
         { success: false, message: 'Invalid JSON input' },
         { status: 400 }
       );
-    }   // Check if email already exist
+    }   
 }

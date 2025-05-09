@@ -133,7 +133,7 @@ export default function ProviderVerification() {
           )}
 
           <div className="flex justify-end mt-6 space-x-2">
-            <button type="button" onClick={handleClear} className="bg-red-800 text-yellow-300 px-4 mr-50 rounded">Clear Entries</button>
+            <button type="reset" onClick={handleClear} className="bg-red-800 text-yellow-300 px-4 mr-50 rounded">Clear Entries</button>
             <button type="submit" className="bg-red-800 text-yellow-300 px-4 py-2 rounded" disabled={isLoading}>
               {isLoading ? 'Submitting...' : 'Continue'}
             </button>
