@@ -1,13 +1,15 @@
 import mongoose from "mongoose";
 
-const facultySchema = new mongoose.Schema({
+const instructorSchema = new mongoose.Schema({
   instructorID: {
     type: Number,
     required: true,
     unique: true,
   },
   departmentID: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "department",
+    required: true,
   },
   status: {
     type: String,
@@ -40,5 +42,5 @@ const facultySchema = new mongoose.Schema({
   timestamps: true,
 });
 
-const Faculty = mongoose.models.Faculty || mongoose.model("Faculty", facultySchema);
-export default Faculty;
+const Instructor = mongoose.models.Instructor || mongoose.model("Instructor", instructorSchema);
+export default Instructor;

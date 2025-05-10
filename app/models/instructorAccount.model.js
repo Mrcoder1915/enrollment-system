@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const facultyAccountSchema = new mongoose.Schema({
+const instructorAccountSchema = new mongoose.Schema({
   userName: {
     type: String,
     required: true,
@@ -25,6 +25,6 @@ const facultyAccountSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-const FacultyAccount = mongoose.models.FacultyAccount || mongoose.model("FacultyAccount", facultyAccountSchema);
+const InstructorAccount = mongoose.models.InstructorAccount || mongoose.model("InstructorAccount", instructorAccountSchema);
 
-export default FacultyAccount;
+export default InstructorAccount;

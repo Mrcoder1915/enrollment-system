@@ -1,43 +1,64 @@
 "use client"
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState, useEffect } from 'react'
+import Cookies from 'js-cookie'
 
 export const dashboardContext = createContext(null);
 
-// 1. Purpose of this DashboardProvider
-// The DashboardProvider is responsible for providing global state or context that is shared across the Dashboard pages
-//  (e.g., user information, theme settings, etc.). Any state or data that needs to be accessed by multiple components
-//  in the dashboard should be placed here.
-
-// 2. How to Add State/Variables
-// If you need to add new state, follow this pattern:
-
-// Add a new state inside DashboardProvider.
-
-// Use useState to initialize it.
-
-// Add the state and its setter function to the context's value, so it can be shared across your components.
-
 const dashboardProvider = ({children}) => {
-    const [show, setShow] = useState(1)
+    const [show, setShow] = useState(1);
+    const [userAccess, setUserAccess] = useState("registrar"); // default = registrar
+    const [userName, setUserName] = useState("Registrar");
+    const [userPhoto, setUserPhoto] = useState("/default-profile.png");
 
-    // if you are working on student portal you need to change the userAcess value to student
-    // if you are working on registar portal you need to change the userAcess value to registar
-    // FOR YOU TO SEE THE STUDENT OR REGISTAR SIDEBAR THIS IS JUST STATIC DATA UNTIL WE IMPLEMENT THE BACKEND
-    const userAccess = "registrar";
+    useEffect(() => {
+        const access = Cookies.get('userAccess');
+        const name = Cookies.get('userName');
+        const photo = Cookies.get('userPhoto');
 
-const showDetails = (position) => {
-    setShow((prev) => prev = position)
-}
-const value = {
-    show,
-    showDetails,
-    userAccess
-}
-  return (
-    <dashboardContext.Provider value = {value}>
-        {children}
-    </dashboardContext.Provider>
-  )
-}
+        if (access) setUserAccess(access);
+        if (name) setUserName(name);
+        if (photo) setUserPhoto(photo);
+    }, []);
 
-export default dashboardProvider
+    const showDetails = (position) => {
+        setShow(position);
+    };
+
+    const loginUser = ({ access, name, photo }) => {
+        Cookies.set('userAccess', access);
+        Cookies.set('userName', name);
+        Cookies.set('userPhoto', photo);
+
+        setUserAccess(access);
+        setUserName(name);
+        setUserPhoto(photo);
+    };
+
+    const logoutUser = () => {
+        Cookies.remove('userAccess');
+        Cookies.remove('userName');
+        Cookies.remove('userPhoto');
+
+        setUserAccess("registrar"); // fallback to default
+        setUserName("Registrar");
+        setUserPhoto("/default-profile.png");
+    };
+
+    const value = {
+        show,
+        showDetails,
+        userAccess,
+        userName,
+        userPhoto,
+        loginUser,
+        logoutUser
+    };
+
+    return (
+        <dashboardContext.Provider value={value}>
+            {children}
+        </dashboardContext.Provider>
+    );
+};
+
+export default dashboardProvider;
