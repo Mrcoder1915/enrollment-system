@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
 
 const facultySchema = new mongoose.Schema({
-  instructorID: { type: Number, required: true, unique: true },
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  middleName: { type: String, required: true,},
-  contactNumber: { type: String, required: true },
-  emailAddress: { type: String, required: true, unique: true },
-}, {
-  collection: "facultyList",
-  timestamps: true,
+  program: {
+    type: String,
+    enum: [
+      "Bachelor of Science in Information Technology",
+      "Bachelor of Science in Business Administration",
+      "Bachelor of Secondary Education",
+      "Bachelor of Science in Hospitality Management",
+    ],
+  },
   instructorID: {
     type: Number,
     required: true,
@@ -40,7 +40,7 @@ const facultySchema = new mongoose.Schema({
     unique: true,
   }
 }, {
-  collection: "facultyAccounts",
+  collection: "instructorList",
   timestamps: true,
 });
 
