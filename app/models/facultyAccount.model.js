@@ -10,11 +10,6 @@ const facultyAccountSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  status: {
-    type: String,
-    enum: ["pending", "approved", "declined"],
-    default: "pending",
-  },
   instructorID: {
     type: Number,
     required: true,

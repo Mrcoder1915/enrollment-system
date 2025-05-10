@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 import connection from '../../../lib/config/connection';
-import FacultyAccount from '../../../models/facultyAccount.model';
-import Faculty from '../../../models/faculty.model';
+import FacultyAccount from '../../../models/instructorAccount.model';
+import Faculty from '../../../models/instructor.model';
 
 export async function POST(req) {
   try {
