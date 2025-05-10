@@ -63,6 +63,9 @@ const studentSchema = new mongoose.Schema({
     requirements: {
         type: Array,
     
+    },
+    image: {
+        type: String,
     }
 })
 

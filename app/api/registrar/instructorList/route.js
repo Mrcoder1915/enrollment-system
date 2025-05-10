@@ -1,5 +1,5 @@
 import connection from "@/app/lib/config/connection";
-import Faculty from "@/app/models/faculty.model";
+import Faculty from "@/app/models/instructor.model";
 
 export async function GET() {
   try {
