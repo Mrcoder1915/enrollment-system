@@ -2,7 +2,7 @@
 import React, { useContext } from 'react'
 import {dashboardContext} from '../providers/dashboardProvider'
 import EnrollmentStatus from '../components/ui/enrollment-status/enrollmentStatus'
-import FacultyAccount from '../components/ui/facultyAccounts'
+import FacultyAccount from '../components/ui/instructorList'
 import Dashboard from '../components/ui/dashboard'
 import GradeEntry from '../components/ui/GradeEntry'
 import StudentList from '../components/ui/StudentList'
