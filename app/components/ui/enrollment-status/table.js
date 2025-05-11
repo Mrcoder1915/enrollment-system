@@ -7,32 +7,43 @@
       const [departmentProgram, setDeparmentProgram] = useState({})
     
       const approveEnrollment =  useCallback(async (ID) => {
-         await fetch("/api/registrar/studentenrollment/approveEnrollment",{
+        try{
+           await fetch("/api/registrar/studentenrollment/approveEnrollment",{
           method: "POST",
           headers: {
-            "content-type":"application/json"
+            "Content-Type":"application/json"
           },
           body: JSON.stringify({ studentID: ID, approve: true})
         })
         const enrollStudent = await fetch("/api/registrar/studentenrollment");
         const data = await enrollStudent.json()
-        setEnrollDetails(prev => prev = data) 
-      },)
+        setEnrollDetails(data) 
+        }catch(error){
+          console.log("error in approve enrollment: ",error)
+        }
+        
+      },[])
 
       const deleteEnrollment =  useCallback(async (ID) => {
-        await fetch("/api/registrar/studentenrollment/deleteEnrollment",{
-          method: "POST",
-          headers: {
-            "content-type":"application/json"
-          },
-          body: JSON.stringify({studentID: ID})
-        })
-        const enrollStudent = await fetch("/api/registrar/studentenrollment");
-        const data = await enrollStudent.json()
-        setEnrollDetails(prev => prev = data) 
-      },)
+        try {
+             await fetch("/api/registrar/studentenrollment/deleteEnrollment",{
+            method: "POST",
+            headers: {
+              "Content-Type":"application/json"
+            },
+            body: JSON.stringify({studentID: ID})
+          })
+          const enrollStudent = await fetch("/api/registrar/studentenrollment");
+          const data = await enrollStudent.json()
+          setEnrollDetails(data) 
+        } catch (error) {
+           console.log("error in delete enrollment: ",error)
+        }
+       
+      },[])
       
       useEffect(() => {
+        try {
           async function enroll() {
               const enrollStudent = await fetch("/api/registrar/studentenrollment");
               const data = await enrollStudent.json()
@@ -40,18 +51,17 @@
               
               const department = await fetch("/api/registrar/studentenrollment/department");
               const departmentdata = await department.json()
-              setDeparmentProgram( departmentdata)
+              setDeparmentProgram(departmentdata)
           }
           enroll()
+        } catch (error) {
+           console.log("error in getting enrollment data: ",error)
+        }
+          
       }, [])
       
 
       const ustudent = enrollDetails
-      const u = ustudent.map((s) => s.courses[0].semester)
-      console.log("ID: ",  u);
-      console.log("deparmentProgram: ", departmentProgram);
-      
-      console.log("dep: ",   props.department + props.semester);
       
 const filterdstudents = ustudent.filter((student) => {
   const studentProgram = student.student?.program;
