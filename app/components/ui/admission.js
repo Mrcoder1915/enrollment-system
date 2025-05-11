@@ -6,6 +6,7 @@ const AdmissionTable = () => {
   const { show } = useContext(dashboardContext);
   const [selectedDept, setSelectedDept] = useState("");
   const [Data,setData] = useState([])
+  const [departmentProgram, setDeparmentProgram] = useState({})
 
   const deleteAdmission =  useCallback(async (ID) => {
           await fetch("http://localhost:3000/api/registrar/deleteadmission",{
@@ -37,16 +38,26 @@ const AdmissionTable = () => {
       const result = await fetch("http://localhost:3000/api/registrar/approvedadmission")
       const data = await result.json()
       setData(prev => prev = data)
+      const department = await fetch("/api/registrar/studentenrollment/department");
+              const departmentdata = await department.json()
+              setDeparmentProgram(departmentdata)
     }
     student()
   },[])
   
 
-  console.log(Data);
+  const ustudent = Data
+  console.log (ustudent)
   
-  const filteredAdmissions = selectedDept
-    ? Data.filter((item) => item.department === selectedDept)
-    : Data;
+  const filterdstudents = ustudent.filter((student) => {
+  const studentProgram = student.studentID?.program;
+
+  const filterByDepartment = selectedDept
+    ? departmentProgram[selectedDept]?.includes(studentProgram)
+    : true;
+
+  return filterByDepartment
+});
 
   return (
     <div
@@ -91,8 +102,8 @@ const AdmissionTable = () => {
               </thead>
 
               <tbody>
-                {filteredAdmissions.length > 0 ? (
-                  filteredAdmissions?.map((item) => (
+                {filterdstudents.length > 0 ? (
+                  filterdstudents?.map((item) => (
                     <tr key={item._id} className="border-t hover:bg-gray-50">
                       <td className="px-4 py-2">{item.studentID._id}</td>
                       <td className="px-4 py-2">{item.studentID.lastName}</td>
