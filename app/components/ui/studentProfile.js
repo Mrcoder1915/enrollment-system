@@ -150,11 +150,13 @@ if(!user) {
           <div className="flex flex-row gap-6 mb-5">
             <p>BirthDate:</p>
             <input
-              type="text"readOnly
+              type="text"
+              readOnly
               placeholder="BirthDate"
-              value={user.birthDate}
-              className="w-58 pl-2 h-8 border border-gray-400 text-black-600 text-md text-black rounded-sm"
-            />
+              value={new Date(user.birthDate).toISOString().split("T")[0]}
+              className="w-58 pl-2 h-8 border border-gray-400 text-black text-md rounded-sm"
+         />
+
 
           </div>
           <div className="flex flex-row gap-5.5 mb-5">
