@@ -4,7 +4,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { dashboardContext } from "@/app/providers/dashboardProvider";
 
 const generateRandomPassword = () => {
-  const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
+  const chars =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
   let password = "";
   for (let i = 0; i < 10; i++) {
     password += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -41,7 +42,7 @@ const FacultyAccount = () => {
   useEffect(() => {
     const fetchFaculty = async () => {
       try {
-        const res = await fetch("/api/registrar/facultyList");
+        const res = await fetch("/api/registrar/instructorList");
         const data = await res.json();
 
         console.log("Fetched faculty data:", data);
@@ -58,6 +59,10 @@ const FacultyAccount = () => {
 
     fetchFaculty();
   }, []);
+
+  const pendingFaculty = facultyList.filter(
+    (faculty) => faculty.status === "pending"
+  );
 
   return (
     <div
@@ -92,8 +97,8 @@ const FacultyAccount = () => {
         <div className="overflow-y-scroll max-h-[60vh] hide-scrollbar">
           <table className="table table-fixed w-full border-collapse border border-gray-300 rounded-b-lg">
             <tbody>
-              {facultyList.length > 0 ? (
-                facultyList.map((faculty, index) => (
+              {pendingFaculty.length > 0 ? (
+                pendingFaculty.map((faculty, index) => (
                   <tr key={faculty._id || index}>
                     <td className="w-[5%]">{faculty.instructorID}</td>
                     <td className="w-[15%]">{faculty.lastName}</td>
@@ -138,7 +143,7 @@ const FacultyAccount = () => {
               ) : (
                 <tr>
                   <td colSpan="7" className="text-center">
-                    No faculty records found.
+                    No pending faculty records found.
                   </td>
                 </tr>
               )}
