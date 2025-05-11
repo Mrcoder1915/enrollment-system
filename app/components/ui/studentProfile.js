@@ -43,8 +43,8 @@ if(!user) {
       <div className=" h-full relative w-full bg-white p-10 shadow-[0_0_20px_rgba(0,0,0,1.50)] z-0 w-[270px] overflow-auto">
 
         {/* Title */}
-        <FaUserLarge className="text-6xl flex inline-block  text-gray-400" />
-        <h2 className="flex inline-block text-3xl font-bold text-[#a70505] ml-[10px] mb-6 flex items-center gap-2">
+        <FaUserLarge className="text-6xl  inline-block  text-gray-400" />
+        <h2 className="inline-block text-3xl font-bold text-[#a70505] ml-[10px] mb-6 items-center gap-2">
           PERSONAL INFORMATION
         </h2>
         <hr className="border-t-2 border-black my-6 mt-8  mb-7" />
@@ -57,7 +57,7 @@ if(!user) {
               type="text" readOnly
               placeholder="Campus"
               value={user.campus}
-              className="px-0 py-0 w-80 border border-gray-400 h-9 text-md pl-2 text-black rounded-sm"
+              className="w-80 border border-gray-400 h-9 text-md pl-2 text-black rounded-sm"
             />
           </div>
 
@@ -66,7 +66,7 @@ if(!user) {
             <textarea readOnly
               placeholder="Department"
               value={user.department}
-              className="px-0 py-0 w-80 border border-gray-400 pl-2 h-13 text-md text-black rounded-sm resize-none"
+              className="w-80 border border-gray-400 pl-2 h-13 text-md text-black rounded-sm resize-none"
             />
           </div>
         </div>
@@ -141,7 +141,7 @@ if(!user) {
               type="text"readOnly
               placeholder="LRN"
               value={user.lrn}
-              className=" px-0 py-0 pl-2 w-58 h-8 border border-gray-400 text-black-600 text-md text-black rounded-sm"
+              className=" pl-2 w-58 h-8 border border-gray-400 text-black-600 text-md text-black rounded-sm"
             
           />
           </div>
@@ -153,7 +153,7 @@ if(!user) {
               type="text"readOnly
               placeholder="BirthDate"
               value={user.birthDate}
-              className="px-0 py-0 w-58 pl-2 h-8 border border-gray-400 text-black-600 text-md text-black rounded-sm"
+              className="w-58 pl-2 h-8 border border-gray-400 text-black-600 text-md text-black rounded-sm"
             />
 
           </div>
@@ -163,7 +163,7 @@ if(!user) {
               type="text"readOnly
               placeholder="BirthPlace"
               value={user.birthPlace}
-              className="px-0 py-0 w-58 pl-2 h-8 border border-gray-400 text-black-600 text-md text-black rounded-sm resize-none "
+              className="w-58 pl-2 h-8 border border-gray-400 text-black-600 text-md text-black rounded-sm resize-none "
             
           />
           </div>
@@ -173,7 +173,7 @@ if(!user) {
               type="text"readOnly
               placeholder="Citizenship"
               value={user.citizenship}
-              className="px-0 py-0 w-58 pl-2 border h-8 border-gray-400 text-black-600 text-md text-black rounded-sm"
+              className="w-58 pl-2 border h-8 border-gray-400 text-black-600 text-md text-black rounded-sm"
             
           />
           </div>
@@ -183,7 +183,7 @@ if(!user) {
               type="text"readOnly
               placeholder="Religion"
               value={user.religion}
-              className="px-0 py-0 w-40 pl-2 border h-8 border-gray-400 text-black-600 text-md text-black rounded-sm"
+              className="w-40 pl-2 border h-8 border-gray-400 text-black-600 text-md text-black rounded-sm"
             
           />
           </div>
@@ -195,7 +195,7 @@ if(!user) {
               type="text"readOnly
               placeholder="Cellphone#"
               value={user.cellphone}
-              className="px-0 py-0 w-40 border h-8 border-gray-400 text-md text-black-600 pl-2 rounded-md"
+              className="w-40 border h-8 border-gray-400 text-md text-black-600 pl-2 rounded-md"
             
           />
         
@@ -208,7 +208,7 @@ if(!user) {
               type="text"readOnly
               placeholder="Landline#"
               value={user.landline}
-              className="px-0 py-0 w-40 border h-8 border-gray-400 text-md text-black-600 pl-2 rounded-md"
+              className="w-40 border h-8 border-gray-400 text-md text-black-600 pl-2 rounded-md"
             
           />
           </div>
@@ -233,7 +233,7 @@ if(!user) {
               type="text"readOnly
               placeholder="Age"
               value={user.age}
-              className="px-0 py-0 w-40 border border-gray-400 h-8 text-md text-black-600 pl-2 rounded-sm"
+              className="w-40 border border-gray-400 h-8 text-md text-black-600 pl-2 rounded-sm"
             
           />
           </div>
@@ -243,7 +243,7 @@ if(!user) {
               type="text"readOnly
               placeholder="Height(cm)"
               value={user.height}
-              className="px-0 py-0 w-40 border border-gray-400 h-8 text-md text-black-600 pl-2 rounded-sm"
+              className="w-40 border border-gray-400 h-8 text-md text-black-600 pl-2 rounded-sm"
             
           />
           </div>
@@ -253,7 +253,7 @@ if(!user) {
               type="text"readOnly
               placeholder="Weight(lbs)"
               value={user.weight}
-              className="px-0 py-0 w-40 border border-gray-400 h-8 text-md text-black-600 pl-2 rounded-sm"
+              className="w-40 border border-gray-400 h-8 text-md text-black-600 pl-2 rounded-sm"
             
           />
           </div>
@@ -263,7 +263,7 @@ if(!user) {
               type="text"readOnly
               placeholder="Civil Status"
               value={user.civilStatus}
-              className="px-0 py-0 w-40 border border-gray-400 text-md h-8 text-black-600 pl-2 rounded-sm"
+              className="w-40 border border-gray-400 text-md h-8 text-black-600 pl-2 rounded-sm"
             
           />
           </div>
@@ -273,7 +273,7 @@ if(!user) {
               type="text"readOnly
               placeholder="Email Address"
               value={user.email}
-              className="px-0 py-0 w-60 border border-gray-400 text-md h-8 text-black-600 pl-2 rounded-sm"
+              className="w-60 border border-gray-400 text-md h-8 text-black-600 pl-2 rounded-sm"
             
           />
           </div>
