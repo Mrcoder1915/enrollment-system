@@ -1,13 +1,32 @@
 import connection from "@/app/lib/config/connection";
-import FacultyProfile from "@/app/models/faculty.model";
+import Instructor from "@/app/models/instructor.model";
+import { cookies } from "next/headers";
 import { ObjectId } from "mongodb";
 
+// GET handler: Fetch instructor profile
 export async function GET() {
   try {
-    await connection();
-    const profiles = await FacultyProfile.find({}).lean();
+    const cookieStore = await cookies(); // Await cookies()
+    let instructorID = cookieStore.get("instructorID")?.value;
 
-    return new Response(JSON.stringify(profiles), {
+    const defaultInstructorID = "681f5955d3306c39c4b1b9d3";
+
+    const validID = ObjectId.isValid(instructorID)
+      ? instructorID
+      : defaultInstructorID;
+
+    await connection();
+
+    const profile = await Instructor.find({ _id: new ObjectId(validID) }).lean();
+
+    if (!profile || profile.length === 0) {
+      return new Response(JSON.stringify({ error: "Instructor not found" }), {
+        status: 404,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    return new Response(JSON.stringify(profile), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
@@ -16,58 +35,55 @@ export async function GET() {
     });
   } catch (err) {
     console.error("Fetch error:", err);
-    return new Response(
-      JSON.stringify({ error: "Could not fetch profile" }),
-      {
-        status: 500,
-        headers: {
-          "Content-Type": "application/json",
-          "Cache-Control": "no-store, max-age=0",
-        },
-      }
-    );
+    return new Response(JSON.stringify({ error: "Could not fetch profile" }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store, max-age=0",
+      },
+    });
   }
 }
 
-export async function PUT(request) {
+// PUT handler: Update instructor profile
+export async function PUT(req) {
   try {
     await connection();
-    const data = await request.json();
+    const body = await req.json();
 
-    if (!data._id || !ObjectId.isValid(data._id)) {
-      return new Response(JSON.stringify({ error: "Invalid or missing _id" }), {
+    const { _id, ...updateData } = body;
+
+    if (!_id || !ObjectId.isValid(_id)) {
+      return new Response(JSON.stringify({ error: "Invalid ID" }), {
         status: 400,
         headers: { "Content-Type": "application/json" },
       });
     }
 
-    const { _id, ...updateData } = data;
-
-    const updated = await FacultyProfile.findOneAndUpdate(
+    const result = await Instructor.updateOne(
       { _id: new ObjectId(_id) },
-      { $set: updateData },
-      { new: true }
+      { $set: updateData }
     );
 
-    if (!updated) {
-      return new Response(JSON.stringify({ error: "Profile not found" }), {
+    if (result.matchedCount === 0) {
+      return new Response(JSON.stringify({ error: "Instructor not found" }), {
         status: 404,
         headers: { "Content-Type": "application/json" },
       });
     }
 
-    return new Response(JSON.stringify(updated), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
-  } catch (err) {
-    console.error("Update error:", err);
     return new Response(
-      JSON.stringify({ error: "Could not update profile" }),
+      JSON.stringify({ message: "Profile updated successfully" }),
       {
-        status: 500,
+        status: 200,
         headers: { "Content-Type": "application/json" },
       }
     );
+  } catch (err) {
+    console.error("Update error:", err);
+    return new Response(JSON.stringify({ error: "Failed to update profile" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
