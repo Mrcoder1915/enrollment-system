@@ -40,7 +40,7 @@ if(!user) {
       }`}
     >
       
-      <div className=" h-full relative w-full bg-white p-10 shadow-[0_0_20px_rgba(0,0,0,1.50)] z-0 w-[270px] overflow-auto">
+      <div className=" h-full relative w-full bg-white p-10 shadow-[0_0_20px_rgba(0,0,0,1.50)] z-0 overflow-auto">
 
         {/* Title */}
         <FaUserLarge className="text-6xl  inline-block  text-gray-400" />
@@ -50,7 +50,7 @@ if(!user) {
         <hr className="border-t-2 border-black my-6 mt-8  mb-7" />
 
         {/* Campus and Department (unchanged) */}
-        <div className="flex-col flex gap-15 mb-8 gap-[13px]">
+        <div className="flex-col flex mb-8 gap-[13px]">
           <div className="flex flex-row items-left gap-15 ">
             <p>Campus:</p>
             <input
