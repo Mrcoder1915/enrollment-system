@@ -37,7 +37,7 @@ const page = () => {
         {
           userAccess === "registrar" && <>
                <Dashboard />
-               <AdmissionTable />
+               <AdmissionTable />               
                <EnrollmentStatus />
                <FacultyAccount />
 
