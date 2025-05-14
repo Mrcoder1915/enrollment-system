@@ -16,7 +16,7 @@ const InstructorLogin = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('/api/instructorLofi', {
+      const res = await fetch('/api/instructorLogin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userName, password }),
