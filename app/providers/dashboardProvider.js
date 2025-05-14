@@ -23,12 +23,12 @@ const dashboardProvider = ({children}) => {
     // if you are working on student portal you need to change the userAcess value to student
     // if you are working on registar portal you need to change the userAcess value to registar
     // FOR YOU TO SEE THE STUDENT OR REGISTAR SIDEBAR THIS IS JUST STATIC DATA UNTIL WE IMPLEMENT THE BACKEND
-    const userAccess = "registrar";
+    const userAccess = "instructor";
 
 const showDetails = (position) => {
     setShow((prev) => prev = position)
 }
-const value = {
+const value = {  
     show,
     showDetails,
     userAccess
