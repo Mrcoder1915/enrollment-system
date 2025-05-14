@@ -4,42 +4,68 @@ import { dashboardContext } from '@/app/providers/dashboardProvider'
 
 const Masterlist = () => {
   const { show } = useContext(dashboardContext)
-
-  // Sample data to filter
-  const [students] = useState([
-    { id: 1, lastName: 'Smith', firstName: 'John', middleName: 'A', studentId: 'S123', year: '1st', program: 'BSIT', section: 'A' },
-    { id: 2, lastName: 'Doe', firstName: 'Jane', middleName: 'B', studentId: 'S124', year: '2nd', program: 'BSBA', section: 'B' },
-    { id: 3, lastName: 'Lee', firstName: 'Chris', middleName: 'C', studentId: 'S125', year: '3rd', program: 'BSHM', section: 'C' }
-    // Add more sample data as needed
-  ])
-
   const [searchTerm, setSearchTerm] = useState('')
-  const [filteredStudents, setFilteredStudents] = useState(students)
+  const [selectedDepartment, setSelectedDepartment] = useState('');
+  const [enrollDetails, setEnrollDetails] = useState([])
+  const [filteredStudents, setFilteredStudents] = useState([])
 
   useEffect(() => {
-    const term = searchTerm.toLowerCase()
-    setFilteredStudents(
-      students.filter(
-        s =>
-          s.firstName.toLowerCase().includes(term) ||
-          s.lastName.toLowerCase().includes(term) ||
-          s.middleName.toLowerCase().includes(term) ||
-          s.studentId.toLowerCase().includes(term)
-      )
-    )
-  }, [searchTerm, students])
+    async function enroll() {
+      const enrollStudent = await fetch("http://localhost:3000/api/registrar/dashboard/totalEnrollment");
+      const data = await enrollStudent.json();
+      setEnrollDetails(data);
+    }
+    enroll();
+  }, [])
+
+  const masterList = enrollDetails.filter((student) => student.approve === true);
+
+  useEffect(() => {
+  const term = searchTerm.toLowerCase();
+
+  const filtered = masterList.filter((student) => {
+    const { studentID } = student;
+
+    const matchesSearch = (
+      studentID?.firstName?.toLowerCase().includes(term) ||
+      studentID?.lastName?.toLowerCase().includes(term) ||
+      studentID?.middleName?.toLowerCase().includes(term) ||
+      studentID?._id?.toLowerCase().includes(term) ||
+      studentID?.section?.toLowerCase().includes(term)
+    );
+
+   const programToDept = {
+       BSIT: 'CICT',
+       BSCS: 'CICT',
+       BSBA: 'CMBT',
+       BSE: 'COE',
+  };
+
+  const matchesDepartment = selectedDepartment
+     ? programToDept[studentID?.program] === selectedDepartment
+     : true;
+
+
+
+    return matchesSearch && matchesDepartment;
+  });
+
+  setFilteredStudents(filtered);
+}, [searchTerm, masterList, selectedDepartment]);
+
 
   return (
     <div className={`w-full h-[80vh] absolute flex-icenter flex-col transition-all ease-in duration-300 ${show === 4 ? "translate-x-[0] visible" : "translate-x-[-200%]"}`}>
       <div className='w-[95%] h-15 mb-2.5 flex-icenter gap-10 justify-between'>
         <div className='w-70 h-7 mb-5 flex-rows gap-1'>
           <label>Department:</label>
-          <select className='w-[60%] border-[2px] border-solid border-black'>
-            <option>BSIT</option>
-            <option>BSHM</option>
-            <option>BSBA</option>
-            <option>BSE</option>
+          <select className="w-[60%] border-[2px] border-solid border-black" value={selectedDepartment}onChange={(e) => setSelectedDepartment(e.target.value)}> 
+              <option value="">All</option>
+              <option value="CICT">CICT</option>
+              <option value="CMBT">CMBT</option>
+              <option value="COE">COE</option>
           </select>
+
         </div>
 
         <div className='mb-6'>
@@ -76,19 +102,20 @@ const Masterlist = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredStudents.map((student, index) => (
-                  <tr key={student.id}>
-                    <td>{index + 1}</td>
-                    <td>{student.lastName}</td>
-                    <td>{student.firstName}</td>
-                    <td>{student.middleName}</td>
-                    <td>{student.studentId}</td>
-                    <td>{student.year}</td>
-                    <td>{student.program}</td>
-                    <td>{student.section}</td>
-                  </tr>
-                ))}
-                {filteredStudents.length === 0 && (
+                {filteredStudents.length > 0 ? (
+                  filteredStudents.map((student, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{student?.studentID?.lastName}</td>
+                      <td>{student?.studentID?.firstName}</td>
+                      <td>{student?.studentID?.middleName}</td>
+                      <td>{student?.studentID?._id}</td>
+                      <td>{student?.studentID?.yearLevel}</td>
+                      <td>{student?.studentID?.program}</td>
+                      <td>{student?.studentID?.section}</td>
+                    </tr>
+                  ))
+                ) : (
                   <tr>
                     <td colSpan="8" className="text-center py-4">No results found.</td>
                   </tr>
