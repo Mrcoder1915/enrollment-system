@@ -16,7 +16,7 @@ const Page = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('/api/student', {
+      const res = await fetch('/api/studentLogin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userName, password }),
