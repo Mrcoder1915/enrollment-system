@@ -6,22 +6,16 @@ const enrollmentSchema = new mongoose.Schema({
         ref: "Student",
         required: true
     },
-   admissionID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Admission"
-   },
-   courseIDs: [
-    {
+    courseID:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Course",
         required: true
-    }
-   ],
-   programID:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Program",
-        required: true
-   },
+    },
+        // scheduleID: {
+        //     type: mongoose.Schema.Types.ObjectId,
+        //     ref: "Schhedule",
+        //     required: true
+        // },
     academicYear: {
         type: Number,
         required: true
@@ -30,12 +24,13 @@ const enrollmentSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    approve: {
-        type: Boolean,
-        default: false
+    status: {
+        type: Number,
+        enum: [0,1],
+        default: 0
     }
 })
 
-const Enrollment = mongoose.models.Enrollment || mongoose.model("Enrollment", enrollmentSchema);
+const enrollment = mongoose.models.enrollment || mongoose.model("enrollment", enrollmentSchema);
 
-export default Enrollment
+export default enrollment
