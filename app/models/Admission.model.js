@@ -5,7 +5,7 @@ const admissionSchema = new mongoose.Schema({
     studentID:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Student",
-        require: true
+        required: true
     },
     remarks: {
         type:String,
