@@ -1,30 +1,43 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const InstructorLogin = () => {
-  const [username, setUsername] = useState('');
+ const router = useRouter();
+  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
 
   const handleLogin = async () => {
-    const res = await fetch('/api/instructor/instructorLogin', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({  userName: username, password }),
-    });
+    setLoading(true);
+    setError('');
+    try {
+      const res = await fetch('/api/instructorLofi', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userName, password }),
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (res.ok) {
-      alert(`Welcome, ${data.userName}`);
-    } else {
-      alert(data.error || 'Login failed');
+      if (!res.ok) {
+        setError(data.message || 'Login failed.');
+        return;
+      }
+
+      router.push('Dashboard');
+    } catch (err) {
+      setError('Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleApply = () => {
-    alert('Redirecting to application form...');
-  };
+
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-r from-red-800 to-white flex flex-col items-center justify-center font-serif">
@@ -38,13 +51,13 @@ const InstructorLogin = () => {
           <input
             type="text"
             placeholder="Username"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
+            value={userName}
+            onChange={e => setUserName(e.target.value)}
             className="w-full px-4 py-1 pr-5 border border-red-800 rounded-full"
           />
           <span className="absolute right-5 top-1.5">👤</span>
         </div>
-        <div className="relative mb-5 w-full">
+        <div className="relative mb-2 w-full">
           <input
             type="password"
             placeholder="Password"
@@ -54,13 +67,20 @@ const InstructorLogin = () => {
           />
           <span className="absolute right-5 top-1.5">🔒</span>
         </div>
+           {error && <p className="text-red-500 text-sm mt-3">{error}</p>}
+          {loading && (
+            <p className="text-yellow-500 font-semibold mt-3 animate-pulse">
+              Logging in...
+            </p>
+          )}
         <div className="flex justify-end gap-1 w-full">
-          <button
-            onClick={handleApply}
-            className="bg-yellow-400 border-2 border-red-800 text-red-800 rounded text-xs w-[70px] h-[35px]"
-          >
-            Apply Here
-          </button>
+          <Link href = "/InstructorProfileVerification">
+            <button
+              className="bg-yellow-400 border-2 border-red-800 text-red-800 rounded text-xs w-[70px] h-[35px]"
+            >
+              Apply Here
+            </button>
+          </Link>
           <button
             onClick={handleLogin}
             className="bg-red-800 text-yellow-300 border-2 border-yellow-300 rounded text-xs w-[70px] h-[35px]"
