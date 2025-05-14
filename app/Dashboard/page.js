@@ -12,6 +12,8 @@ import InstructorSchedule from "../components/ui/instructorSchedule"
 import AdmissionTable from '../components/ui/admission'
 import StudentProfile from '../components/ui/studentProfile'
 import ProfileForm from '../components/ui/instructorProfile'
+import EnrollmentSchedule from '../components/ui/enrollmentSchedule'
+import EnrollmentCard from '../components/ui/enrollmentCard'
 
 const page = () => {
   const { userAccess } = useContext(dashboardContext);
@@ -58,6 +60,8 @@ const page = () => {
               <GradeView />
               <EnrollmentForm />
               <StudentProfile />
+              <EnrollmentSchedule /> 
+              <EnrollmentCard />
             </>
         }
         
