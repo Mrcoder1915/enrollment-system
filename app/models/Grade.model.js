@@ -1,16 +1,18 @@
+
 import mongoose from 'mongoose';
 
-const gradeReportSchema = new mongoose.Schema({
-  courseCode: { type: String, required: true },
-  courseName: { type: String, required: true },
-  instructor: { type: String, required: true },
-  finalGrade: { type: String, required: true },
-  remarks: { type: String, required: true },
-  semester: { type: String, enum: ['1', '2'], required: true }
-}, {
-  timestamps: true // optional: adds createdAt and updatedAt fields
+const gradeSchema = new mongoose.Schema({
+  gradeID: { type: Number, required: true, unique: true },
+  studentID: { type: mongoose.Schema.Types.ObjectId, ref: 'Student', required: true },
+  instructorID: { type: mongoose.Schema.Types.ObjectId, ref: 'instructor', required: true },
+  courseID: { type: mongoose.Schema.Types.ObjectId, ref: 'course', required: true },
+  midtermGrade: { type: Number, min: 1, max: 5 },
+  finalGrade: { type: Number, min: 1, max: 5 },
+  grade_computation: { type: Number, min: 1, max: 5 },
+  remarks: { type: String, enum: ['passed', 'failed', 'inc'], required: true }
 });
 
-const Grade = mongoose.models.Grade || mongoose.model('Grade', gradeReportSchema);
+const Grade = mongoose.models.Grade || mongoose.model('Grade', gradeSchema);
 
 export default Grade;
+

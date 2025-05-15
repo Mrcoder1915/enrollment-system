@@ -5,16 +5,16 @@ import { dashboardContext } from '@/app/providers/dashboardProvider';
 const ReportOfGrades = () => {
   const { show } = useContext(dashboardContext);
   const [courses, setGrades] = useState([]);
-  const [semester, setSemester] = useState('1, 2');
-  
+  const [semester, setSemester] = useState('1st Semester');
+
   useEffect(() => {
     const fetchGrades = async () => {
       try {
         const res = await fetch('/api/Student/GradeReport');
-        const data = await res.json(courses);
+        const data = await res.json();
         setGrades(data);
       } catch (error) {
-        console.error('Error fetching grades:', err);
+        console.error('Error fetching grades:', error);
       }
     };
 
@@ -53,14 +53,14 @@ const ReportOfGrades = () => {
           </tr>
         </thead>
         <tbody>
-          {courses.map((courses, index) => (
-            <tr key={courses._id}>
+          {courses.map((course, index) => (
+            <tr key={course._id}>
               <td className="p-2 border">{index + 1}</td>
-              <td className="p-2 border">{courses.courseCode}</td>
-              <td className="p-2 border">{courses.courseName}</td>
-              <td className="p-2 border">{courses.instructor}</td>
-              <td className="p-2 border">{courses.finalGrade}</td>
-              <td className="p-2 border">{courses.remarks}</td> 
+              <td className="p-2 border">{course.courseCode}</td>
+              <td className="p-2 border">{course.courseName}</td>
+              <td className="p-2 border">{course.instructor}</td>
+              <td className="p-2 border">{course.finalGrade}</td>
+              <td className="p-2 border">{course.remarks}</td> 
             </tr>
           ))}
         </tbody>
