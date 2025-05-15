@@ -55,16 +55,11 @@ const enroll = await Enrollment.aggregate([
   }
 ]);
 
-
-
-    if(!enroll && enroll.length === 0) return NextResponse.json({message: "no enrollment"})
-
-      // console.log(enroll);
+    if(!enroll && enroll.length === 0) return NextResponse.json({message: "enrollment Not Found"}, {status: 404})
       
-   
    return NextResponse.json(enroll)
   } catch (error) {
-    return NextResponse.json({message: error.message})
+    return NextResponse.json({message: error.message},{status: 500})
   }
   
 }
