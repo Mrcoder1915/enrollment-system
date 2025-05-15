@@ -1,88 +1,105 @@
 "use client";
-import React, {useState} from "react";
-import {useRouter} from "next/navigation";
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { FaUser, FaLock } from 'react-icons/fa';
 
-const Login = () => {
-  const [userName, setUsername] = useState("")
-    const [password, setPassword] = useState("")
-    const [err, seterr] = useState(false)
-    console.log(JSON.stringify({userName}))
-    const router = useRouter()
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+const Page = () => {
+  const router = useRouter();
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-        try {
-            const user = await fetch("api/registrar/registrarLogin", {
-                method: "POST",
-                headers: {"Content-type": "application/json"},
-                body: JSON.stringify({userName, password})
-            })
-            if(user.ok){
-              seterr(false)
 
-                console.log("Login Success")
-                router.push("/Dashboard")
-            }else{
-                console.log("invalid");
-                seterr(true)
-            }
-        } catch (error) {
-            
-        }
+  const handleLogin = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const res = await fetch('/api/registrarLogin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userName, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.message || 'Login failed.');
+        return;
+      }
+
+      router.push('Dashboard');
+    } catch (err) {
+      setError('Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
     }
- 
+  };
+
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 bg-gradient-primary">
-     <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
-          Registrar Portal 
-        </h1>
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md h-[500px]">
-        
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <div>
-               <img src="/logo.jpg" className="w-20"></img>
-          <div className="w-full flex items-center justify-center text-info">
-               <h2>UNIVERSITY OF SOUTHERN
-                              NUEVA ECIJA </h2>
-          </div>
-            <label htmlFor="uname" className="block text-sm font-medium text-gray-700">
-              User Name
-            </label>
-            <input
-              type="text"
-              onChange={(e) => setUsername(e.target.value)}
-              id="uname"
-              className={`mt-1 block w-full px-4 py-2 border  rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 ${err? "border-red-500":"border-gray-300"}`}
-              placeholder="Username"
-            />
+    <div className="min-h-screen flex items-center justify-center bg-gradient-primary">
+      <div className="text-center">
+
+        <h1 className="text-white text-4xl font-serif mb-1">Registrar Portal</h1>
+        <div className="bg-white rounded-3xl shadow-xl p-6 w-[350px] mx-auto">
+          <img
+            src="/neustlogo-nobg.png"
+            alt="University Logo"
+            className="h-40 mx-auto mb-2"
+          />
+          <h2
+            className="text-lg font-bold text-[#990000] leading-tight"
+            style={{ textShadow: '1px 1px #facc15' }}
+          >
+            UNIVERSITY OF SOUTHERN <br /> NUEVA ECIJA
+          </h2>
+
+          <div className="mt-4 space-y-3">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Username"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                className="w-full pr-10 pl-3 py-2 border border-red-700 rounded-full focus:outline-none focus:ring-2 focus:ring-red-700"
+              />
+              <FaUser className="absolute top-2.5 right-5 text-gray-400" />
+            </div>
+
+            <div className="relative">
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full pr-10 pl-3 py-2 border border-red-700 rounded-full focus:outline-none focus:ring-2 focus:ring-red-700"
+              />
+              <FaLock className="absolute top-2.5 right-5 text-gray-400" />
+            </div>
           </div>
 
-          <div>
-            <label htmlFor="pass" className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
-            <input
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
+          
+          {error && <p className="text-red-500 text-sm mt-3">{error}</p>}
+          {loading && (
+            <p className="text-yellow-500 font-semibold mt-3 animate-pulse">
+              Logging in...
+            </p>
+          )}
 
-              id="pass"
-              className={`mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 ${err? "border-red-500":"border-gray-300"}`}
-              placeholder="Password"
-            />
-          </div>
-
-          <div className="flex justify-between mt-6">
+          <div className="flex justify-center mt-[20px] ">
             <button
-              type="submit"
-              className="px-4 py-2 border border-indigo-600 text-indigo-600 rounded-md hover:bg-indigo-50"
+              onClick={handleLogin}
+              disabled={loading}
+              className="bg-red-700 hover:bg-red-800 text-yellow-300 font-bold py-2 px-4 rounded"
             >
-              Login
+              {loading ? 'Loading...' : 'Log In'}
             </button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Page;
