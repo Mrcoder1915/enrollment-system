@@ -1,11 +1,6 @@
 import mongoose from "mongoose";
 
 const instructorSchema = new mongoose.Schema({
-  instructorID: {
-    type: Number,
-    required: true,
-    unique: true,
-  },
   departmentID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "department",
@@ -24,10 +19,6 @@ const instructorSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  middleName: {
-    type: String,
-    required: true,
-  },
   contactNumber: {
     type: String,
     required: true,
@@ -37,9 +28,7 @@ const instructorSchema = new mongoose.Schema({
     required: true,
     unique: true,
   }
-}, {
-  collection: "instructorList",
-  timestamps: true,
+
 });
 
 const Instructor = mongoose.models.Instructor || mongoose.model("Instructor", instructorSchema);

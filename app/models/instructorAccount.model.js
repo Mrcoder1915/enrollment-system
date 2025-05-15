@@ -16,9 +16,8 @@ const instructorAccountSchema = new mongoose.Schema({
     default: "pending",
   },
   instructorID: {
-    type: Number,
-    required: true,
-    unique: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Instructor"
   },
 }, {
   collection: "instructorAccounts",
