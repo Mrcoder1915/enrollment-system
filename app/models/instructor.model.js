@@ -27,8 +27,7 @@ const instructorSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-  }
-
+  },
 });
 
 const Instructor = mongoose.models.Instructor || mongoose.model("Instructor", instructorSchema);
