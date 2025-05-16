@@ -47,7 +47,9 @@ const sideBar = () => {
                         return (
                           <li key={index} className={
                               `${activeColor(item.id, "btn-success hover:bg-[#ffd700]")}`}
-                              onClick={() => showDetails(item.id)}>
+                              onClick={() => {showDetails(item.id);
+                                 if (item?.onclick) item.onclick();
+                              }}>
                               <i>{item.icon}</i>
                               <div className={
                                   `${activeColor(item.id, "text-[#8b0606] ")}`}>

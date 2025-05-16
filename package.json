@@ -13,6 +13,7 @@
     "@react-pdf/renderer": "^4.3.0",
     "bcryptjs": "^3.0.2",
     "dotenv": "^16.5.0",
+    "jose": "^6.0.11",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.16.0",
     "mongoose": "^8.14.2",

@@ -28,12 +28,13 @@ export async function POST(req) {
 
         const studentName = await Student.findOne({_id: student.studentID}, {_id:0 ,firstName: 1 ,lastName: 1})
         const fullName = `${studentName.firstName} ${studentName.lastName}`
+        
         const accessToken = generateAccessToken({ studentID: student.studentID, role, fullName });
         const refreshToken = generateRefreshToken({ studentID: student.studentID, role});
         console.log(studentName);
         
         const res = new NextResponse(
-            JSON.stringify({ message: "Login successful!", accessToken, refreshToken, fullName }),
+            JSON.stringify({ message: "Login successful!"}),
             { status: 200 }
         );
 
