@@ -6,6 +6,7 @@ import { NextResponse } from "next/server";
 export async function POST(Req) {
   try {
     await connection(); // Connect to DB
+    await Admission(newstudent);
     const body = await Req.json();// Parse JSON body   
 
     const newstudent = await student.create(body); // Create new doc in DB

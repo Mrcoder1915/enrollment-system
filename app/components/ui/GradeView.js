@@ -56,9 +56,9 @@ const ReportOfGrades = () => {
           {courses.map((course, index) => (
             <tr key={course._id}>
               <td className="p-2 border">{index + 1}</td>
-              <td className="p-2 border">{course.courseCode}</td>
-              <td className="p-2 border">{course.courseName}</td>
-              <td className="p-2 border">{course.instructor}</td>
+              <td className="p-2 border">{course.courseID.code}</td>
+              <td className="p-2 border">{course.courseID.name}</td>
+              <td className="p-2 border">{course.instructorID}</td>
               <td className="p-2 border">{course.finalGrade}</td>
               <td className="p-2 border">{course.remarks}</td> 
             </tr>
