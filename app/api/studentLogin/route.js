@@ -4,6 +4,7 @@ import Studentaccount from "@/app/models/studentaccount.model";
 import { NextResponse } from "next/server";
 import generateAccessToken from "@/app/lib/auth/generateAccessToken";
 import generateRefreshToken from "@/app/lib/auth/generateRefreshToken";
+import Student from "@/app/models/student.model";
 
 export async function POST(req) {
     await connection();
@@ -20,16 +21,20 @@ export async function POST(req) {
             return NextResponse.json({ message: "Student does not exist." }, { status: 404 });
         }
 
-        const passwordVerify = await verifyPassword(password, student.password);
+        const passwordVerify = verifyPassword(password, student.password);
         if (!passwordVerify) {
             return NextResponse.json({ message: "Incorrect username or password." }, { status: 401 });
         }
 
-        const accessToken = generateAccessToken({ studentID: student.studentID, role });
-        const refreshToken = generateRefreshToken({ studentID: student.studentID, role });
-
+        const studentName = await Student.findOne({_id: student.studentID}, {_id:0 ,firstName: 1 ,lastName: 1})
+        const fullName = `${studentName.firstName} ${studentName.lastName}`
+        
+        const accessToken = generateAccessToken({ studentID: student.studentID, role, fullName });
+        const refreshToken = generateRefreshToken({ studentID: student.studentID, role});
+        console.log(studentName);
+        
         const res = new NextResponse(
-            JSON.stringify({ message: "Login successful!", accessToken, refreshToken }),
+            JSON.stringify({ message: "Login successful!"}),
             { status: 200 }
         );
 

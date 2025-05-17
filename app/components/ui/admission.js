@@ -47,8 +47,7 @@ const AdmissionTable = () => {
   
 
   const ustudent = Data
-  console.log (ustudent)
-  
+
   const filterdstudents = ustudent.filter((student) => {
   const studentProgram = student.studentID?.program;
 

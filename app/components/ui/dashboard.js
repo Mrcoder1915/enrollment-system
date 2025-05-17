@@ -13,7 +13,6 @@ const Dashboard = () => {
 
       const [enrollDetails, setEnrollDetails] = useState([])
       const [admissionDetails, setadmissionEnrollDetails] = useState([])
-      console.log(enrollDetails)
       
       useEffect(() => {
           async function enroll() {

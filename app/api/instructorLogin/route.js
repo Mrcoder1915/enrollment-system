@@ -29,8 +29,8 @@ export async function POST(req) {
       return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
     }
 
-        const InstructorName = await Instructor.findOne({lastName: "Doe"})
-        const fullName = `${InstructorName.firstName} ${InstructorName.lastName}`
+    const InstructorName = await Instructor.findOne({_id: account.instructorID}, {_id:0 ,firstName: 1 ,lastName: 1})
+    const fullName = `${InstructorName.firstName} ${InstructorName.lastName}`
      
     const accessToken = generateAccessToken({ instructorID: account.instructorID, role , fullName: fullName});
     const refreshToken = generateRefreshToken({ instructorID: account.instructorID, role });
