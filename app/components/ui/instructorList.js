@@ -61,7 +61,9 @@ const FacultyAccount = () => {
   }, []);
 
   // Include entries with no status as "pending"
+  // Include entries with no status as "pending"
   const pendingFaculty = facultyList.filter(
+    (faculty) => !faculty.status || faculty.status === "pending"
     (faculty) => !faculty.status || faculty.status === "pending"
   );
 
@@ -106,6 +108,7 @@ const FacultyAccount = () => {
                     </td>
                     <td className="w-[15%]">{faculty.lastName}</td>
                     <td className="w-[15%]">{faculty.firstName}</td>
+                    <td className="w-[15%]">{faculty.middleName || "-"}</td>
                     <td className="w-[15%]">{faculty.middleName || "-"}</td>
                     <td className="w-[15%]">{faculty.contactNumber}</td>
                     <td className="w-[20%]">{faculty.emailAddress}</td>
