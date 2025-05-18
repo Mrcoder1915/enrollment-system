@@ -47,29 +47,35 @@ const InstructorLogin = () => {
         <h2 className="text-red-800 mb-2 leading-tight text-lg font-semibold" style={{ textShadow: '1px 0px 3px #facc15' }}>
           UNIVERSITY OF SOUTHERN<br />NUEVA ECIJA
         </h2>
-        <div className="relative mb-3 w-full">
-          <input
-            type="text"
-            placeholder="Username"
-            value={userName}
-            onChange={e => setUserName(e.target.value)}
-            className="w-full px-4 py-1 pr-5 border border-red-800 rounded-full"
-          />
-          <span className="absolute right-5 top-1.5">👤</span>
-        </div>
-        <div className="relative mb-2 w-full">
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            className="w-full px-4 py-1 pr-10 border border-red-800 rounded-full"
-          />
-          <span className="absolute right-5 top-1.5">🔒</span>
-        </div>
-           {error && <p className="text-red-500 text-sm mt-3">{error}</p>}
+<div className="relative mb-3 w-full">
+  <input
+    type="text"
+    placeholder="Username"
+    value={userName}
+    onChange={e => setUserName(e.target.value)}
+    className="w-full px-4 py-1 pr-5 border border-red-800 rounded-full"
+  />
+  <span className="absolute right-5 top-2">
+    <img src="userIcon.png" alt="Username Icon" className="w-4 h-4" />
+  </span>
+</div>
+
+<div className="relative mb-2 w-full">
+  <input
+    type="password"
+    placeholder="Password"
+    value={password}
+    onChange={e => setPassword(e.target.value)}
+    className="w-full px-4 py-1 pr-10 border border-red-800 rounded-full"
+  />
+  <span className="absolute right-5 top-2">
+    <img src="/passwordIcon.png" alt="Password Icon" className="w-4 h-4" />
+  </span>
+</div>
+
+           {error && <p className="text-red-500 text-sm mt-2 mb-2">{error}</p>}
           {loading && (
-            <p className="text-yellow-500 font-semibold mt-3 animate-pulse">
+            <p className="text-yellow-500 text-sm mt-2 mb-2 animate-pulse">
               Logging in...
             </p>
           )}
