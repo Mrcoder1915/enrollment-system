@@ -1,14 +1,14 @@
 import { NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
 
-const PUBLIC_ROUTES = ['/', '/registrarLogin', "/studentLogin", "/InstructorPortal"];
+const PUBLIC_ROUTES = ['/', '/registrarLogin', "/studentLogin", "/InstructorPortal","/InstructorProfileVerification"];
 
 const ROLE_API_ACCESS = {
   registrar: ['/api/registrar'],
   instructor: ['/api/instructor'],
   student: ['/api/Student'],
 };
-const EXCLUDED_API_PATHS = ['/api/refreshToken', '/api/registrarLogin', "/api/studentLogin",  "/api/Logout", "/api/getUser", "/api/instructorLogin"];
+const EXCLUDED_API_PATHS = ['/api/refreshToken', '/api/registrarLogin', "/api/studentLogin",  "/api/Logout", "/api/getUser", "/api/instructorLogin","/api/instructorprofileverification"];
 async function verifyJWT(token) {
   const secret = new TextEncoder().encode(process.env.SECRET_KEY);
   return await jwtVerify(token, secret);

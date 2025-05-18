@@ -3,7 +3,7 @@ import connection from "@/app/lib/config/connection";
 import Instructor from '@/app/models/instructor.model';
 
 export async function POST(Req) {
-  const {firstName, lastName, middleName, emailAddress,contact} = await Req.json()
+  const {firstName, lastName, middleName, emailAddress,contactNumber} = await Req.json()
      
     if(!firstName) return NextResponse.json({message: "s"}, {status: 404})
     try {
@@ -13,12 +13,12 @@ export async function POST(Req) {
             lastName,
             middleName,
             emailAddress,
-            contact
+            contactNumber
           })
           return NextResponse.json({message: "inserted"}, {status: 201})
     } catch (error) {
       return NextResponse.json(
-        { success: false, message: 'Invalid JSON input' },
+        { success: false, message: 'Invalid JSON input', error: error.message },
         { status: 400 }
       );
     }   

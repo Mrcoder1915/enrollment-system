@@ -4,7 +4,6 @@ const instructorSchema = new mongoose.Schema({
   departmentID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "department",
-    required: true,
   },
   status: {
     type: String,
@@ -16,6 +15,10 @@ const instructorSchema = new mongoose.Schema({
     required: true,
   },
   lastName: {
+    type: String,
+    required: true,
+  },
+  middleName: {
     type: String,
     required: true,
   },
