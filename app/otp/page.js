@@ -40,10 +40,9 @@ const [enterotp, setenterotp] = useState(0);
         <p className="text-lg mb-6">Hello, student</p>
         <input
           type="number"
-         
+          maxLength='6s'
           onChange={(e) => setenterotp(e.target.value)}
           className="w-full border border-red-300  rounded-md p-3 mb-6 text-center text-lg  shadow-xl/black bg-gray-300"
-          maxLength="6"
           placeholder="Enter OTP"
         />
         <p className="mb-6 text-sm text-black-600 ">

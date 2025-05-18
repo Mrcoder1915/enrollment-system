@@ -13,15 +13,8 @@
     "@react-pdf/renderer": "^4.3.0",
     "bcryptjs": "^3.0.2",
     "dotenv": "^16.5.0",
-<<<<<<< HEAD
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.13.2",
-=======
-    "jose": "^6.0.11",
-    "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.16.0",
-    "mongoose": "^8.14.2",
->>>>>>> master
     "next": "15.2.4",
     "nodemailer": "^6.10.1",
     "react": "^19.0.0",
