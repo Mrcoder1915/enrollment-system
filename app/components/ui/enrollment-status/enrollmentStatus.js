@@ -5,8 +5,10 @@ import Table from './table'
 
 const enrollmentStatus = () => {
     const {show} = useContext(dashboardContext)
-    const [program , setProgram] = useState("")
-    const [semester, setSemester] = useState(0)
+    const [department , setProgram] = useState("")
+    const [semester, setSemester] = useState(1)
+    console.log("department:",department);
+    console.log("enrollment status rerender");
     
   return (
     <div className={`w-full h-[80vh] absolute  flex-icenter flex-col transition-all ease-in duration-300 ${show == 3? "translate-x-[0] visible" : "translate-x-[-200%]" }`}>
@@ -15,16 +17,14 @@ const enrollmentStatus = () => {
               <label>Department:</label>
               <select className='w-[60%] border-[2px] border-solid border-black' onChange={(e) => setProgram(e.target.value)}>
                   <option></option>
-                  <option>BSIT</option>
-                  <option>BSHM</option>
-                  <option>BSBA</option>
-                  <option>BSE</option>
+                  <option value={"CICT"}>CICT</option>
+                  <option value={"CMBT"}>CMBT</option>
+                  <option>COE</option>
               </select>
             </div>
             <div className='w-70  flex-rows gap-1'>
               <label>Semester:</label>
               <select className='w-[40%] border-[2px] border-solid border-black' onChange={(e) => setSemester(e.target.value)}>
-                  <option></option>
                   <option value={1}>1st Sem</option>
                   <option value={2}>2nd Sem</option>
               </select>
@@ -46,7 +46,7 @@ const enrollmentStatus = () => {
             </div>
             {/* tables */}
             <div className='flex w-full  h-full absolute overflow-y-scroll hide-scrollbar' >
-              <Table program={program} semester={semester}/>
+              <Table department={department} semester={semester}/>
             </div>
         </div>
     </div>

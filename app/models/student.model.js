@@ -54,15 +54,23 @@ const studentSchema = new mongoose.Schema({
     program: {
         type: String,
         enum: ['BSIT', "BSBA", "BSE", "BSHM"],
-
     },
     YearLevel:{
         type: Number,
+<<<<<<< HEAD
         
+=======
+    },
+    academicYear: {
+        type: Number,
+>>>>>>> master
     },
     requirements: {
         type: Array,
     
+    },
+    image: {
+        type: String,
     }
 })
 

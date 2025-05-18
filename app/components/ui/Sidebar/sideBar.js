@@ -20,7 +20,7 @@ const sideBar = () => {
               {/* this is the sidebar */}
               <div className='w-full h-[20%] flex items-center justify-center gap-2.5'> 
                 <div className='w-25 h-[100px] flex items-center'>
-                  <img className='w-h-full' src='/neustlogo-nobg.png'/> 
+                  <img className='w-h-full' src='/usneLogo.png'/> 
                 </div>
                 <h1 className='text-5xl font-bold text-gradient-primary'>USNE</h1>
               </div>
@@ -47,7 +47,9 @@ const sideBar = () => {
                         return (
                           <li key={index} className={
                               `${activeColor(item.id, "btn-success hover:bg-[#ffd700]")}`}
-                              onClick={() => showDetails(item.id)}>
+                              onClick={() => {showDetails(item.id);
+                                 if (item?.onclick) item.onclick();
+                              }}>
                               <i>{item.icon}</i>
                               <div className={
                                   `${activeColor(item.id, "text-[#8b0606] ")}`}>
