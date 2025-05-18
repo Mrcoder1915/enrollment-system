@@ -8,9 +8,10 @@ const generateotp =() =>{
 
     return random
 }
-const otp =generateotp()
+
 export async function POST(Req){
-    const {Email} = await Req.json()
+    const {Email} = await Req .json()
+    const otp = generateotp()
     try {
         if (!Email) return NextResponse.json({message: "Email not found"},{status: 404})
      
@@ -31,8 +32,18 @@ export async function POST(Req){
                 to: Email,
                 
                 subject: "otp",
+               
+                text: 
+                `Dear Student,
+
+                Thank you for signing up with us. To 
+                verify your email, please enter the
+                following
+
+                One Time Password:${otp}
                 
-                text: `hello this is your otp ${otp}`,
+                This OTP is valid for 10 minutes from the receipt of this email.`,
+                
                 
                 };
                 

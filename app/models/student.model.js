@@ -58,7 +58,7 @@ const studentSchema = new mongoose.Schema({
     },
     YearLevel:{
         type: Number,
-        required: true
+        
     },
     requirements: {
         type: Array,
