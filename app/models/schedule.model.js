@@ -10,7 +10,7 @@ const scheduleSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Year_section"
    },
-   courseIDs: [
+   courseID: [
     {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Course",

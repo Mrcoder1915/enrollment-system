@@ -1,131 +1,104 @@
 "use client";
 
-import React, { useEffect, useState, useContext } from "react";
-import { useRouter } from "next/navigation";
-import { dashboardContext } from "@/app/providers/dashboardProvider";
+import React, { useEffect, useContext, useState } from "react";
+import { dashboardContext } from '@/app/providers/dashboardProvider';
 
-const ProfileForm = () => {
-  const router = useRouter();
+export default function InstructorSchedule() {
   const { show } = useContext(dashboardContext);
-
-  const [profile, setProfile] = useState({
-    _id: "",
-    program: "",
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    emailAddress: "",
-    contactNumber: "",
-  });
+  const [scheduleData, setScheduleData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+console.log(scheduleData);
 
   useEffect(() => {
-    fetch("/api/instructor/instructorProfile", { cache: "no-store" })
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          setProfile(data[0]);
-        }
-      })
-      .catch((err) => console.error("Fetch error:", err));
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setProfile((prev) => ({ ...prev, [name]: value }));
-  };
+  useEffect(() => {
+    const fetchSchedule = async () => {
+      try {
+        const res = await fetch(`/api/instructor/instructorProfile?instructorID=681cb3d0647a57329227988c`);
+        if (!res.ok) throw new Error("Failed to fetch schedule");
+        const data = await res.json();
+        setScheduleData(data);
+      } catch (err) {
+        console.error(err);
+        setError("Error loading schedule.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const handleSubmit = async () => {
-    if (!profile.emailAddress) {
-      alert("Email is required");
-      return;
-    }
-
-    try {
-      const res = await fetch("/api/instructor/instructorProfile", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(profile),
-      });
-
-      if (!res.ok) throw new Error();
-      router.refresh();
-      alert("Profile updated successfully!");
-    } catch (err) {
-      console.error("Update error:", err);
-      alert("Failed to update profile.");
-    }
-  };
+    fetchSchedule();
+  }, []);
 
   return (
     <div
-        className={`w-full h-[80vh] absolute top-5 left-0 z-10 flex items-center justify-center flex-col transition-all ease-in duration-300 ${
-        show === 1 ? "translate-x-0 visible" : "translate-x-[-200%]"
-    }`}
->
+      className={`absolute top-5 right-5 left-5 w-full md:w-[calc(100%-40px)] h-full bg-white z-30 overflow-y-auto transition-transform duration-300 ease-in-out ${
+        show === 2 ? "translate-x-0" : "translate-x-full"
+      }`}
+    >
+      <style>{`
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .table-container { max-height: 400px; overflow-y: auto; }
+        thead th { position: sticky; top: 0; background-color: #D1D5DB; }
+      `}</style>
 
-      <div className="w-[95%] min-h-[45vh] mt-4 bg-white border border-gray-200 rounded-2xl shadow-2xl z-0">
-        <div className="h-15 bg-tertiary flex items-center pl-4 text-white rounded-t-2xl">
-          <h1 className="text-2xl font-semibold">My Profile</h1>
-        </div>
-        <form className="p-10 flex flex-col gap-3">
-          {[
-            {
-              label: "Program",
-              name: "program",
-              type: "select",
-              options: [
-                "",
-                "Bachelor of Science in Information Technology",
-                "Bachelor of Science in Business Administration",
-                "Bachelor of Secondary Education",
-                "Bachelor of Science in Hospitality Management",
-              ],
-            },
-            { label: "First Name", name: "firstName" },
-            { label: "Middle Name", name: "middleName" },
-            { label: "Last Name", name: "lastName" },
-            { label: "Email Address", name: "emailAddress", type: "email" },
-            { label: "Contact", name: "contactNumber" },
-          ].map(({ label, name, type = "text", options }) => (
-            <div className="flex items-center gap-4" key={name}>
-              <label className="w-[120px]">{label}:</label>
-              {type === "select" ? (
-                <select
-                  name={name}
-                  value={profile[name]}
-                  onChange={handleChange}
-                  className="w-[50%] border rounded px-3 py-1.5"
-                >
-                  {options.map((opt) => (
-                    <option key={opt || "placeholder"} value={opt}>
-                      {opt || "Select…"}
-                    </option>
-                  ))}
-                </select>
+      <div className="flex flex-col items-center pt-24 px-4">
+        <div className="rounded-md w-full max-w-6xl shadow-md">
+          <h2 className="text-3xl text-white px-4 py-2 rounded-sm bg-red-900">
+            Schedule
+          </h2>
+
+          <div className="grid grid-cols-2 bg-gray-300 text-sm font-semibold">
+            <div className="p-3 border-r border-gray-500">Academic Year/Semester:</div>
+            <div className="p-3">2024-2025 - 1st Semester</div>
+          </div>
+
+          <div className="border border-gray-300">
+            <div className="table-container hide-scrollbar">
+              {loading ? (
+                <div className="p-4 text-center text-gray-600">Loading schedule...</div>
+              ) : error ? (
+                <div className="p-4 text-center text-red-600">{error}</div>
               ) : (
-                <input
-                  type={type}
-                  name={name}
-                  value={profile[name]}
-                  onChange={handleChange}
-                  className="w-[50%] border rounded px-3 py-1.5"
-                />
+                <table className="min-w-full text-sm border-collapse">
+                  <thead>
+                    <tr>
+                      <th className="px-4 py-2 border font-semibold">Program</th>
+                      <th className="px-4 py-2 border font-semibold">Course/Subject</th>
+                      <th className="px-4 py-2 border font-semibold">Day</th>
+                      <th className="px-4 py-2 border font-semibold">Start Time</th>
+                      <th className="px-4 py-2 border font-semibold">End Time</th>
+                      <th className="px-4 py-2 border font-semibold">Section</th>
+                      <th className="px-4 py-2 border font-semibold">Room#</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {scheduleData.map((item, index) => (
+                      <tr key={index} className="text-center">
+                        <td className="px-4 py-2 border">{item.courseID?.programID?.programName || "N/A"}</td>
+                        <td className="px-4 py-2 border">
+                          {item.courseID?.courseCode} ({item.courseID[0]?.courseName})
+                        </td>
+                        <td className="px-4 py-2 border">{item.day}</td>
+                        <td className="px-4 py-2 border">{item.startTime}</td>
+                        <td className="px-4 py-2 border">{item.endTime}</td>
+                        <td className="px-4 py-2 border">{item.year_sectionID?.value}</td>
+                        <td className="px-4 py-2 border">{item.room || "TBA"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               )}
             </div>
-          ))}
-        </form>
-      </div>
-
-      <div className="w-[95%] mt-4">
-        <button
-          onClick={handleSubmit}
-          className="btn-danger px-6 py-2 rounded-md shadow-md text-[#ffd700]"
-        >
-          Update
-        </button>
+          </div>
+        </div>
       </div>
     </div>
   );
-};
-
-export default ProfileForm;
+}
