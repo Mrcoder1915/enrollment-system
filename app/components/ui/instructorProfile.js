@@ -58,11 +58,10 @@ const ProfileForm = () => {
 
   return (
     <div
-        className={`w-full h-[80vh] absolute top-5 left-0 z-10 flex items-center justify-center flex-col transition-all ease-in duration-300 ${
+      className={`w-full h-[80vh] absolute top-5 left-0 z-10 flex items-center justify-center flex-col transition-all ease-in duration-300 ${
         show === 1 ? "translate-x-0 visible" : "translate-x-[-200%]"
-    }`}
->
-
+      }`}
+    >
       <div className="w-[95%] min-h-[45vh] mt-4 bg-white border border-gray-200 rounded-2xl shadow-2xl z-0">
         <div className="h-15 bg-tertiary flex items-center pl-4 text-white rounded-t-2xl">
           <h1 className="text-2xl font-semibold">My Profile</h1>

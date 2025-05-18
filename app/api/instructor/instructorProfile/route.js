@@ -6,10 +6,10 @@ import { ObjectId } from "mongodb";
 // GET handler: Fetch instructor profile
 export async function GET() {
   try {
-    const cookieStore = await cookies(); // Await cookies()
+    const cookieStore = await cookies();
     let instructorID = cookieStore.get("instructorID")?.value;
 
-    const defaultInstructorID = "681f5955d3306c39c4b1b9d3";
+    const defaultInstructorID = "6824c0500d4944b8fbb7c9e8";
 
     const validID = ObjectId.isValid(instructorID)
       ? instructorID
@@ -25,6 +25,10 @@ export async function GET() {
         headers: { "Content-Type": "application/json" },
       });
     }
+
+    // Ensure middleName and program exist
+    if (!profile[0].middleName) profile[0].middleName = "";
+    if (!profile[0].program) profile[0].program = "";
 
     return new Response(JSON.stringify(profile), {
       status: 200,
@@ -60,6 +64,12 @@ export async function PUT(req) {
       });
     }
 
+    // Force middleName and program to exist as strings
+    if (!updateData.middleName) updateData.middleName = "";
+    if (!updateData.program) updateData.program = "";
+
+    console.log("Update Data Before UpdateOne:", updateData);
+
     const result = await Instructor.updateOne(
       { _id: new ObjectId(_id) },
       { $set: updateData }
@@ -71,6 +81,8 @@ export async function PUT(req) {
         headers: { "Content-Type": "application/json" },
       });
     }
+
+    console.log("Update Result:", result);
 
     return new Response(
       JSON.stringify({ message: "Profile updated successfully" }),

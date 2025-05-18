@@ -31,6 +31,7 @@ const page = () => {
         
         {
            userAccess === "instructor" && <>
+                <ProfileForm />
                 <GradeEntry />
                 <StudentList />
                 <InstructorSchedule />
