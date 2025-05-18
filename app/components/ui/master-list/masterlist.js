@@ -31,6 +31,7 @@ const Masterlist = () => {
       studentID?.lastName?.toLowerCase().includes(term) ||
       studentID?.middleName?.toLowerCase().includes(term) ||
       studentID?._id?.toLowerCase().includes(term) ||
+      studentID?.program?.toLowerCase().includes(term) ||
       studentID?.section?.toLowerCase().includes(term)
     );
 
