@@ -6,18 +6,32 @@ import { RiShutDownLine } from "react-icons/ri";
 import { AiFillSchedule } from "react-icons/ai";
 import {dashboardContext} from '../../../providers/dashboardProvider'
 import { useContext } from "react";
+import { useRouter } from "next/navigation";
 
 
  const Navigation = () => {
     const {userAccess} = useContext(dashboardContext) 
-
+    const router = useRouter()
     const getUserView = (registrar, student, instructor) => {
         return  userAccess == "registrar"
         ? registrar
         :userAccess == "instructor"
         ? instructor
-        : student;
+        :userAccess == "student"
+        ? student
+        : null
    };
+
+   const Logout = async () => {
+      try {
+        const res = await fetch("/api/Logout")
+        if(res.ok){
+          router.push("/")
+        }
+      } catch (error) {
+        throw new error
+      }
+   }
 
  const nav = [
          { 
@@ -51,7 +65,8 @@ import { useContext } from "react";
           {
             id: 6,
             icon: <RiShutDownLine />,
-            text: "Log Out"
+            text: "Log Out",
+            onclick:  () => Logout()
           }
     ];
     return nav

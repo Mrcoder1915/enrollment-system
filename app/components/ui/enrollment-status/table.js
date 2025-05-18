@@ -1,39 +1,83 @@
   "use client"
-  import React, { useEffect, useState } from 'react'
+  import React, { useCallback, useEffect, useState } from 'react'
 
 
-  const enrollStatusTable = () => {
+  const EnrollStatusTable = (props) => {
       const [enrollDetails, setEnrollDetails] = useState([])
-      console.log(enrollDetails)
+      const [departmentProgram, setDeparmentProgram] = useState({})
+    
+      const approveEnrollment =  useCallback(async (ID) => {
+        try{
+           await fetch("/api/registrar/studentenrollment/approveEnrollment",{
+          method: "POST",
+          headers: {
+            "Content-Type":"application/json"
+          },
+          body: JSON.stringify({ studentID: ID, approve: true})
+        })
+        const enrollStudent = await fetch("/api/registrar/studentenrollment");
+        const data = await enrollStudent.json()
+        setEnrollDetails(data) 
+        }catch(error){
+          console.log("error in approve enrollment: ",error)
+        }
+        
+      },[])
+
+      const deleteEnrollment =  useCallback(async (ID) => {
+        try {
+             await fetch("/api/registrar/studentenrollment/deleteEnrollment",{
+            method: "POST",
+            headers: {
+              "Content-Type":"application/json"
+            },
+            body: JSON.stringify({studentID: ID})
+          })
+          const enrollStudent = await fetch("/api/registrar/studentenrollment");
+          const data = await enrollStudent.json()
+          setEnrollDetails(data) 
+        } catch (error) {
+           console.log("error in delete enrollment: ",error)
+        }
+       
+      },[])
       
       useEffect(() => {
+        try {
           async function enroll() {
-              const enrollStudent = await fetch("http://localhost:3000/api/studentenrollment");
+              const enrollStudent = await fetch("/api/registrar/studentenrollment");
               const data = await enrollStudent.json()
-              setEnrollDetails(prev => prev = data)         
+              setEnrollDetails(data)
+              
+              const department = await fetch("/api/registrar/studentenrollment/department");
+              const departmentdata = await department.json()
+              setDeparmentProgram(departmentdata)
           }
           enroll()
+        } catch (error) {
+           console.log("error in getting enrollment data: ",error)
+        }
+          
       }, [])
       
-      const getUniqueEnrollments = (enrollments) => {
-          const uniqueEnrollmentKeys = new Set();
-          const uniqueEnrollmentData = [];
-      
-          enrollments.forEach((enrollment) => {
-            // Create a unique key for each enrollment based on studentID and courseID.
-            const enrollmentKey = enrollment.studentID._id;
-      
-            if (!uniqueEnrollmentKeys.has(enrollmentKey)) {
-              uniqueEnrollmentKeys.add(enrollmentKey);
-              uniqueEnrollmentData.push(enrollment);
-            }
-          });
-      
-          return uniqueEnrollmentData;
-        };
 
-      const ustudent = getUniqueEnrollments(enrollDetails)
-      console.log("inique: ",ustudent)
+      const ustudent = enrollDetails
+      
+const filterdstudents = ustudent.filter((student) => {
+  const studentProgram = student.student?.program;
+
+  const filterByDepartment = props.department
+    ? departmentProgram[props.department]?.includes(studentProgram)
+    : true;
+
+  const filterBySemester = props.semester
+    ? student.courses[0]?.semester == props.semester
+    : true;
+
+  return filterByDepartment && filterBySemester;
+});
+      
+      
       
     return (
       <table className='table overflow-y-hidden'>
@@ -51,19 +95,19 @@
               </tr>
           </thead>
           <tbody>
-          {ustudent?.map((info) => (
+          {filterdstudents?.map((info) => (
               <tr key={info._id}>
                   <td>{info._id}</td>
-                  <td>{info.studentID?.lastName}</td>
-                  <td>{info.studentID?.firstName}</td>
-                  <td>{info.studentID?.middleName}</td>
-                  <td>{info.studentID?._id}</td>
-                  <td>{info.courseID.year}</td>
-                  <td>{info.courseID.programID.programCode}</td>
+                  <td>{info.student?.lastName}</td>
+                  <td>{info.student?.firstName}</td>
+                  <td>{info.student?.middleName}</td>
+                  <td>{info.student?._id}</td>
+                  <td>{info.student?.yearLevel}</td>
+                  <td>{info.student?.program}</td>
                   <td ><button className='w-[70px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>VIEW</button></td>
                   <td colSpan={2}>
-                      <button className='w-[80px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>Approved</button>
-                      <button className='w-[70px] border-[1px] border-solid border-[#8b0606] text-[#ffd700] font-medium rounded-[5px] btn-danger ml-2.5'>Failed</button>
+                      <button onClick={() =>  {approveEnrollment(info.student?._id)}} className='w-[80px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>Approved</button>
+                      <button onClick={() =>  {deleteEnrollment(info.student?._id)}} className='w-[70px] border-[1px] border-solid border-[#8b0606] text-[#ffd700] font-medium rounded-[5px] btn-danger ml-2.5'>Failed</button>
                   </td>
               </tr>
           ))}
@@ -84,4 +128,4 @@
     )
   }
 
-  export default enrollStatusTable
+  export default React.memo(EnrollStatusTable)
