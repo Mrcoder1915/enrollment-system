@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
 
-const PUBLIC_ROUTES = ['/', '/registrarLogin', "/studentLogin", "/InstructorPortal","/studentverification", "/InstructorProfileVerification"];
+const PUBLIC_ROUTES = ['/', '/registrarLogin', "/studentLogin", "/InstructorPortal","/studentverification", "/InstructorProfileVerification","/StudentAdmission"];
 
 const ROLE_API_ACCESS = {
   registrar: ['/api/registrar'],
