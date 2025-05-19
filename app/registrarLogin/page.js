@@ -44,7 +44,7 @@ const Page = () => {
         <h1 className="text-white text-4xl font-serif mb-1">Registrar Portal</h1>
         <div className="bg-white rounded-3xl shadow-xl p-6 w-[350px] mx-auto">
           <img
-            src="/neustlogo-nobg.png"
+            src="/usneLogo.png"
             alt="University Logo"
             className="h-40 mx-auto mb-2"
           />
