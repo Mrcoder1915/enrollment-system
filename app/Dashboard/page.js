@@ -13,6 +13,7 @@ import AdmissionTable from '../components/ui/admission'
 import StudentProfile from '../components/ui/studentProfile'
 import ProfileForm from '../components/ui/instructorProfile'
 import MasterList from '../components/ui/master-list/masterlist'
+import ViewDocs from "@/app/components/ui/enrollment-status/View"
 
 const page = () => {
   const { userAccess } = useContext(dashboardContext);
@@ -26,6 +27,7 @@ const page = () => {
                <AdmissionTable />               
                <EnrollmentStatus />
                <MasterList />
+               <ViewDocs />
                <FacultyAccount />
            </>
         }
