@@ -18,7 +18,7 @@ export async function GET(Req){
            let accessToken
                switch (decoded.role) {
                     case "student":
-                        accessToken = generateAccessToken({ studentID: decoded.id, role: decoded.role });
+                        accessToken = generateAccessToken({ studentID: decoded.id, role: decoded.role});
                         break;
                     case "registrar":
                         accessToken = generateAccessToken({ registrarID: decoded.id, role: decoded.role });
