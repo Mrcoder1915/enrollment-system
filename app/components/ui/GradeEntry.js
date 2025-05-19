@@ -16,28 +16,17 @@ const GradeTable = () => {
   };
 
   
-  // const getEquivalentGrade = (average) => {
-  //   const avg = parseFloat(average);
-  //   if (avg >= 1.00 && avg <= 1.12) return "1.00";
-  //   if (avg >= 1.13 && avg <= 1.37) return "1.25";
-  //   if (avg >= 1.38 && avg <= 1.62) return "1.50";
-  //   if (avg >= 1.63 && avg <= 1.87) return "1.75";
-  //   if (avg >= 1.88 && avg <= 2.12) return "2.00";
-  //   if (avg >= 2.13 && avg <= 2.37) return "2.25";
-  //   if (avg >= 2.38 && avg <= 2.62) return "2.50";
-  //   if (avg >= 2.63 && avg <= 2.87) return "2.75";
-  //   if (avg >= 2.88 && avg <= 3.15) return "3.00";
-  //   if (avg > 3.15 && avg <= 5.00) return "5.00";
-  //   return "";
-  // };
+
 
   const getRemarks = (gradeData) => {
     const semester = parseFloat(gradeData.semester);
     if (!isNaN(semester)) {
       if (semester <= 3.00) return { color: 'text-green-600' };
-      if (semester > 3.00) return { color: 'text-red-600' };
+      if (semester > 3.00) return { color: 'text-red-600' }
+
     }
-    return { color: '' };
+    
+        return {color: "text-yellow-600"}
   };
 console.log(grades);
 useEffect(() => {

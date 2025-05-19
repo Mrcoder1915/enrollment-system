@@ -165,12 +165,27 @@ export async function POST(req) {
       const avg = (parseFloat(midtermGrade) + parseFloat(finalGrade)) / 2;
       let remarks = "inc";
 
-      if (avg <= 3.00) remarks = "passed";
-      else if (avg > 3.00) remarks = "failed";
+        const getEquivalentGrade = (average) => {
+          const avg = parseFloat(average);
+          if (avg >= 1.00 && avg <= 1.12) return 1.00;
+          if (avg >= 1.13 && avg <= 1.37) return 1.25;
+          if (avg >= 1.38 && avg <= 1.62) return 1.50;
+          if (avg >= 1.63 && avg <= 1.87) return 1.75;
+          if (avg >= 1.88 && avg <= 2.12) return 2.00;
+          if (avg >= 2.13 && avg <= 2.37) return 2.25;
+          if (avg >= 2.38 && avg <= 2.62) return 2.50;
+          if (avg >= 2.63 && avg <= 2.87) return 2.75;
+          if (avg >= 2.88 && avg <= 3.15) return 3.00;
+          if (avg > 3.15 && avg <= 5.00) return 5.00;
+          return null;
+        };
+
+      if (getEquivalentGrade(avg) <= 3.00 && getEquivalentGrade(avg) >= 1.00) remarks = "passed";
+      else if (getEquivalentGrade(avg) > 3.00) remarks = "failed";
 
       const grade = await Grade.findOneAndUpdate(
         { studentID, instructorID, courseID },
-        { midtermGrade, finalGrade, grade_computation: avg, remarks },
+        { midtermGrade, finalGrade, grade_computation: getEquivalentGrade(avg), remarks },
         { upsert: true, new: true }
       );
 
