@@ -21,113 +21,116 @@ const Masterlist = () => {
   const masterList = enrollDetails.filter((student) => student.approve === true);
 
   useEffect(() => {
-  const term = searchTerm.toLowerCase();
+    const term = searchTerm.toLowerCase();
 
-  const filtered = masterList.filter((student) => {
-    const { studentID } = student;
+    const filtered = masterList.filter((student) => {
+      const { studentID } = student;
 
-    const matchesSearch = (
-      studentID?.firstName?.toLowerCase().includes(term) ||
-      studentID?.lastName?.toLowerCase().includes(term) ||
-      studentID?.middleName?.toLowerCase().includes(term) ||
-      studentID?._id?.toLowerCase().includes(term) ||
-      studentID?.program?.toLowerCase().includes(term) ||
-      studentID?.section?.toLowerCase().includes(term)
-    );
+      const matchesSearch = (
+        studentID?.firstName?.toLowerCase().includes(term) ||
+        studentID?.lastName?.toLowerCase().includes(term) ||
+        studentID?.middleName?.toLowerCase().includes(term) ||
+        studentID?._id?.toLowerCase().includes(term) ||
+        studentID?.program?.toLowerCase().includes(term) ||
+        studentID?.section?.toLowerCase().includes(term)
+      );
 
-   const programToDept = {
-       BSIT: 'CICT',
-       BSCS: 'CICT',
-       BSBA: 'CMBT',
-       BSE: 'COE',
-  };
+      const programToDept = {
+        BSIT: 'CICT',
+        BSCS: 'CICT',
+        BSBA: 'CMBT',
+        BSE: 'COE',
+      };
 
-  const matchesDepartment = selectedDepartment
-     ? programToDept[studentID?.program] === selectedDepartment
-     : true;
+      const matchesDepartment = selectedDepartment
+        ? programToDept[studentID?.program] === selectedDepartment
+        : true;
 
+      return matchesSearch && matchesDepartment;
+    });
 
-
-    return matchesSearch && matchesDepartment;
-  });
-
-  setFilteredStudents(filtered);
-}, [searchTerm, masterList, selectedDepartment]);
-
+    setFilteredStudents(filtered);
+  }, [searchTerm, masterList, selectedDepartment]);
 
   return (
-    <div className={`w-full h-[80vh] absolute flex-icenter flex-col transition-all ease-in duration-300 ${show === 4 ? "translate-x-[0] visible" : "translate-x-[-200%]"}`}>
-      <div className='w-[95%] h-15 mb-2.5 flex-icenter gap-10 justify-between'>
-        <div className='w-70 h-7 mb-5 flex-rows gap-1'>
-          <label>Department:</label>
-          <select className="w-[60%] border-[2px] border-solid border-black" value={selectedDepartment}onChange={(e) => setSelectedDepartment(e.target.value)}> 
+    <div
+      className={`w-full h-[80vh] absolute flex flex-col items-center justify-center transition-all ease-in duration-300 ${show === 4 ? "translate-x-0 visible" : "-translate-x-[200%]"}`}
+    >
+      <div className="flex h-full w-[95%] flex-col rounded">
+        
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <label className="font-semibold">Department:</label>
+            <select
+              className="border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={selectedDepartment}
+              onChange={(e) => setSelectedDepartment(e.target.value)}
+            >
               <option value="">All</option>
               <option value="CICT">CICT</option>
               <option value="CMBT">CMBT</option>
               <option value="COE">COE</option>
-          </select>
-
-        </div>
-
-        <div className='mb-6'>
-          <label>Search:</label>
-          <input
-            type="text"
-            name='search'
-            id='search'
-            className='w-[60%] border-[2px] border-solid border-black ml-1'
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-      </div>
-
-      <div className='w-[95%] h-10 mb-2.5 mt-20 flex-icenter gap-10'>
-        <div className='w-full min-h-[95%] relative overflow-hidden bg-white shadow-[4px_4px_10px_rgba(0,0,0,.40)] z-0'>
-          <div className='w-full h-8 bg-tertiary pl-1 text-white pt-0.5 '>
-            <h1>Master List</h1>
+            </select>
           </div>
 
-          <div className="hide-scrollbar overflow-y-scroll w-full h-[95%] border rounded-b shadow-2xl">
-            <table className='table overflow-y-hidden'>
-              <thead>
-                <tr>
-                  <th>No.</th>
-                  <th>Last Name</th>
-                  <th>First Name</th>
-                  <th>Middle Name</th>
-                  <th>Student ID</th>
-                  <th>Year Level</th>
-                  <th>Program</th>
-                  <th>Section</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredStudents.length > 0 ? (
-                  filteredStudents.map((student, index) => (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{student?.studentID?.lastName}</td>
-                      <td>{student?.studentID?.firstName}</td>
-                      <td>{student?.studentID?.middleName}</td>
-                      <td>{student?.studentID?._id}</td>
-                      <td>{student?.studentID?.yearLevel}</td>
-                      <td>{student?.studentID?.program}</td>
-                      <td>{student?.studentID?.section}</td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="8" className="text-center py-4">No results found.</td>
+          <div className="flex items-center gap-2">
+            <label className="font-semibold">Search:</label>
+            <input
+              type="text"
+              name="search"
+              id="search"
+              className="border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className="bg-tertiary text-white text-xl px-4 py-2 rounded-t">
+          Master List
+        </div>
+
+        <div className="hide-scrollbar overflow-y-scroll w-full h-[95%] border rounded-b shadow-2xl">
+          <table className="table w-full overflow-y-hidden">
+            <thead className="bg-gray-200 text-left">
+              <tr>
+                <th className="px-4 py-2">No.</th>
+                <th className="px-4 py-2">Last Name</th>
+                <th className="px-4 py-2">First Name</th>
+                <th className="px-4 py-2">Middle Name</th>
+                <th className="px-4 py-2">Student ID</th>
+                <th className="px-4 py-2">Year Level</th>
+                <th className="px-4 py-2">Program</th>
+                <th className="px-4 py-2">Section</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredStudents.length > 0 ? (
+                filteredStudents.map((student, index) => (
+                  <tr key={index} className="border-t hover:bg-gray-50">
+                    <td className="px-4 py-2">{index + 1}</td>
+                    <td className="px-4 py-2">{student?.studentID?.lastName}</td>
+                    <td className="px-4 py-2">{student?.studentID?.firstName}</td>
+                    <td className="px-4 py-2">{student?.studentID?.middleName}</td>
+                    <td className="px-4 py-2">{student?.studentID?._id}</td>
+                    <td className="px-4 py-2">{student?.studentID?.yearLevel}</td>
+                    <td className="px-4 py-2">{student?.studentID?.program}</td>
+                    <td className="px-4 py-2">{student?.studentID?.section}</td>
                   </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="8" className="px-4 py-4 text-center text-gray-500">
+                    No results found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   )
 }
 
-export default Masterlist
+export default Masterlist;
