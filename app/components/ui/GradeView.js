@@ -4,7 +4,7 @@ import { dashboardContext } from '@/app/providers/dashboardProvider';
 
 const ReportOfGrades = () => {
   const { show } = useContext(dashboardContext);
-  const [courses, setGrades] = useState([]);
+  const [grades, setGrades] = useState([]);
   const [semester, setSemester] = useState('1st Semester');
 
   useEffect(() => {
@@ -40,31 +40,33 @@ const ReportOfGrades = () => {
           <option value="2nd Semester">2nd Semester</option>
         </select>
       </div>
-
-      <table className="w-[95%] h-[400px] border-collapse shadow overflow-hidden">
-        <thead>
+    <div className='flex w-full  overflow-y-scroll hide-scrollbar'>
+      <table className="table overflow-y-hidden">
+        <thead className='border-0 border-black border-solid'>
           <tr className="bg-gray-200">
-            <th className="p-4 border">No.</th>
-            <th className="p-4 border">Course Code</th>
-            <th className="p-4 border">Course Name</th>
-            <th className="p-4 border">Instructor</th>
-            <th className="p-4 border">Final Grade</th>
-            <th className="p-4 border">Remarks</th>
+            <th className="">No.</th>
+            <th className="">Course Code</th>
+            <th className="">Course Name</th>
+            <th className="">Instructor</th>
+            <th className="">Final Grade</th>
+            <th className="">Remarks</th>
           </tr>
         </thead>
         <tbody>
-          {courses.map((course, index) => (
-            <tr key={course._id}>
-              <td className="p-2 border">{index + 1}</td>
-              <td className="p-2 border">{course.courseID.code}</td>
-              <td className="p-2 border">{course.courseID.name}</td>
-              <td className="p-2 border">{course.instructorID}</td>
-              <td className="p-2 border">{course.finalGrade}</td>
-              <td className="p-2 border">{course.remarks}</td> 
+          {grades.map((course, index) => (
+            <tr key={index}>
+              <td >{index + 1}</td>
+              <td >{course.courseCode}</td>
+              <td >{course.courseName}</td>
+              <td >{`${course.instructorFirstName} ${course.instructorLastName}`}</td>
+              <td >{course.finalGrade}</td>
+              <td >{course.remarks}</td> 
             </tr>
           ))}
+           
         </tbody>
       </table>
+      </div>
     </div>
   );
 };

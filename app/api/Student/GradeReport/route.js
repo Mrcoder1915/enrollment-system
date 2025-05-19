@@ -1,41 +1,51 @@
 import connection from '@/app/lib/config/connection';
-import Grade from '@/app/models/Grade.model';
+import Grade from '@/app/models/GradeEntry.model';
 import Instructor from '@/app/models/instructor.model';
 import Course from '@/app/models/course.model';
+import { NextResponse } from 'next/server';
+import { ObjectId } from 'mongodb';
 
 
 export async function GET() {
+  await connection()
   try {
-    await connection();
-    await Instructor();
-    await Course();
- 
-    const grades = await Grade.find({})
-      .populate('courseID')
-      .populate('instructorID');
-
-    const formatted = grades.map((grade) => ({
-      _id: grade._id,
-      courseCode: grade.courseID?.courseCode || 'N/A',
-      courseName: grade.courseID?.courseName || 'N/A',
-      instructor: `${grade.instructorID?.firstName || ''} ${grade.instructorID?.lastName || ''}`.trim() || 'N/A',
-      finalGrade: grade.finalGrade,
-      remarks: grade.remarks,
-    }));
-
-    return new Response(JSON.stringify(formatted), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
-
+    const Grades = await Grade.aggregate([
+      {
+        $match: {studentID: new ObjectId("67f7e4a86dcdfbab210025bc")}
+      },
+      {
+        $lookup: {
+            from: "instructors",
+            localField: "instructorID",
+            foreignField: "_id",
+            as: "instructor"
+        }
+      },
+      { $unwind: { path: '$instructor', preserveNullAndEmptyArrays: true } },
+      {
+        $lookup: {
+            from: "courses",
+            localField: "courseID",
+            foreignField: "_id",
+            as: "course"
+        }
+      },
+      { $unwind: { path: '$course', preserveNullAndEmptyArrays: true } },
+      {
+        $project: {
+          _id: 0,
+          courseName: "$course.courseName",
+          courseCode: "$course.courseCode",
+          instructorFirstName: "$instructor.firstName",
+          instructorLastName: "$instructor.lastName",
+          finalGrade: "$finalGrade",
+          remarks: "$remarks"
+        }
+      }
+    ])
+    return NextResponse.json((Grades), {status: 200})
   } catch (error) {
-    console.error('Error fetching grades:', error);
-    return new Response(JSON.stringify({
-      message: 'Failed to fetch grades',
-      error: error.message,
-    }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return NextResponse.json({message: error.message}, {status: 500})
   }
+   
 }
