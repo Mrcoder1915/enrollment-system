@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
 
-const PUBLIC_ROUTES = ['/', '/registrarLogin', "/studentLogin", "/InstructorPortal"];
+const PUBLIC_ROUTES = ['/', '/registrarLogin', "/studentLogin", "/InstructorPortal","/studentverification", "/InstructorProfileVerification"];
 
 const ROLE_API_ACCESS = {
   registrar: ['/api/registrar'],
@@ -50,7 +50,7 @@ console.log("token:", token);
 
   if (!token) {
     if (!isPublicPage) {
-      return NextResponse.redirect(new URL('/registrarLogin', req.url));
+      return NextResponse.redirect(new URL('/', req.url));
     }
     return NextResponse.next();
   }
@@ -71,10 +71,12 @@ console.log("token:", token);
     if(isPublicPage) {
       return NextResponse.redirect(new URL('/Dashboard', req.url));
     }
-    
+    if(!verified){
+      return NextResponse.redirect(new URL("/", req.url));
+    }
     return NextResponse.next()
   }
-  return NextResponse.next();
+   return NextResponse.next()
 }
 
 export const config = {

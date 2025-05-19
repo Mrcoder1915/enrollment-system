@@ -1,11 +1,13 @@
   "use client"
-  import React, { useCallback, useEffect, useState } from 'react'
+import { dashboardContext } from '@/app/providers/dashboardProvider'
+  import React, { useCallback, useContext, useEffect, useState } from 'react'
 
 
   const EnrollStatusTable = (props) => {
+    const {SetView, setInsertInfo} = useContext(dashboardContext)
       const [enrollDetails, setEnrollDetails] = useState([])
       const [departmentProgram, setDeparmentProgram] = useState({})
-    
+
       const approveEnrollment =  useCallback(async (ID) => {
         try{
            await fetch("/api/registrar/studentenrollment/approveEnrollment",{
@@ -104,7 +106,7 @@ const filterdstudents = ustudent.filter((student) => {
                   <td>{info.student?._id}</td>
                   <td>{info.student?.yearLevel}</td>
                   <td>{info.student?.program}</td>
-                  <td ><button className='w-[70px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>VIEW</button></td>
+                  <td ><button onClick={() => {setInsertInfo(info.student); SetView(3)}} className='w-[70px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>VIEW</button></td>
                   <td colSpan={2}>
                       <button onClick={() =>  {approveEnrollment(info.student?._id)}} className='w-[80px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>Approved</button>
                       <button onClick={() =>  {deleteEnrollment(info.student?._id)}} className='w-[70px] border-[1px] border-solid border-[#8b0606] text-[#ffd700] font-medium rounded-[5px] btn-danger ml-2.5'>Failed</button>

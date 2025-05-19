@@ -4,14 +4,19 @@ import {dashboardContext} from '@/app/providers/dashboardProvider'
 import Table from './table'
 
 const enrollmentStatus = () => {
-    const {show} = useContext(dashboardContext)
+    const {show, view } = useContext(dashboardContext)
     const [department , setProgram] = useState("")
     const [semester, setSemester] = useState(1)
-    console.log("department:",department);
     console.log("enrollment status rerender");
-    
+    const showEnrollment = () => {
+      if(show === 3 && view !== 3){
+        return "translate-x-[0] visible"
+      }else {
+          return "translate-x-[-200%]"
+      }
+    }
   return (
-    <div className={`w-full h-[80vh] absolute  flex-icenter flex-col transition-all ease-in duration-300 ${show == 3? "translate-x-[0] visible" : "translate-x-[-200%]" }`}>
+    <div className={`w-full h-[80vh] absolute  flex-icenter flex-col transition-all ease-in duration-300 ${showEnrollment()}`}>
         <div className='w-[95%] h-10 mb-2.5 flex-icenter gap-10'>
             <div className='w-70  flex-rows gap-1'>
               <label>Department:</label>
