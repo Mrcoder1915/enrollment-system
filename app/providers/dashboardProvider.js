@@ -6,7 +6,9 @@ export const dashboardContext = createContext(null);
 
 const dashboardProvider = ({children}) => {
     const [show, setShow] = useState(1)
+    const [view, setView] = useState(null)
     const [userAccess, setUserAccess] = useState(null)
+    const [insertInfo, setInsertInfo] = useState([])
     console.log("userAccess: ",userAccess)
 
 useEffect(() => {
@@ -26,12 +28,21 @@ useEffect(() => {
 
 const showDetails = (position) => {
     setShow((prev) => prev = position)
+    setView(null)
+    setInsertInfo([])
+}
+const SetView = (In) => {
+  setView(prev => prev = In)
 }
 const value = useMemo(() => ({  
     show,
     showDetails,
-    userAccess
-}),[show,setShow,showDetails])
+    userAccess,
+    view,
+    SetView,
+    setInsertInfo,
+    insertInfo
+}),[show,setShow,showDetails,SetView,setInsertInfo,view,insertInfo])
   return (
     <dashboardContext.Provider value = {value}>
         {children}

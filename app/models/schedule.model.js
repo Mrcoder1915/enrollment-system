@@ -15,8 +15,8 @@ const scheduleSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Course",
         required: true
-    }
-   ],
+    },
+   
    room:{
         type: Number,
         required: true
