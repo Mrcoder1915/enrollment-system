@@ -43,11 +43,10 @@ const Page = () => {
 
         <h1 className="text-white text-4xl font-serif mb-1">Registrar Portal</h1>
         <div className="bg-white rounded-3xl shadow-xl p-6 w-[350px] mx-auto">
-          <img
-            src="/usneLogo.png"
-            alt="University Logo"
-            className="h-40 mx-auto mb-2"
-          />
+          <div className='w-fullh-[40px] flex justify-center'>
+            <img className='w-30 z-10' src='/USNE.png' />
+          </div>
+          
           <h2
             className="text-lg font-bold text-[#990000] leading-tight"
             style={{ textShadow: '1px 1px #facc15' }}

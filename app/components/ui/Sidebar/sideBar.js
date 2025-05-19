@@ -20,7 +20,7 @@ const sideBar = () => {
               {/* this is the sidebar */}
               <div className='w-full h-[20%] flex items-center justify-center gap-2.5'> 
                 <div className='w-25 h-[100px] flex items-center'>
-                  <img className='w-h-full' src='/usneLogo.png'/> 
+                  <img className='w-h-full' src='/USNE.png'/> 
                 </div>
                 <h1 className='text-5xl font-bold text-gradient-primary'>USNE</h1>
               </div>
