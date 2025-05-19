@@ -1,27 +1,38 @@
 "use client";
-import React, { useState } from "react";
-import { useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { dashboardContext } from "@/app/providers/dashboardProvider";
 
 const StudentList = () => {
   const { show } = useContext(dashboardContext);
+  const [studentData, setStudentData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [selectedTerm, setSelectedTerm] = useState("");
 
-  const students = [
-    { id: 1, program: "BSIT", yearLevel: "2nd Year", section: "BSIT-2A", course: "Data Structures", enrolled: true },
-  ];
-
-
-  const courseEnrollment = students.reduce((acc, student) => {
-    if (!acc[student.course]) {
-      acc[student.course] = { ...student, count: 0 };
+  useEffect(() => {
+    const fetchStudentList = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/instructor/studentlist");
+      const data = await res.json();
+      setStudentData(data);
+    } catch (error) {
+      console.error("Error fetching student list:", error.message);
+      setStudentData([]);
+    } finally {
+      setLoading(false);
     }
-    if (student.enrolled) {
-      acc[student.course].count += 1;
-    }
-    return acc;
-  }, {});
+  };
+  fetchStudentList()
+  },[])
+  
+console.log("data: ",studentData);
 
-  const courseList = Object.values(courseEnrollment);
+
+
+  const handleSelect = (item) => {
+    console.log("Selected Student Group:", item);
+    // Add navigation or modal logic if needed
+  };
 
   return (
     <div
@@ -29,54 +40,71 @@ const StudentList = () => {
         show === 3 ? "translate-x-0 visible" : "translate-x-[-200%] invisible"
       }`}
     >
-
       <div className="p-5">
-
         <div className="mb-4 text-left">
           <label htmlFor="term" className="font-bold mr-2">Term:</label>
-          <select id="term" className="border border-gray-300 p-2 rounded-md">
+          <select
+            id="term"
+            // value={selectedTerm}
+            // onChange={handleTermChange}
+            className="border border-gray-300 p-2 rounded-md"
+          >
             <option value="">Select Term</option>
             <option value="1st">1st Semester</option>
             <option value="2nd">2nd Semester</option>
           </select>
         </div>
 
-        
-        <div className="max-w-10xl mx-auto bg-white shadow-[4px_4px_10px_rgba(0,0,0,0.40)] rounded-lg overflow-hidden ">
+        <div className="max-w-10xl mx-auto shadow-[4px_4px_10px_rgba(0,0,0,0.40)] rounded-lg overflow-hidden">
+          <div className="bg-tertiary text-white px-6 py-3 text-xl font-bold rounded-t-md">
+            Student List
+          </div>
           <div className="overflow-y-auto hide-scrollbar max-h-[510px]">
             <table className="w-full table-auto border-collapse">
               <thead>
-                <tr className="bg-red-800 text-white sticky top-0 z-20">
-                  <th colSpan="6" className="py-3 text-xl font-bold text-left pl-5">
-                    Student List
-                  </th>
-                </tr>
-                <tr className="bg-gray-300 sticky top-[52] z-10 text-center">
+                <tr className="bg-gray-300 sticky top-0 z-10 text-center">
                   <th className="px-5 py-3 text-left border-r">Program</th>
                   <th className="px-5 py-3 text-left border-r">Year Level</th>
                   <th className="px-5 py-3 text-left border-r">Section</th>
                   <th className="px-5 py-3 text-left border-r">Course/Subject</th>
-                  <th className="px-5 py-3 text-left border-r">Enrolled Count</th>
+                  <th className="px-5 py-3 text-left border-r">Enrolled</th>
                   <th className="px-5 py-3 text-left">Select</th>
                 </tr>
               </thead>
               <tbody>
-                {courseList.map((courseData, index) => (
-                  <tr key={index} className="border-b">
-                    <td className="px-5 py-3 text-center border-r">{courseData.program}</td>
-                    <td className="px-5 py-3 text-center border-r">{courseData.yearLevel}</td>
-                    <td className="px-5 py-3 text-center border-r">{courseData.section}</td>
-                    <td className="px-5 py-3 text-center border-r">{courseData.course}</td>
-                    <td className="px-5 py-3 text-center border-r">{courseData.count}</td>
-                    <td className="px-5 py-3 text-center">
-                      <button className="bg-yellow-500 text-white py-1 px-4 rounded-md">
-                        Select
-                      </button>
-                    </td>
+                {loading ? (
+                  <tr>
+                    <td colSpan="6" className="text-center py-3">Loading student list...</td>
                   </tr>
-                ))}
+                ) : studentData.length > 0 ? (
+                  studentData.map((item, index) => (
+                    <tr key={index} className="border-b">
+                      <td className="px-5 py-3 text-center border-r">{item.program}</td>
+                      <td className="px-5 py-3 text-center border-r">{item.yearLevel}</td>
+                      <td className="px-5 py-3 text-center border-r">{item.section}</td>
+                      <td className="px-5 py-3 text-center border-r">{item.course}</td>
+                      <td className="px-5 py-3 text-center border-r">{item.enrolled}</td>
+                      <td className="px-5 py-3 text-center">
+                        <button
+                          className="bg-yellow-500 text-white py-1 px-4 rounded-md"
+                         
+                        >
+                          Select
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : selectedTerm !== "" ? (
+                  <tr>
+                    <td colSpan="6" className="text-center py-3">No records found for this term.</td>
+                  </tr>
+                ) : (
+                  <tr>
+                    <td colSpan="6" className="text-center py-3">Please select a term.</td>
+                  </tr>
+                )}
 
-                {Array.from({ length: Math.max(0, 8 - courseList.length) }).map((_, index) => (
+                {Array.from({ length: Math.max(0, 8 - studentData.length) }).map((_, index) => (
                   <tr key={`empty-${index}`} className="border-b">
                     <td className="px-5 py-3 text-center border-r">&nbsp;</td>
                     <td className="px-5 py-3 text-center border-r">&nbsp;</td>

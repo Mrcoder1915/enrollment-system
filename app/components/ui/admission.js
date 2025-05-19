@@ -1,57 +1,62 @@
 "use client"
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState , useCallback} from "react";
 import { dashboardContext } from "@/app/providers/dashboardProvider";
 
 const AdmissionTable = () => {
   const { show } = useContext(dashboardContext);
   const [selectedDept, setSelectedDept] = useState("");
+  const [Data,setData] = useState([])
+  const [departmentProgram, setDeparmentProgram] = useState({})
 
-  const admissions = [
-    {
-      id: 1,
-      lastName: "Concha",
-      firstName: "Jhoven A.",
-      middleName: "Cordero",
-      program: "BSIT",
-      academicYear: "2024-2025",
-      yearLevel: "1st Year",
-      department: "CICT",
-    },
-    {
-      id: 2,
-      lastName: "Dela Cruz",
-      firstName: "Maria",
-      middleName: "Santos",
-      program: "BSBA",
-      academicYear: "2024-2025",
-      yearLevel: "2nd Year",
-      department: "CMBT",
-    },
-    {
-      id: 3,
-      lastName: "Reyes",
-      firstName: "Juan",
-      middleName: "Torres",
-      program: "BSE",
-      academicYear: "2024-2025",
-      yearLevel: "3rd Year",
-      department: "COE",
-    },
-    {
-      id: 4,
-      lastName: "Lopez",
-      firstName: "Ana",
-      middleName: "Marquez",
-      program: "BSCS",
-      academicYear: "2024-2025",
-      yearLevel: "1st Year",
-      department: "CICT",
-    },
-  ];
+  const deleteAdmission =  useCallback(async (ID) => {
+          await fetch("http://localhost:3000/api/registrar/deleteadmission",{
+            method: "POST",
+            headers: {
+              "content-type":"application/json"
+            },
+            body: JSON.stringify({studentID: ID})
+          })
+          const result = await fetch("http://localhost:3000/api/registrar/approvedadmission")
+         const data = await result.json()
+         setData(prev => prev = data)
+        },)
+  const approveAdmission =  useCallback(async (ID) => {
+          await fetch("http://localhost:3000/api/registrar/approvedadmission",{
+            method: "POST",
+            headers: {
+              "content-type":"application/json"
+            },
+            body: JSON.stringify({studentID: ID, remarks: "approve"})
+          })
+          const result = await fetch("http://localhost:3000/api/registrar/approvedadmission")
+         const data = await result.json()
+         setData(prev => prev = data)
+        },)
 
-  const filteredAdmissions = selectedDept
-    ? admissions.filter((item) => item.department === selectedDept)
-    : admissions;
+  useEffect(() => {
+    const student = async () => {
+      const result = await fetch("http://localhost:3000/api/registrar/approvedadmission")
+      const data = await result.json()
+      setData(prev => prev = data)
+      const department = await fetch("/api/registrar/studentenrollment/department");
+              const departmentdata = await department.json()
+              setDeparmentProgram(departmentdata)
+    }
+    student()
+  },[])
+  
+
+  const ustudent = Data
+
+  const filterdstudents = ustudent.filter((student) => {
+  const studentProgram = student.studentID?.program;
+
+  const filterByDepartment = selectedDept
+    ? departmentProgram[selectedDept]?.includes(studentProgram)
+    : true;
+
+  return filterByDepartment
+});
 
   return (
     <div
@@ -68,7 +73,7 @@ const AdmissionTable = () => {
               onChange={(e) => setSelectedDept(e.target.value)}
               className="border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="">All</option>
+              <option value=""></option>
               <option value="CICT">CICT</option>
               <option value="CMBT">CMBT</option>
               <option value="COE">COE</option>
@@ -96,26 +101,26 @@ const AdmissionTable = () => {
               </thead>
 
               <tbody>
-                {filteredAdmissions.length > 0 ? (
-                  filteredAdmissions.map((item) => (
-                    <tr key={item.id} className="border-t hover:bg-gray-50">
-                      <td className="px-4 py-2">{item.id}</td>
-                      <td className="px-4 py-2">{item.lastName}</td>
-                      <td className="px-4 py-2">{item.firstName}</td>
-                      <td className="px-4 py-2">{item.middleName}</td>
-                      <td className="px-4 py-2">{item.program}</td>
-                      <td className="px-4 py-2">{item.academicYear}</td>
-                      <td className="px-4 py-2">{item.yearLevel}</td>
+                {filterdstudents.length > 0 ? (
+                  filterdstudents?.map((item) => (
+                    <tr key={item._id} className="border-t hover:bg-gray-50">
+                      <td className="px-4 py-2">{item.studentID._id}</td>
+                      <td className="px-4 py-2">{item.studentID.lastName}</td>
+                      <td className="px-4 py-2">{item.studentID.firstName}</td>
+                      <td className="px-4 py-2">{item.studentID.middleName}</td>
+                      <td className="px-4 py-2">{item.studentID.program}</td>
+                      <td className="px-4 py-2">{`${item.studentID.academicYear} - ${item.studentID.academicYear + 1}`}</td>
+                      <td className="px-4 py-2">{item.studentID.yearLevel? item.studentID.yearLevel: ""}</td>
                       <td>
                         <button className = 'w-[70px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>
                           VIEW
                         </button>
                       </td>
                       <td className ="flex gap-2 justify-center items-center">
-                        <button className= 'w-[80px] h-[27px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>
+                        <button onClick={() => approveAdmission(item.studentID._id)} className= 'w-[80px] h-[27px] border-[1px] border-solid border-[#8b0606] text-info font-medium rounded-[5px] btn-success'>
                           Approve
                         </button>
-                        <button className= 'w-[70px] h-[27px] border-[1px] border-solid border-[#8b0606] text-[#ffd700] font-medium rounded-[5px] btn-danger ml-2.5'>
+                        <button onClick={() => deleteAdmission(item.studentID._id)} className= 'w-[70px] h-[27px] border-[1px] border-solid border-[#8b0606] text-[#ffd700] font-medium rounded-[5px] btn-danger ml-2.5'>
                           Failed
                         </button>
                         </td>

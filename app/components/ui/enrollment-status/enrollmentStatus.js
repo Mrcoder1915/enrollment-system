@@ -8,6 +8,7 @@ const enrollmentStatus = () => {
     const [department , setProgram] = useState("")
     const [semester, setSemester] = useState(1)
     console.log("department:",department);
+    console.log("enrollment status rerender");
     
   return (
     <div className={`w-full h-[80vh] absolute  flex-icenter flex-col transition-all ease-in duration-300 ${show == 3? "translate-x-[0] visible" : "translate-x-[-200%]" }`}>
