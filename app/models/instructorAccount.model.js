@@ -15,10 +15,6 @@ const instructorAccountSchema = new mongoose.Schema({
     enum: ["pending", "approved", "declined"],
     default: "pending",
   },
-  instructorID: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Instructor"
-  },
 }, {
   collection: "instructorAccounts",
   timestamps: true,
