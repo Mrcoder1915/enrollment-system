@@ -50,7 +50,7 @@ const Masterlist = () => {
     });
 
     setFilteredStudents(filtered);
-  }, [searchTerm, masterList, selectedDepartment]);
+  }, [searchTerm, selectedDepartment]);
 
   return (
     <div
