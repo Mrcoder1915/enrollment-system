@@ -1,5 +1,5 @@
 import connection from '@/app/lib/config/connection';
-import Grade from 'app/models/Grade.model';
+import Grade from '@/app/models/Grade.model';
 import Instructor from '@/app/models/instructor.model';
 import Course from '@/app/models/course.model';
 
