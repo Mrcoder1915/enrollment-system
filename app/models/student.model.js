@@ -57,9 +57,13 @@ const studentSchema = new mongoose.Schema({
     },
     YearLevel:{
         type: Number,
+<<<<<<< HEAD
+        
+=======
     },
     academicYear: {
         type: Number,
+>>>>>>> master
     },
     requirements: {
         type: Array,

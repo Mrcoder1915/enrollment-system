@@ -10,11 +10,12 @@ export default function DashboardProviderVerification() {
   const [emailAddress ,setemailAddress] = useState("")
   
 console.log(firstName);
-console.log(lastName);
+console.log(emailAddress);
 
 
 
- async function student(){
+ async function student(e){
+  e.preventDefault()
     const result=await fetch("/api/Student/studentverification",{
       method:"POST",
       headers:{
@@ -23,8 +24,18 @@ console.log(lastName);
       body:JSON.stringify({firstName:firstName,lastName:lastName,emailAddress:emailAddress})
     })
     if(result.ok){
-      router.push("/otp")
-      console.log("ok")
+      console.log("sending.........");
+      
+     await fetch("/api/Student/otp",{
+      method:"POST",
+      headers:{
+        "content-Type":"application/json"
+      },
+      body:JSON.stringify({Email:emailAddress})
+     })
+     router.push("/otp")
+     console.log("done");
+     
     }
   }
 
@@ -52,7 +63,7 @@ console.log(lastName);
           <input type="text" name="middleName"  disabled={check}  className="w-full p-2 mt-1 border border-black-400 rounded" placeholder="Middle Name" />
           
           <label className="block mt-1">
-            <input type="checkbox" name="noMiddleName" checked={check} onClick={() => setChecked(prev => !prev)} className="mr-2" />
+            <input type="checkbox" name="noMiddleName" checked={check} onChange={() => setChecked(prev => !prev)} className="mr-2" />
             I don't have a middle name.
           </label>
 
