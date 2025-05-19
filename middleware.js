@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
 
-const PUBLIC_ROUTES = ['/', '/registrarLogin', "/studentLogin", "/InstructorPortal","/studentverification", "/InstructorProfileVerification"];
+const PUBLIC_ROUTES = ['/', '/registrarLogin', "/studentLogin", "/InstructorPortal","/studentverification", "/InstructorProfileVerification","/StudentAdmission"];
 
 const ROLE_API_ACCESS = {
   registrar: ['/api/registrar'],
@@ -80,5 +80,7 @@ console.log("token:", token);
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  matcher: [
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.png|.*\\.jpg|.*\\.jpeg|.*\\.svg|.*\\.webp|.*\\.css|.*\\.js).*)',
+  ],
 };

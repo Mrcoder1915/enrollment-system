@@ -8,7 +8,7 @@ export default function PersonalInformationForm() {
       {show && (
         <div className="max-w-full bg-white rounded-4xl shadow-lg p-6">
           <h1 className="text-2xl font-bold mb-2 border-b-4 border-red-900 font-serif items-center rounded-t-4xl flex justify-start text-yellow-400 bg-gradient-to-t from-[#FABCBC] via-[#d16b6b] to-[#8b0606] p-2">
-            <img className="w-20 h-20 mr-2" src="/neustlogo-nobg.png" alt="NEUST Logo" />
+            <img className="w-20 h-20 mr-2" src="/USNE.png" alt="NEUST Logo" />
             UNIVERSITY OF SOUTHERN NUEVA ECIJA
           </h1>
 
@@ -23,32 +23,32 @@ export default function PersonalInformationForm() {
           </p>
 
 
-          <div class="flex items-center justify-center w-full m-4  pr-7">
+          <div className="flex items-center justify-center w-full m-4  pr-7">
 
-<div class="flex items-center ">
-  <div class="bg-[#8b0606] text-yellow-400 font-bold py-2 px-4 rounded-lg z-10">STEP 1</div>
-  <div class="h-1 bg-yellow-400 w-50"></div>
+<div className="flex items-center ">
+  <div className="bg-[#8b0606] text-yellow-400 font-bold py-2 px-4 rounded-lg z-10">STEP 1</div>
+  <div className="h-1 bg-yellow-400 w-50"></div>
 </div>
 
 
-<div class="flex items-center">
-  <div class="bg-yellow-400 text-[#8b0606] font-bold py-2 px-4 rounded-lg z-10">STEP 2</div>
-  <div class="h-1 bg-yellow-400 w-50"></div>
+<div className="flex items-center">
+  <div className="bg-yellow-400 text-[#8b0606] font-bold py-2 px-4 rounded-lg z-10">STEP 2</div>
+  <div className="h-1 bg-yellow-400 w-50"></div>
 </div>
 
 
-<div class="flex items-center">
-  <div class="bg-yellow-400 text-[#8b0606] font-bold py-2 px-4 rounded-lg z-10">STEP 3</div>
-  <div class="h-1 bg-yellow-400 w-50"></div>
+<div className="flex items-center">
+  <div className="bg-yellow-400 text-[#8b0606] font-bold py-2 px-4 rounded-lg z-10">STEP 3</div>
+  <div className="h-1 bg-yellow-400 w-50"></div>
 </div>
 
 
-<div class="flex items-center">
-  <div class="bg-yellow-400 text-[#8b0606] font-bold py-2 px-4 rounded-lg z-10">STEP 4</div>
+<div className="flex items-center">
+  <div className="bg-yellow-400 text-[#8b0606] font-bold py-2 px-4 rounded-lg z-10">STEP 4</div>
 </div>
 </div>
 
-<div class="flex justify-evenly w-full text-m pr-7 mb-4 text-red-800">
+<div className="flex justify-evenly w-full text-m pr-7 mb-4 text-red-800">
 <span>PERSONAL INFORMATION</span>
 <span>FAMILY BACKGROUND</span>
 <span>EDUCATIONAL ATTAINMENT</span>
