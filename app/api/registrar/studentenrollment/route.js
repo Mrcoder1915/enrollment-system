@@ -45,6 +45,7 @@ const enroll = await Enrollment.aggregate([
       "student.middleName": 1,
       "student.program": 1,
       "student.yearLevel": 1,
+      "student.requirements": 1,
       "admission._id": 1,
       "admission.schoolYear": 1,
       "courses._id": 1,
