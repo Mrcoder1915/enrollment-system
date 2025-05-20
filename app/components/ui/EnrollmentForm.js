@@ -1,40 +1,56 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { dashboardContext } from '@/app/providers/dashboardProvider';
 
 const EnrollmentForm = () => {
-  const { show } = useContext(dashboardContext);
+  const { show, view ,setView} = useContext(dashboardContext);
+  const [Value, setValue] = useState("")
+  const [yearLevel, setYearLevel] = useState("")
+  const [semester, setSemester] = useState("")
+  const [Data, setData] = useState()
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    const studentId = event.target.studentId.value.trim();
-    const firstName = event.target.firstName.value.trim();
-    const middleName = event.target.middleName.value.trim();
-    const lastName = event.target.lastName.value.trim();
-    const program = event.target.program.value.trim();
-    const section = event.target.section.value;
-    const yearLevel = event.target.yearLevel.value;
-    const semester = event.target.semester.value;
-
-    if (!studentId || !firstName || !middleName || !lastName || !program || !section || !yearLevel || !semester) {
-      alert("Please fill in all the fields.");
-      return;
+  useEffect(() => {
+    const students = async () => {
+      try {
+        const  res = await fetch("/api/Student/studentEnrollment",{
+          method: "GET"
+        })
+        const data = await  res.json()
+        setData(data)
+      } catch (error) {
+        console.log("error: ", error);
+    }  
     }
+     students() 
+  },[])
+  if(!Data){
+    return
+  }
+  console.log("dATA: ",Data);
+  let program = {}
 
-    const enrollmentData = {
-      name: `${firstName} ${middleName} ${lastName}`,
-      year: yearLevel,
-      semester: semester,
-    };
-    localStorage.setItem("enrollmentStatus", JSON.stringify(enrollmentData));
-
-    window.location.href = "/status"; // Assuming you have a /status page
-  };
-
+switch (Data?.studentID?.program) {
+  case "BSIT":
+    program = { one: "BSIT-1A", two: "BSIT-1B" };
+    break
+  case "BSHM":
+    program = { one: "BSHM-1A", two: "BSHM-1B" };
+    break
+  case "BSBA":
+    program = { one: "BSBA-1A", two: "BSBA-1B" };
+    break
+  case "BSE":
+    program = { one: "BSE-1A", two: "BSE-1B" };
+    break
+}
+const getView = () => {
+  if(view != 2 && show === 2){   
+    return  'translate-x-0 visible'
+  }
+  return '-translate-x-[200%] invisible'
+}
   return (
     <div
-      className={`w-full h-[80vh] p-5 absolute flex justify-center flex-col transition-all ease-in duration-300 ${
-        show === 2 ? 'translate-x-0 visible' : '-translate-x-[200%] invisible'
+      className={`w-full h-[80vh] p-5 absolute flex justify-center flex-col transition-all ease-in duration-300 ${getView()
       }`}
     >
 
@@ -42,15 +58,15 @@ const EnrollmentForm = () => {
           <h2 className="bg-red-800 text-white py-4 px-5 text-xl font-bold rounded-t-md mb-4">
             Enrollment Form
           </h2>
-          <form id="enrollmentForm" onSubmit={handleSubmit}>
+          <form id="enrollmentForm">
             <div className="mb-4">
               <label htmlFor="studentId" className="block text-gray-700 text-sm font-bold mb-2">
-                Student ID:
+                Student ID: 
               </label>
               <input
                 type="text"
                 id="studentId"
-                placeholder="Enter Student ID"
+                value={Data.studentID._id}
                 required
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
@@ -58,11 +74,12 @@ const EnrollmentForm = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
               <div className="mb-4 md:mb-0">
                 <label htmlFor="firstName" className="block text-gray-700 text-sm font-bold mb-2">
-                  First Name:
+                  First Name: 
                 </label>
                 <input
                   type="text"
                   id="firstName"
+                  value={Data.studentID.firstName}
                   placeholder="Enter First Name"
                   required
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -75,6 +92,7 @@ const EnrollmentForm = () => {
                 <input
                   type="text"
                   id="middleName"
+                  value={Data?.studentID?.middleName}
                   placeholder="Enter Middle Name"
                   required
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -87,6 +105,7 @@ const EnrollmentForm = () => {
                 <input
                   type="text"
                   id="lastName"
+                  value={Data.studentID?.lastName}
                   placeholder="Enter Last Name"
                   required
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -101,6 +120,7 @@ const EnrollmentForm = () => {
                 <input
                   type="text"
                   id="program"
+                  value={Data.studentID?.program}
                   placeholder="e.g. BSIT, BSED, etc."
                   required
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -113,13 +133,12 @@ const EnrollmentForm = () => {
                 <select
                   id="section"
                   required
+                  onChange={(e) => setValue(e.target.value)}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 >
                   <option value="">Select Section</option>
-                  <option>BSIT-1A</option>
-                  <option>BSIT-1B</option>
-                  <option>BSIT-2A</option>
-                  <option>BSIT-2B</option>
+                  <option>{program.one}</option>
+                  <option>{program.two}</option>
                 </select>
               </div>
               <div>
@@ -129,13 +148,14 @@ const EnrollmentForm = () => {
                 <select
                   id="yearLevel"
                   required
+                  onChange={(e) => setYearLevel(e.target.value)}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 >
                   <option value="">Select Year</option>
-                  <option>1st</option>
-                  <option>2nd</option>
-                  <option>3rd</option>
-                  <option>4th</option>
+                  <option value={1}>1st</option>
+                  <option value={2}>2nd</option>
+                  <option value={3}>3rd</option>
+                  <option value={4}>4th</option>
                 </select>
               </div>
             </div>
@@ -146,15 +166,17 @@ const EnrollmentForm = () => {
               <select
                 id="semester"
                 required
+                onChange={(e) => setSemester(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               >
                 <option value="">Select Semester</option>
-                <option>1st sem</option>
-                <option>2nd sem</option>
+                <option value={1}>1st sem</option>
+                <option value={2}>2nd sem</option>
               </select>
             </div>
             <button
               type="submit"
+              onClick={() => setView(2)}
               className="bg-red-800 hover:bg-red-900 text-yellow-500 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
               Process Enrollment
