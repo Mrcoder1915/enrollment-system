@@ -11,7 +11,7 @@ console.log("toks:" ,token);
 
   try {
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
-    console.log("decoded", decoded)
+    
     return NextResponse.json({ user: decoded });
   } catch (err) {
     if (err.name === "TokenExpiredError") {

@@ -14,17 +14,18 @@ export async function GET(Req){
 
         try {
             const decoded = jwt.verify(Token, process.env.SECRET_KEY)
-
+            console.log("decoded: iD:", decoded.studentID);
+            
            let accessToken
                switch (decoded.role) {
                     case "student":
-                        accessToken = generateAccessToken({ studentID: decoded.id, role: decoded.role });
+                        accessToken = generateAccessToken({ studentID: decoded.studentID, role: decoded.role});
                         break;
                     case "registrar":
-                        accessToken = generateAccessToken({ registrarID: decoded.id, role: decoded.role });
+                        accessToken = generateAccessToken({ registrarID: decoded.registrarID, role: decoded.role });
                         break;
                     case "instructor":
-                        accessToken = generateAccessToken({ instructorID: decoded.id, role: decoded.role });
+                        accessToken = generateAccessToken({ instructorID: decoded.instructorID, role: decoded.role });
                         break;
                     default:
                         return NextResponse.json({ message: "Invalid role" }, { status: 403 });

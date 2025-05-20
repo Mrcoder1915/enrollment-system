@@ -50,7 +50,7 @@ console.log("token:", token);
 
   if (!token) {
     if (!isPublicPage) {
-      return NextResponse.redirect(new URL('/registrarLogin', req.url));
+      return NextResponse.redirect(new URL('/', req.url));
     }
     return NextResponse.next();
   }
@@ -71,12 +71,16 @@ console.log("token:", token);
     if(isPublicPage) {
       return NextResponse.redirect(new URL('/Dashboard', req.url));
     }
-    
+    if(!verified){
+      return NextResponse.redirect(new URL("/", req.url));
+    }
     return NextResponse.next()
   }
-  return NextResponse.next();
+   return NextResponse.next()
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  matcher: [
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.png|.*\\.jpg|.*\\.jpeg|.*\\.svg|.*\\.webp|.*\\.css|.*\\.js).*)',
+  ],
 };
