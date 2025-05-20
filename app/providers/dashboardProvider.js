@@ -1,30 +1,45 @@
-"use client"
-import React, { createContext, useMemo, useState, useEffect } from 'react'
-import Fetch from "../lib/fetch/fetchRefreshToken"
+"use client";
+import React, { createContext, useMemo, useState, useEffect } from "react";
+import Fetch from "../lib/fetch/fetchRefreshToken";
 
 export const dashboardContext = createContext(null);
+
 
 const dashboardProvider = ({children}) => {
     const [show, setShow] = useState(1)
     const [view, setView] = useState(null)
+    const [user, setUser]     = useState(null);
     const [userAccess, setUserAccess] = useState(null)
     const [insertInfo, setInsertInfo] = useState([])
     console.log("userAccess: ",userAccess)
 
-useEffect(() => {
-  const getuser = async () => {
-        const user = await Fetch("api/getUser", {
-        method: "GET",
-      })
-      const userAccess = await user.json()
-      if(userAccess){
-        setUserAccess(userAccess.user.role)
-      }else{
-        setUserAccess(null)
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const res  = await Fetch("api/getUser");
+        const data = await res.json();
+        if (data.user) {
+          setUser(data.user);
+          setUserAccess(data.user.role);
+        } else {
+          setUser(null);
+          setUserAccess(null);
+        }
+      } catch (err) {
+        console.error(err);
+        setUser(null);
+        setUserAccess(null);
       }
-  }
-  getuser()
-},[])
+    };
+    getUser();
+  }, []);
+
+  const showDetails = (position) => setShow(position);
+
+  const value = useMemo(
+    () => ({ show, showDetails, user, userAccess }),
+    [show, showDetails, user, userAccess]
+  );
 
 const showDetails = (position) => {
     setShow((prev) => prev = position)
@@ -44,10 +59,10 @@ const value = useMemo(() => ({
     insertInfo
 }),[show,setShow,showDetails,SetView,setInsertInfo,view,insertInfo])
   return (
-    <dashboardContext.Provider value = {value}>
-        {children}
+    <dashboardContext.Provider value={value}>
+      {children}
     </dashboardContext.Provider>
-  )
-}
+  );
+};
 
-export default dashboardProvider
+export default DashboardProvider;
