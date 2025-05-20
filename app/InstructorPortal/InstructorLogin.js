@@ -43,7 +43,7 @@ const InstructorLogin = () => {
     <div className="min-h-screen w-full bg-gradient-to-r from-red-800 to-white flex flex-col items-center justify-center font-serif">
       <h1 className="text-white text-4xl mb-1 text-center">Instructor Portal</h1>
       <div className="bg-white p-3 rounded-2xl shadow-2xl text-center h-93 w-80 flex flex-col items-center">
-        <img src="/usneLogo.png" alt="University Logo" className="w-30 h-30 mb-3" />
+        <img src="/USNE.png" alt="University Logo" className="w-30 h-30 mb-3" />
         <h2 className="text-red-800 mb-2 leading-tight text-lg font-semibold" style={{ textShadow: '1px 0px 3px #facc15' }}>
           UNIVERSITY OF SOUTHERN<br />NUEVA ECIJA
         </h2>
