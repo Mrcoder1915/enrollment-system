@@ -5,7 +5,7 @@ import { dashboardContext } from '@/app/providers/dashboardProvider';
 import Link from 'next/link';
 
 const EnrollmentSchedule = () => {
-  const { show } = useContext(dashboardContext);
+  const { show,view } = useContext(dashboardContext);
   const [enrollments, setEnrollments] = useState([]);
 
   useEffect(() => {
@@ -32,11 +32,15 @@ const EnrollmentSchedule = () => {
     alert("You are now enrolled!");
 
   };
-
+const getView = () => {
+  if(view == 2 && show == 2){   
+    return  'translate-x-0 visible'
+  }
+  return '-translate-x-[200%] invisible'
+}
   return (
     <div
-      className={`w-full absolute flex items-center justify-center flex-col transition-all ease-in duration-300 ${
-        show === 2 ? "translate-x-0 visible" : "translate-x-[-200%]"
+      className={`w-full absolute flex items-center justify-center flex-col transition-all ease-in duration-300 ${ getView()
       }`}
     >
       <div className="w-full max-w-7xl bg-white p-5 sm:p-5 md:p-8 rounded-lg shadow-lg">
