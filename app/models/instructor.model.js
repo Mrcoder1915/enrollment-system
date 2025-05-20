@@ -20,7 +20,6 @@ const instructorSchema = new mongoose.Schema({
   },
   middleName: {
     type: String,
-    required: true,
   },
   contactNumber: {
     type: String,

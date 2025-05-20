@@ -1,5 +1,7 @@
 // app/pages/ProviderVerification.js
 'use client'
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useState } from 'react';
 
 export default function ProviderVerification() {
@@ -10,12 +12,12 @@ export default function ProviderVerification() {
     middleName: '',
     noMiddleName: false,
     emailAddress: '',
-    contact: '',
+    contactNumber: '',
   });
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-
+const router = useRouter()
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -29,9 +31,9 @@ export default function ProviderVerification() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { lastName, firstName, emailAddress, contact, middleName, noMiddleName } = formData;
+    const { lastName, firstName, emailAddress, contactNumber, middleName, noMiddleName } = formData;
 
-    if (!lastName || !firstName || !emailAddress || !contact) {
+    if (!lastName || !firstName || !emailAddress || !contactNumber) {
       alert('Please fill out all required fields.');
       return;
     }
@@ -45,9 +47,10 @@ export default function ProviderVerification() {
         firstName,
         middleName: noMiddleName ? '' : middleName,
         emailAddress,
-        contact,
+        contactNumber,
       };
-
+      console.log("payload: ",payload);
+      
       const response = await fetch('/api/instructorprofileverification', {
         method: 'POST',
         headers: {
@@ -59,13 +62,13 @@ export default function ProviderVerification() {
       
 
       if (response.ok) {
-        alert('Profile verification successful! Please check your email for further instructions.');
         handleClear(); 
+        router.push("/InstructorPortal")
       } else {
         setErrorMessage(data.message || 'Something went wrong.');
       }
     } catch (error) {
-      setErrorMessage('An error occurred while submitting the form. Please try again later.');
+      setErrorMessage('An error occurred while submitting the form. Please try again later.',error);
     } finally {
       setIsLoading(false);
     }
@@ -77,7 +80,7 @@ export default function ProviderVerification() {
       firstName: '',
       middleName: '',
       emailAddress: '',
-      contact: '',
+      contactNumber: '',
     });
   };
 
@@ -126,17 +129,19 @@ export default function ProviderVerification() {
           <input type="email" name="emailAddress" onChange={handleChange} className="w-full p-2 mt-1 border border-red-400 rounded" placeholder="Email Address" />
 
           <label className="font-semibold block mt-2">Contact:</label>
-          <input type="text" name="contact"  onChange={handleChange} className="w-full p-2 mt-1 border border-red-400 rounded" placeholder="Contact" />
+          <input type="text" name="contactNumber"  onChange={handleChange} className="w-full p-2 mt-1 border border-red-400 rounded" placeholder="Contact" />
 
           {errorMessage && (
             <p className="text-red-600 text-sm mt-2">{errorMessage}</p>
           )}
 
           <div className="flex justify-end mt-6 space-x-2">
-            <button type="reset" onClick={handleClear} className="bg-red-800 text-yellow-300 px-4 mr-50 rounded">Clear Entries</button>
+            
+            <button type="reset" onClick={handleClear} className="bg-red-800 text-yellow-300 px-4 py-2 mr-50 rounded">Clear Entries</button>
             <button type="submit" className="bg-red-800 text-yellow-300 px-4 py-2 rounded" disabled={isLoading}>
               {isLoading ? 'Submitting...' : 'Continue'}
             </button>
+            
           </div>
         </form>
       </div>
