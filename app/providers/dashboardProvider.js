@@ -5,7 +5,7 @@ import Fetch from "../lib/fetch/fetchRefreshToken";
 export const dashboardContext = createContext(null);
 
 
-const dashboardProvider = ({children}) => {
+const DashboardProvider = ({children}) => {
     const [show, setShow] = useState(1)
     const [view, setView] = useState(null)
     const [user, setUser]     = useState(null);
@@ -34,13 +34,6 @@ const dashboardProvider = ({children}) => {
     getUser();
   }, []);
 
-  const showDetails = (position) => setShow(position);
-
-  const value = useMemo(
-    () => ({ show, showDetails, user, userAccess }),
-    [show, showDetails, user, userAccess]
-  );
-
 const showDetails = (position) => {
     setShow((prev) => prev = position)
     setView(null)
@@ -56,8 +49,9 @@ const value = useMemo(() => ({
     view,
     SetView,
     setInsertInfo,
-    insertInfo
-}),[show,setShow,showDetails,SetView,setInsertInfo,view,insertInfo])
+    insertInfo,
+    user
+}),[show,setShow,showDetails,SetView,setInsertInfo,view,insertInfo,user])
   return (
     <dashboardContext.Provider value={value}>
       {children}

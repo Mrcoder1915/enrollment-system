@@ -25,7 +25,7 @@ const Sidebar = () => {
       {/* logo */}
       <div className="w-full h-[20%] flex items-center justify-center gap-2.5">
         <div className="w-25 h-[100px] flex items-center">
-          <img className="w-h-full" src="/usneLogo.png" alt="Logo" />
+          <img className="w-h-full" src="/USNE.png" alt="Logo" />
         </div>
         <h1 className="text-5xl font-bold text-gradient-primary">USNE</h1>
       </div>
