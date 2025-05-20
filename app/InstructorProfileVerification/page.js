@@ -24,7 +24,7 @@ const router = useRouter()
     setFormData((prev) => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value,
-      // Automatically clear middleName if noMiddleName is checked
+      
       middleName: name === 'noMiddleName' && checked ? '' : prev.middleName,
     }));
   };
