@@ -4,7 +4,6 @@ const instructorSchema = new mongoose.Schema({
   departmentID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "department",
-    required: true,
   },
   status: {
     type: String,
@@ -18,6 +17,9 @@ const instructorSchema = new mongoose.Schema({
   lastName: {
     type: String,
     required: true,
+  },
+  middleName: {
+    type: String,
   },
   contactNumber: {
     type: String,
