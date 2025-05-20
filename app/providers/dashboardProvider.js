@@ -1,43 +1,62 @@
-"use client"
-import React, { createContext, useState } from 'react'
+"use client";
+import React, { createContext, useMemo, useState, useEffect } from "react";
+import Fetch from "../lib/fetch/fetchRefreshToken";
 
 export const dashboardContext = createContext(null);
 
-// 1. Purpose of this DashboardProvider
-// The DashboardProvider is responsible for providing global state or context that is shared across the Dashboard pages
-//  (e.g., user information, theme settings, etc.). Any state or data that needs to be accessed by multiple components
-//  in the dashboard should be placed here.
 
-// 2. How to Add State/Variables
-// If you need to add new state, follow this pattern:
-
-// Add a new state inside DashboardProvider.
-
-// Use useState to initialize it.
-
-// Add the state and its setter function to the context's value, so it can be shared across your components.
-
-const dashboardProvider = ({children}) => {
+const DashboardProvider = ({children}) => {
     const [show, setShow] = useState(1)
+    const [view, setView] = useState(null)
+    const [user, setUser]     = useState(null);
+    const [userAccess, setUserAccess] = useState(null)
+    const [insertInfo, setInsertInfo] = useState([])
+    console.log("userAccess: ",userAccess)
 
-    // if you are working on student portal you need to change the userAcess value to student
-    // if you are working on registar portal you need to change the userAcess value to registar
-    // FOR YOU TO SEE THE STUDENT OR REGISTAR SIDEBAR THIS IS JUST STATIC DATA UNTIL WE IMPLEMENT THE BACKEND
-    const userAccess = "student";
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const res  = await Fetch("api/getUser");
+        const data = await res.json();
+        if (data.user) {
+          setUser(data.user);
+          setUserAccess(data.user.role);
+        } else {
+          setUser(null);
+          setUserAccess(null);
+        }
+      } catch (err) {
+        console.error(err);
+        setUser(null);
+        setUserAccess(null);
+      }
+    };
+    getUser();
+  }, []);
 
 const showDetails = (position) => {
     setShow((prev) => prev = position)
+    setView(null)
+    setInsertInfo([])
 }
-const value = {  
+const SetView = (In) => {
+  setView(prev => prev = In)
+}
+const value = useMemo(() => ({  
     show,
     showDetails,
-    userAccess
-}
+    userAccess,
+    view,
+    SetView,
+    setInsertInfo,
+    insertInfo,
+    user
+}),[show,setShow,showDetails,SetView,setInsertInfo,view,insertInfo,user])
   return (
-    <dashboardContext.Provider value = {value}>
-        {children}
+    <dashboardContext.Provider value={value}>
+      {children}
     </dashboardContext.Provider>
-  )
-}
+  );
+};
 
-export default dashboardProvider
+export default DashboardProvider;

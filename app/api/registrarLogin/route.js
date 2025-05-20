@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 // import HashPassword from "@/app/lib/auth/hashpassword";
 import generateAccessToken from "@/app/lib/auth/generateAccessToken";
 import generateRefreshToken from "@/app/lib/auth/generateRefreshToken";
+import RegistrarData from "@/app/models/registrar.model";
 
 
 export async function POST(Req) {
@@ -16,15 +17,20 @@ export async function POST(Req) {
         
         const Registrar = await  Registraraccount.findOne({userName})
         if(!Registrar) return NextResponse.json({message: "Student Not Exist"}, {status: 404})
-
+        
         const passwordVerify = verifyPassword(password , Registrar.password)
-
+        
         if(!passwordVerify) return NextResponse.json({message: "invalid credentials"}, {status: 401})
+        
+        const RegistrarName = await RegistrarData.findOne({_id: Registrar.registrarID}, {_id:0 ,firstName: 1 ,lastName: 1})
+        console.log(RegistrarName.lastName);
+        
+        const fullName = `${RegistrarName.firstName} ${RegistrarName.lastName}` 
 
-        const accessToken = generateAccessToken({registrarID:Registrar.registrarID,  role:role})
+        const accessToken = generateAccessToken({registrarID:Registrar.registrarID,  role:role, fullName})
         const refreshToken = generateRefreshToken({registrarID:Registrar.registrarID,  role:role})
 
-        const res = NextResponse.json({message: "login", accessToken , refreshToken}, {status: 200})
+        const res = NextResponse.json({message: "login"}, {status: 200})
 
         res.cookies.set("accessToken", accessToken, {httpOnly: true, path: "/"} )
         res.cookies.set("refreshToken", refreshToken, {httpOnly: true, path: "/"} )

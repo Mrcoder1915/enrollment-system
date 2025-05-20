@@ -45,6 +45,7 @@ const enroll = await Enrollment.aggregate([
       "student.middleName": 1,
       "student.program": 1,
       "student.yearLevel": 1,
+      "student.requirements": 1,
       "admission._id": 1,
       "admission.schoolYear": 1,
       "courses._id": 1,
@@ -55,16 +56,11 @@ const enroll = await Enrollment.aggregate([
   }
 ]);
 
-
-
-    if(!enroll && enroll.length === 0) return NextResponse.json({message: "no enrollment"})
-
-      // console.log(enroll);
+    if(!enroll && enroll.length === 0) return NextResponse.json({message: "enrollment Not Found"}, {status: 404})
       
-   
    return NextResponse.json(enroll)
   } catch (error) {
-    return NextResponse.json({message: error.message})
+    return NextResponse.json({message: error.message},{status: 500})
   }
   
 }

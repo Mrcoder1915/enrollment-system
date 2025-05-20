@@ -7,46 +7,44 @@ import { SiGoogleforms } from "react-icons/si"
 import { GiOpenFolder } from "react-icons/gi"
 import { IoIosPersonAdd } from "react-icons/io"
 
-
 const Dashboard = () => {
-    const { show, showDetails } = useContext(dashboardContext);
+    const { show, showDetails } = useContext(dashboardContext)
+    const [enrollDetails, setEnrollDetails] = useState([])
+    const [admissionDetails, setadmissionEnrollDetails] = useState([])
 
-      const [enrollDetails, setEnrollDetails] = useState([])
-      const [admissionDetails, setadmissionEnrollDetails] = useState([])
-      console.log(enrollDetails)
-      
-      useEffect(() => {
-          async function enroll() {
-              const enrollStudent = await fetch("http://localhost:3000/api/registrar/dashboard/totalEnrollment");
-              const data = await enrollStudent.json()
-              setEnrollDetails(prev => prev = data)         
-              const admissionStudent = await fetch("http://localhost:3000/api/registrar/dashboard/totalAdmission")
-              const adata = await admissionStudent.json()
-              setadmissionEnrollDetails(prev => prev = adata)         
-          }
-          enroll()
-      }, [])
-        const totalAdmission = admissionDetails.filter((s) => s.remarks == "pending")
-        const totalEnrollment = enrollDetails.filter((s) => s.approve == false)
-        const totalstudents= enrollDetails.filter((s) => s.approve == true)
+    useEffect(() => {
+        async function enroll() {
+            const enrollStudent = await fetch("http://localhost:3000/api/registrar/dashboard/totalEnrollment");
+            const data = await enrollStudent.json()
+            setEnrollDetails(data)
 
+            const admissionStudent = await fetch("http://localhost:3000/api/registrar/dashboard/totalAdmission");
+            const adata = await admissionStudent.json()
+            setadmissionEnrollDetails(adata)
+        }
+        enroll()
+    }, [])
 
-        const firstGrid = [
+    const totalAdmission = admissionDetails.filter((s) => s.remarks === "pending")
+    const totalEnrollment = enrollDetails.filter((s) => s.approve === false && s.studentID && typeof s.studentID.yearLevel === "number")
+    const totalstudents = enrollDetails.filter((s) => s.approve === true)
+
+    const grid = [
         {
             label: "For Admission",
             icon: (
                 <RiGraduationCapFill className="bg-red-300 text-black text-8xl rounded-md p-2" />
             ),
             total: totalAdmission.length,
-            onclick: () => showDetails(2)
+            onclick: () => showDetails(2),
         },
-        { 
+        {
             label: "For Enrollment",
             icon: (
                 <SiGoogleforms className="bg-yellow-400 text-black text-8xl rounded-md p-2" />
             ),
             total: totalEnrollment.length,
-            onclick: () => showDetails(3)
+            onclick: () => showDetails(3),
         },
         {
             label: "Total Students",
@@ -54,28 +52,14 @@ const Dashboard = () => {
                 <GiOpenFolder className="bg-red-600 text-black text-8xl rounded-md p-2" />
             ),
             total: totalstudents.length,
-            onclick: () => showDetails(4)
+            onclick: () => showDetails(4),
         },
     ]
 
-    const secondGrid = [
-        { 
-            year: "1st Year",
-            color: "bg-red-600"
-        },
-        { 
-            year: "2nd Year",
-            color: "bg-yellow-400"
-        },
-        { 
-            year: "3rd Year",
-            color: "bg-red-600"
-        },
-        { 
-            year: "4th Year",
-            color: "bg-yellow-400"
-        },
-    ]
+    const yearLevelCounts = [1, 2, 3, 4].map((year) => ({
+        year,
+        count: totalEnrollment.filter((s) => s.studentID.yearLevel === year).length,
+    }))
 
     return (
         <div
@@ -89,41 +73,52 @@ const Dashboard = () => {
                         Registrar Dashboard
                     </h1>
                 </div>
-                <div className="grid lg:grid-cols-3 gap-2 mt-17 mb-15 ml-15">
-                    {firstGrid.map((card, index) => (
+
+                <div className="grid lg:grid-cols-3 gap-2 mt-17 mb-15 ml-12">
+                    {grid.map((card, index) => (
                         <div
                             key={index}
-                            className="bg-white p-4 text-white text-center rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.35)] z-0 w-[270px] h-[120px] cursor-pointer"
-                            onClick = {card.onclick}
+                            onClick={card.onclick}
+                            className="bg-white p-4 text-white text-center rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.35)] z-0 w-[270px] h-[120px] cursor-pointer transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-xl hover:bg-gray-100"
                         >
-                            <div  className="grid grid-cols-2 grid-rows-2 gap-4 rounded-lg h-full">
+                            <div className="grid grid-cols-2 grid-rows-2 gap-4 rounded-lg h-full">
                                 <div className="row-span-2 flex justify-center items-center w-full h-full">
                                     {card.icon}
                                 </div>
                                 <div className="text-red-700 text-[17px]">{card.label}</div>
                                 <div className="col-start-2 text-black text-3xl flex items-center justify-center mb-6 mr-7">
-                                   {card.total && card.total}
+                                    {card.total}
                                 </div>
                             </div>
                         </div>
                     ))}
                 </div>
-                
+
                 <div className="grid lg:grid-cols-4 gap-10 mt-5">
-                    {secondGrid.map(({ year, color }, index) => (
+                    {yearLevelCounts.map(({ year, count }) => (
                         <div
-                            key={index}
-                            className={`relative p-4 text-white text-center rounded-md w-[220px] h-[180px] cursor-pointer ${color} overflow-hidden`}
+                            key={year}
+                            className={`relative p-4 text-white text-center rounded-md w-[220px] h-[180px] cursor-pointer ${
+                                year % 2 !== 0 ? "bg-red-600" : "bg-yellow-400"
+                            } overflow-hidden`}
                         >
                             <div className="grid grid-cols-2 grid-rows-[1fr_auto_1fr] gap-3 h-full">
-                                <div className="row-span-1 col-span-1 flex items-end justify-center text-4xl mr-2">
-                                    10 {/* this is hardcoded data */}
+                                <div className="row-span-1 col-span-1 flex items-end justify-center text-4xl mr-4 mt-3">
+                                    {count}
                                 </div>
-                                <div className="col-span-1 flex items-start justify-center text-lg ml-4">
+                                <div className="col-span-1 flex items-start justify-center text-lg ml-4 mt-3">
                                     {year}
+                                    {year === 1
+                                        ? "st"
+                                        : year === 2
+                                        ? "nd"
+                                        : year === 3
+                                        ? "rd"
+                                        : "th"}{" "}
+                                    Year
                                 </div>
-                                <div className="row-span-3 col-start-2 row-start-1 flex justify-center items-center w-full h-full">
-                                    <IoIosPersonAdd className="text-black text-9xl p-2 bg-transparent opacity-50" />
+                                <div className="row-span-3 col-start-2 row-start-1 ml-2 flex justify-center items-center w-full h-full">
+                                    <IoIosPersonAdd className="text-black text-9xl bg-transparent opacity-50 mb-4" />
                                 </div>
                             </div>
                             <div className="absolute bottom-0 left-0 w-full bg-black/30 text-white py-2 flex justify-center items-center">
