@@ -4,7 +4,7 @@ import { dashboardContext } from '@/app/providers/dashboardProvider';
 
 
 const GradeTable = () => {
-  const { show } = useContext(dashboardContext);
+  const { show, view} = useContext(dashboardContext);
   const [selectedSemester, setSelectedSemester] = useState('');
   const [grades, setGrades] = useState([]);
   const [loading, setLoading] = useState(false)
@@ -62,18 +62,23 @@ useEffect(() => {
     const data = await res.json();
     setGrades(data);
   };
-  
-
- 
-
-
-
+      const ViewDetails = () => {
+        if(show === 4 && view === 4){
+            return "translate-x-[0] visible"
+        }
+        return "translate-x-[-200%]"
+    }
   return (
-    <div className={`w-full h-[80vh]  absolute flex items-center justify-center flex-col transition-all ease-in duration-300 ${
-      show === 4 ? 'translate-x-0 visible' : '-translate-x-[200%]'
-    }`}>
+    <div
+    className={   
+        `w-full h-[80vh] absolute
+        flex-icenter flex-col transition-all
+        ease-in duration-300
+        z-20
+        ${ViewDetails()}`
+    }>
       <div className='flex flex-col w-[95%]'>
-      <div className='w-full[ h-full'>
+      <div className='w-full h-full'>
         <div className='w-full mb-3'>
           <label htmlFor="semester" className="font-bold mr-2">Semester:</label>
           <select
@@ -96,7 +101,7 @@ useEffect(() => {
         <div className="w-full bg-gray-100 p-3 text-lg font-medium border-collapse shadow-[4px_4px_10px_rgba(0,0,0,0.2),_-4px_4px_10px_rgba(0,0,0,0.2)]">
           Course: CC100 - Introduction to Computing
         </div>
-    <div className='w-full h-[90%]overflow-y-scroll'>
+    <div className='w-full h-[90%]overflow-y-scroll '>
       <table className="w-full relative  border-collapse shadow-[4px_4px_10px_rgba(0,0,0,0.2),_-4px_4px_10px_rgba(0,0,0,0.2)] ">
 
         <thead>

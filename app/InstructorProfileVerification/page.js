@@ -1,5 +1,7 @@
 // app/pages/ProviderVerification.js
 'use client'
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useState } from 'react';
 
 export default function ProviderVerification() {
@@ -10,28 +12,28 @@ export default function ProviderVerification() {
     middleName: '',
     noMiddleName: false,
     emailAddress: '',
-    contact: '',
+    contactNumber: '',
   });
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-
+const router = useRouter()
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
     setFormData((prev) => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value,
-      // Automatically clear middleName if noMiddleName is checked
+      
       middleName: name === 'noMiddleName' && checked ? '' : prev.middleName,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { lastName, firstName, emailAddress, contact, middleName, noMiddleName } = formData;
+    const { lastName, firstName, emailAddress, contactNumber, middleName, noMiddleName } = formData;
 
-    if (!lastName || !firstName || !emailAddress || !contact) {
+    if (!lastName || !firstName || !emailAddress || !contactNumber) {
       alert('Please fill out all required fields.');
       return;
     }
@@ -45,10 +47,11 @@ export default function ProviderVerification() {
         firstName,
         middleName: noMiddleName ? '' : middleName,
         emailAddress,
-        contact,
+        contactNumber,
       };
-
-      const response = await fetch('/api/instructor/instructorprofileverification', {
+      console.log("payload: ",payload);
+      
+      const response = await fetch('/api/instructorprofileverification', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,13 +62,13 @@ export default function ProviderVerification() {
       
 
       if (response.ok) {
-        alert('Profile verification successful! Please check your email for further instructions.');
         handleClear(); 
+        router.push("/InstructorPortal")
       } else {
         setErrorMessage(data.message || 'Something went wrong.');
       }
     } catch (error) {
-      setErrorMessage('An error occurred while submitting the form. Please try again later.');
+      setErrorMessage('An error occurred while submitting the form. Please try again later.',error);
     } finally {
       setIsLoading(false);
     }
@@ -77,7 +80,7 @@ export default function ProviderVerification() {
       firstName: '',
       middleName: '',
       emailAddress: '',
-      contact: '',
+      contactNumber: '',
     });
   };
 
@@ -87,7 +90,7 @@ export default function ProviderVerification() {
       
       <div className="bg-auto bg-gray-100 p-6 rounded-lg shadow-md w-full max-w-md">
         <div className="text-center mb-4">
-          <img src="/neustlogo-nobg.png" className="mx-auto w-24 my-2" alt="NEUST Logo" />
+           <img src="/usneLogo.png" className="mx-auto w-24 my-2" alt="NEUST Logo" /> 
           <p className="text-red-800 font-bold text-md leading-tight">
             UNIVERSITY OF SOUTHERN<br />NUEVA ECIJA
           </p>
@@ -126,20 +129,48 @@ export default function ProviderVerification() {
           <input type="email" name="emailAddress" onChange={handleChange} className="w-full p-2 mt-1 border border-red-400 rounded" placeholder="Email Address" />
 
           <label className="font-semibold block mt-2">Contact:</label>
-          <input type="text" name="contact"  onChange={handleChange} className="w-full p-2 mt-1 border border-red-400 rounded" placeholder="Contact" />
+          <input type="text" name="contactNumber"  onChange={handleChange} className="w-full p-2 mt-1 border border-red-400 rounded" placeholder="Contact" />
 
           {errorMessage && (
             <p className="text-red-600 text-sm mt-2">{errorMessage}</p>
           )}
 
           <div className="flex justify-end mt-6 space-x-2">
-            <button type="reset" onClick={handleClear} className="bg-red-800 text-yellow-300 px-4 mr-50 rounded">Clear Entries</button>
+            
+            <button type="reset" onClick={handleClear} className="bg-red-800 text-yellow-300 px-4 py-2 mr-50 rounded">Clear Entries</button>
             <button type="submit" className="bg-red-800 text-yellow-300 px-4 py-2 rounded" disabled={isLoading}>
               {isLoading ? 'Submitting...' : 'Continue'}
             </button>
+            
           </div>
         </form>
       </div>
     </div>
   );
+}
+Recelyn
+import { NextResponse } from 'next/server';
+import connection from "@/app/lib/config/connection";
+import Instructor from '@/app/models/instructor.model';
+
+export async function POST(Req) {
+  const {firstName, lastName, middleName, emailAddress,contactNumber} = await Req.json()
+     
+    if(!firstName) return NextResponse.json({message: "s"}, {status: 404})
+    try {
+      await connection();
+          await Instructor.insertOne({
+            firstName,
+            lastName,
+            middleName,
+            emailAddress,
+            contactNumber
+          })
+          return NextResponse.json({message: "inserted"}, {status: 201})
+    } catch (error) {
+      return NextResponse.json(
+        { success: false, message: 'Invalid JSON input', error: error.message },
+        { status: 400 }
+      );
+    }   
 }

@@ -50,29 +50,46 @@ export const GET = async (req) => {
       },
       { $unwind: "$yearSection" },
       {
-        $lookup: {
-          from: "enrollments",
-          let: { ysid: "$year_sectionID", cid: "$courseID" },
-          pipeline: [
-            {
-              $match: {
-                $expr: {
-                  $and: [
-                    { $eq: ["$year_sectionID", "$$ysid"] },
-                    { $in: ["$$cid", "$courseIDs"] },
-                      { $eq: ["$approve",true] }
-                   
-                  ]
-                }
-              }
-            }
-          ],
-          as: "enrolled"
+  $lookup: {
+    from: "enrollments",
+    let: { ysid: "$year_sectionID", cid: "$courseID" },
+    pipeline: [
+      {
+        $match: {
+          $expr: {
+            $and: [
+              { $eq: ["$year_sectionID", "$$ysid"] },
+              { $in: ["$$cid", "$courseIDs"] }
+            ]
+          }
         }
       },
       {
+        $lookup: {
+          from: "students",
+          localField: "studentID",
+          foreignField: "_id",
+          as: "student"
+        }
+      },
+      {
+        $unwind: "$student"
+      },
+      {
+        $project: {
+          _id: 0,
+          studentID: "$student._id",
+          firstName: "$student.firstName",
+          lastName: "$student.lastName",
+        }
+      }
+    ],
+    as: "enrolled"
+  }
+},
+     
+      {
         $addFields: {
-          enrolled: { $size: "$enrolled" },
           section: "$yearSection.value",          // Full section like "BSIT-2B"
           yearLevel: {
             $toInt: {
@@ -88,17 +105,13 @@ export const GET = async (req) => {
       {
         $project: {
           _id: 0,
+          student: "$enrolled",
           course: "$course.courseName",
-          ins: "$course.instructorID",
+          ins: "$instructorID",
           program: "$program.programName",
           section: 1,
           yearLevel: 1,
-          enrolled: 1,
           year_sectionID: 1,
-          room: 1,
-          dayOfWeek: 1,
-          startTime: 1,
-          endTime: 1
         }
       }
     ]);
