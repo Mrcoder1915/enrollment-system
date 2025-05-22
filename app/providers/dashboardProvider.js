@@ -12,6 +12,7 @@ const DashboardProvider = ({children}) => {
     const [userAccess, setUserAccess] = useState(null)
     const [insertInfo, setInsertInfo] = useState([])
     const [studentlist, setStudentList] = useState([])
+    const [gradeList, setGradeList] = useState([])
     console.log("userAccess: ",userAccess)
 
   useEffect(() => {
@@ -46,6 +47,9 @@ const SetView = (In) => {
 const SetStudent = (students) => {
   setStudentList(students)
 }
+const SetGrade = (students) => {
+  setGradeList(students)
+}
 const value = useMemo(() => ({  
     show,
     showDetails,
@@ -56,10 +60,12 @@ const value = useMemo(() => ({
     insertInfo,
     user,
     studentlist,
-    SetStudent
-}),[show,setShow,showDetails,SetView,setInsertInfo,view,insertInfo,user,
-  studentlist, setStudentList,SetStudent
-
+    SetStudent,
+    SetGrade,
+    gradeList
+}),[show,setShow,showDetails,SetView,setInsertInfo,
+    view, insertInfo, user, studentlist, setStudentList, 
+    SetStudent, gradeList
 ])
   return (
     <dashboardContext.Provider value={value}>

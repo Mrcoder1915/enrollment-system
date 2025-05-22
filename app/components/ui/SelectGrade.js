@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { dashboardContext } from "@/app/providers/dashboardProvider";
 
 const GradeEntry = () => {
-  const { show, view, SetView } = useContext(dashboardContext) 
+  const { show, view, SetView, SetGrade } = useContext(dashboardContext) 
 
   const [studentData, setStudentData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -67,13 +67,14 @@ const GradeEntry = () => {
               <tbody>
                 {studentData.map((courseData, index) => (
                   <tr key={index} className="border-b">
-                    <td className="px-5 py-3 text-center border-r">{courseData.program}</td>
+                    <td className="px-5 py-3 text-center border-r">{courseData.programName}</td>
                     <td className="px-5 py-3 text-center border-r">{courseData.yearLevel} Year</td>
                     <td className="px-5 py-3 text-center border-r">{courseData.section}</td>
-                    <td className="px-5 py-3 text-center border-r">{courseData.course}</td>
+                    <td className="px-5 py-3 text-center border-r">{courseData.courseName}</td>
                     <td className="px-5 py-3 text-center border-r">{courseData.enrolled}</td>
                     <td className="px-5 py-3 text-center">
-                      <button className="bg-yellow-500 text-red-900 py-1 px-4 rounded-md" onClick={() => SetView(4)}>Select</button>
+                      <button className="bg-yellow-500 text-red-900 py-1 px-4 rounded-md" onClick={() =>{ SetView(4);
+                        if(courseData) SetGrade([courseData])}}>Select</button>
                     </td>
                   </tr>
                 ))}

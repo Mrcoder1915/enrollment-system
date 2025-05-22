@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import connection from "@/app/lib/config/connection";
 import Schedule from "@/app/models/schedule.model";
 import jwt from "jsonwebtoken";
-import { ObjectId } from "mongodb";
+import mongoose from "mongoose";
 
 export const GET = async (req) => {
   await connection();
@@ -20,7 +20,7 @@ export const GET = async (req) => {
     const id = decoded.instructorID
     const data = await Schedule.aggregate([
       {
-        $match: { instructorID: new ObjectId(id) }
+        $match: { instructorID: new mongoose.Types.ObjectId(id) }
       },
       {
         $lookup: {
@@ -75,14 +75,7 @@ export const GET = async (req) => {
       {
         $unwind: "$student"
       },
-      {
-        $project: {
-          _id: 0,
-          studentID: "$student._id",
-          firstName: "$student.firstName",
-          lastName: "$student.lastName",
-        }
-      }
+     
     ],
     as: "enrolled"
   }
