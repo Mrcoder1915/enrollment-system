@@ -65,14 +65,60 @@ export const GET = async (req) => {
                   ]
                 }
               }
-            }
+            },
+             {
+              $lookup: {
+                from: "students",
+                localField: "studentID",
+                foreignField: "_id",
+                as: "student"
+              }
+            },
+          {
+            $unwind: "$student"
+          },
+          
+             { $lookup: {
+          from: "grades",
+          let: {
+            sId: "$studentID",   // ObjectId of this student
+            cId: "$$cid"         // courseId from parent Schedule
+          },
+          pipeline: [
+            { $match: {
+                $expr: {
+                  $and: [
+                    { $eq: [ "$studentID", "$$sId" ] },
+                    { $eq: [ "$courseID",  "$$cId" ] }
+                  ]
+                }
+            }}
+          ],
+          as: "grade"
+      }},
+{
+  $unwind: { path: '$grade', preserveNullAndEmptyArrays: true } // 🔒 No preserveNullAndEmptyArrays = only students with grades appear
+},
+{
+  $project: {
+    _id: 0,
+    studentID: 1,
+    firstName: "$student.firstName",
+    lastName: "$student.lastName",
+    finalGrade: "$grade.finalGrade",
+    midtermGrade: "$grade.midtermGrade",
+    calculatedGrade: "$grade.grade_computation",
+    remarks: "$grade.remarks"
+  }
+}
+
           ],
           as: "enrolled"
         }
       },
       {
         $addFields: {
-          
+          enrolledCount: {$size: "$enrolled"},
           section: "$yearSection.value",
           yearLevel: {
             $toInt: {
@@ -85,20 +131,24 @@ export const GET = async (req) => {
           }
         }
       },
+      
       {
         $project: {
           _id: 0,
-          course: "$course.courseName",
-          ins: "$course.instructorID",
-          program: "$program.programName",
+          courseID: 1,
+          courseName: "$course.courseName",
+          instructorID: 1,
+          programName: "$program.programName",
+          studentID: '$student._id',
+          students: "$enrolled",
           section: 1,
           yearLevel: 1,
-          enrolled: { $size: "$enrolled" },
+          enrolled: "$enrolledCount" ,
           year_sectionID: 1,
           room: 1,
           dayOfWeek: 1,
           startTime: 1,
-          endTime: 1
+          endTime: 1, 
         }
       }
     ]);

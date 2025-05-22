@@ -3,32 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { dashboardContext } from "@/app/providers/dashboardProvider";
 
 const StudentListSelect = ({ selectedGroup }) => {
-      const { show , view} = useContext(dashboardContext);
-  const [students, setStudents] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (!selectedGroup?.year_sectionID) return;
-
-    const fetchStudents = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch("/api/instructor/studentlistselect");
-        if (!res.ok) throw new Error("Failed to fetch student details");
-        const data = await res.json();
-        setStudents(data);
-      } catch (error) {
-        console.error("Failed to fetch student details:", error);
-        setStudents([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchStudents();
-  }, [selectedGroup]);
-  console.log("Student: ",students);
-  
+      const { show , view, studentlist} = useContext(dashboardContext);
 
       const ViewDetails = () => {
         if(show === 3 && view === 3){
@@ -69,26 +44,26 @@ const StudentListSelect = ({ selectedGroup }) => {
               </tr>
             </thead>
             <tbody>
-                {loading ? (
-                    <tr className="p-6 text-center">
-                        No students found.
-                    </tr>
-        ) : students.length === 0 ? (
+        {
+         studentlist.length === 0 ? (
           < tr className="p-6 text-center">
-            No students found.
+            <td>No students found.</td>
             </tr>
         ) : (
-            students.map((student, index) => (
-                <tr key={student.studentID || index} className="hover:bg-gray-50">
+          
+            studentlist.map((student, index) => (
+              student.student.map((studentInfo) => (
+                <tr key={`${student._id}-${studentInfo.studentID || sIndex}`} className="hover:bg-gray-50">
                   <td className="px-4 py-2 border">{index + 1}</td>
-                  <td className="px-4 py-2 border">{student.lastName}</td>
-                  <td className="px-4 py-2 border">{student.stundetfirstName}</td>
-                  <td className="px-4 py-2 border">{student.middleName}</td>
-                  <td className="px-4 py-2 border">{student.studentID}</td>
+                  <td className="px-4 py-2 border">{studentInfo.lastName}</td>
+                  <td className="px-4 py-2 border">{studentInfo.firstName}</td>
+                  <td className="px-4 py-2 border">{studentInfo.middleName}</td>
+                  <td className="px-4 py-2 border">{studentInfo.studentID}</td>
                   <td className="px-4 py-2 border">{student.yearLevel}</td>
                   <td className="px-4 py-2 border">{student.program}</td>
                   <td className="px-4 py-2 border">{student.section}</td>
                 </tr>
+              ))
               ))
                  )}
             </tbody>

@@ -5,6 +5,7 @@ import Course from "@/app/models/course.model";
 import YearAndSection from "@/app/models/yearandsection.model";
 import Instructor from "@/app/models/instructor.model";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 export async function GET(req) {
   await connection();
@@ -17,23 +18,9 @@ export async function GET(req) {
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
     console.log(decoded);
     const id = decoded.instructorID
-    // const schedules = await Schedule.find({ instructorID: id })
-    //   .populate({
-    //     path: "courseID",
-    //     model: Course,
-    //   })
-    //   .populate({
-    //     path: "year_sectionID",
-    //     model: YearAndSection,
-
-    //   })
-    //   .populate({
-    //     path: "instructorID",
-    //     model: Instructor,
-    //   });
  const schedules = await Schedule.aggregate([
         {
-            $match: {instructorID: 124}
+            $match: {instructorID: new mongoose.Types.ObjectId(id)}
         },
         {
             $lookup:{

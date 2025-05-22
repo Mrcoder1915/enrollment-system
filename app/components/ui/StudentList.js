@@ -3,10 +3,10 @@ import React, { useState, useContext, useEffect } from "react";
 import { dashboardContext } from "@/app/providers/dashboardProvider";
 
 const StudentList = () => {
-  const { show , view, SetView} = useContext(dashboardContext);
+  const { show , view, SetView, SetStudent} = useContext(dashboardContext);
   const [studentData, setStudentData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedTerm, setSelectedTerm] = useState("");
+  const [selectedTerm, setSelectedTerm] = useState(0);
   const [selectedStudentGroup, setSelectedStudentGroup] = useState(null);
 
   useEffect(() => {
@@ -43,6 +43,15 @@ const StudentList = () => {
       </div>
     );
   }
+
+  const filterdstudents = studentData.filter((student) => {
+  const filterBySemester = selectedTerm
+    ? student?.sem == selectedTerm
+    : false;
+
+  return filterBySemester;
+});
+
   const showStundent = () => {
       if(show === 3 && view !== 3){
         return "translate-x-[0] visible"
@@ -66,8 +75,8 @@ const StudentList = () => {
             className="border border-gray-300 p-2 rounded-md"
           >
             <option value="">Select Term</option>
-            <option value="1st">1st Semester</option>
-            <option value="2nd">2nd Semester</option>
+            <option value={1}>1st Semester</option>
+            <option value={2}>2nd Semester</option>
           </select>
         </div>
 
@@ -92,18 +101,19 @@ const StudentList = () => {
                   <tr>
                     <td colSpan="6" className="text-center py-3">Loading student list...</td>
                   </tr>
-                ) : studentData.length > 0 ? (
-                  studentData.map((item, index) => (
+                ) : filterdstudents.length > 0 ? (
+                  filterdstudents.map((item, index) => (
                     <tr key={index} className="border-b">
                       <td className="px-5 py-3 text-center border-r">{item.program}</td>
                       <td className="px-5 py-3 text-center border-r">{item.yearLevel}</td>
                       <td className="px-5 py-3 text-center border-r">{item.section}</td>
                       <td className="px-5 py-3 text-center border-r">{item.course}</td>
-                      <td className="px-5 py-3 text-center border-r">{item.enrolled}</td>
+                      <td className="px-5 py-3 text-center border-r">{item.enrolledCount}</td>
                       <td className="px-5 py-3 text-center">
                         <button
                           className="bg-yellow-500 text-white py-1 px-4 rounded-md"
-                          onClick={() => SetView(3)}
+                          onClick={() => { SetView(3);
+                            if(item) SetStudent([item]);}}
                         >
                           Select
                         </button>

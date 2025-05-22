@@ -8,7 +8,7 @@ const scheduleSchema = new mongoose.Schema({
     },
   year_sectionID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Year_section"
+        ref: "YearAndSection"
    },
    courseID: 
     {
