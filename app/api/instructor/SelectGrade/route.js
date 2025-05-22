@@ -6,9 +6,11 @@ import { ObjectId } from "mongodb";
 
 export const GET = async (req) => {
   await connection();
-  
 
-  const token = req.cookies.get('accessToken')?.value;
+  const cookieToken = req.cookies.get('accessToken')?.value;
+  const authHeader = req.headers.get('authorization');
+  const headerToken = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
+  const token = cookieToken || headerToken;
 
   if (!token) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
@@ -16,8 +18,8 @@ export const GET = async (req) => {
 
   try {
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
-    console.log(decoded);
-    const id = decoded.instructorID
+    const id = decoded.instructorID;
+
     const data = await Schedule.aggregate([
       {
         $match: { instructorID: new ObjectId(id) }
@@ -50,48 +52,28 @@ export const GET = async (req) => {
       },
       { $unwind: "$yearSection" },
       {
-  $lookup: {
-    from: "enrollments",
-    let: { ysid: "$year_sectionID", cid: "$courseID" },
-    pipeline: [
-      {
-        $match: {
-          $expr: {
-            $and: [
-              { $eq: ["$year_sectionID", "$$ysid"] },
-              { $in: ["$$cid", "$courseIDs"] }
-            ]
-          }
-        }
-      },
-      {
         $lookup: {
-          from: "students",
-          localField: "studentID",
-          foreignField: "_id",
-          as: "student"
+          from: "enrollments",
+          let: { ysid: "$year_sectionID", cid: "$courseID" },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    { $eq: ["$year_sectionID", "$$ysid"] },
+                    { $in: ["$$cid", "$courseIDs"] },            
+                  ]
+                }
+              }
+            }
+          ],
+          as: "enrolled"
         }
       },
-      {
-        $unwind: "$student"
-      },
-      {
-        $project: {
-          _id: 0,
-          studentID: "$student._id",
-          firstName: "$student.firstName",
-          lastName: "$student.lastName",
-        }
-      }
-    ],
-    as: "enrolled"
-  }
-},
-     
       {
         $addFields: {
-          enrolledCount: { $size: "$enrolled" },
-          section: "$yearSection.value",          // Full section like "BSIT-2B"
+          
+          section: "$yearSection.value",
           yearLevel: {
             $toInt: {
               $substrCP: [
@@ -106,14 +88,12 @@ export const GET = async (req) => {
       {
         $project: {
           _id: 0,
-          student: "$enrolled",
           course: "$course.courseName",
-          sem: "$course.semester",
-          ins: "$instructorID",
+          ins: "$course.instructorID",
           program: "$program.programName",
-          enrolledCount: "$enrolledCount",
           section: 1,
           yearLevel: 1,
+          enrolled: { $size: "$enrolled" },
           year_sectionID: 1,
           room: 1,
           dayOfWeek: 1,
@@ -123,7 +103,7 @@ export const GET = async (req) => {
       }
     ]);
 
-    return NextResponse.json(data);
+    return NextResponse.json(data); 
   } catch (error) {
     console.error("Aggregation Error:", error);
     return NextResponse.json({ error: "Server Error" }, { status: 500 });

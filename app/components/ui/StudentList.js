@@ -3,41 +3,66 @@ import React, { useState, useContext, useEffect } from "react";
 import { dashboardContext } from "@/app/providers/dashboardProvider";
 
 const StudentList = () => {
-  const { show } = useContext(dashboardContext);
+  const { show , view, SetView, SetStudent} = useContext(dashboardContext);
   const [studentData, setStudentData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedTerm, setSelectedTerm] = useState("");
+  const [selectedTerm, setSelectedTerm] = useState(0);
+  const [selectedStudentGroup, setSelectedStudentGroup] = useState(null);
 
   useEffect(() => {
     const fetchStudentList = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch("/api/instructor/studentlist");
-      const data = await res.json();
-      setStudentData(data);
-    } catch (error) {
-      console.error("Error fetching student list:", error.message);
-      setStudentData([]);
-    } finally {
-      setLoading(false);
+      setLoading(true);
+      try {
+        const res = await fetch("/api/instructor/studentlist");
+        const data = await res.json();
+        setStudentData(data);
+      } catch (error) {
+        console.error("Error fetching student list:", error.message);
+        setStudentData([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStudentList();
+  }, []);
+
+  if (selectedStudentGroup) {
+    return (
+      <div
+        className={`transition-all ease-in duration-300 ${
+          show === 3 ? "translate-x-0 visible" : "translate-x-[-200%] invisible"
+        }`}
+      >
+        
+        <button
+          className="mt-4 ml-6 bg-gray-500 text-white px-4 py-2 rounded"
+          onClick={() => setSelectedStudentGroup(null)}
+        >
+          Back to List
+        </button>
+      </div>
+    );
+  }
+
+  const filterdstudents = studentData.filter((student) => {
+  const filterBySemester = selectedTerm
+    ? student?.sem == selectedTerm
+    : false;
+
+  return filterBySemester;
+});
+
+  const showStundent = () => {
+      if(show === 3 && view !== 3){
+        return "translate-x-[0] visible"
+      }else {
+          return "translate-x-[-200%]"
+      }
     }
-  };
-  fetchStudentList()
-  },[])
-  
-console.log("data: ",studentData);
-
-
-
-  const handleSelect = (item) => {
-    console.log("Selected Student Group:", item);
-    // Add navigation or modal logic if needed
-  };
 
   return (
     <div
-      className={`transition-all ease-in duration-300 ${
-        show === 3 ? "translate-x-0 visible" : "translate-x-[-200%] invisible"
+      className={`transition-all ease-in duration-300 ${showStundent()
       }`}
     >
       <div className="p-5">
@@ -45,13 +70,13 @@ console.log("data: ",studentData);
           <label htmlFor="term" className="font-bold mr-2">Term:</label>
           <select
             id="term"
-            // value={selectedTerm}
-            // onChange={handleTermChange}
+            value={selectedTerm}
+            onChange={(e) => setSelectedTerm(e.target.value)}
             className="border border-gray-300 p-2 rounded-md"
           >
             <option value="">Select Term</option>
-            <option value="1st">1st Semester</option>
-            <option value="2nd">2nd Semester</option>
+            <option value={1}>1st Semester</option>
+            <option value={2}>2nd Semester</option>
           </select>
         </div>
 
@@ -76,18 +101,19 @@ console.log("data: ",studentData);
                   <tr>
                     <td colSpan="6" className="text-center py-3">Loading student list...</td>
                   </tr>
-                ) : studentData.length > 0 ? (
-                  studentData.map((item, index) => (
+                ) : filterdstudents.length > 0 ? (
+                  filterdstudents.map((item, index) => (
                     <tr key={index} className="border-b">
                       <td className="px-5 py-3 text-center border-r">{item.program}</td>
                       <td className="px-5 py-3 text-center border-r">{item.yearLevel}</td>
                       <td className="px-5 py-3 text-center border-r">{item.section}</td>
                       <td className="px-5 py-3 text-center border-r">{item.course}</td>
-                      <td className="px-5 py-3 text-center border-r">{item.enrolled}</td>
+                      <td className="px-5 py-3 text-center border-r">{item.enrolledCount}</td>
                       <td className="px-5 py-3 text-center">
                         <button
                           className="bg-yellow-500 text-white py-1 px-4 rounded-md"
-                         
+                          onClick={() => { SetView(3);
+                            if(item) SetStudent([item]);}}
                         >
                           Select
                         </button>
