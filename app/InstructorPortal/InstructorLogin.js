@@ -29,7 +29,7 @@ const InstructorLogin = () => {
         return;
       }
 
-      router.push('Dashboard');
+      router.push('/Dashboard');
     } catch (err) {
       setError('Something went wrong. Please try again.');
     } finally {

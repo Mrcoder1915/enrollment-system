@@ -81,6 +81,7 @@ console.log("token:", token);
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.png|.*\\.jpg|.*\\.jpeg|.*\\.svg|.*\\.webp|.*\\.css|.*\\.js).*)',
+    '/((?!_next/|.*\\.(?:png|jpg|jpeg|svg|webp|ico|css|js|map)$|favicon\\.ico$).*)',
   ],
 };
+

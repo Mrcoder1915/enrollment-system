@@ -59,8 +59,7 @@ export const GET = async (req) => {
                 $expr: {
                   $and: [
                     { $eq: ["$yearandsectionID", "$$ysid"] },
-                    { $in: ["$$cid", "$courseIDs"] },
-                   
+                    { $in: ["$$cid", "$courseIDs"] },  
                   ]
                 }
               }
