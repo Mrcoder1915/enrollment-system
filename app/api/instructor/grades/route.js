@@ -2,14 +2,24 @@ import connection from "@/app/lib/config/connection";
 import Schedule from "@/app/models/schedule.model";
 import { NextResponse } from "next/server";
 import Grade from '@/app/models/GradeEntry.model'; 
+import jwt from "jsonwebtoken"
+import { ObjectId } from "mongodb";
 
-export async function GET() {
+export async function GET(req) {
   await connection();
-  try {
-    const instructorID = 124; // Use ObjectId if your schema needs it
+  const token = req.cookies.get('accessToken')?.value;
+  
+    if (!token) {
+      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    }
+  
+    try {
+      const decoded = jwt.verify(token, process.env.SECRET_KEY);
+      console.log(decoded);
+      
 
     const result = await Schedule.aggregate([
-      { $match: { instructorID } },
+      { $match: { instructorID: new ObjectId(decoded.instructorID) } },
 
       // Lookup yearandsection
       {

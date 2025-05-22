@@ -16,6 +16,9 @@ import MasterList from '../components/ui/master-list/masterlist'
 import ViewDocs from "@/app/components/ui/enrollment-status/View"
 import EnrollmentSchedule from '../components/ui/enrollmentSchedule'
 import EnrollmentCard from '@/app/components/ui/enrollmentCard'
+import SelectGrade from '@/app/components/ui/SelectGrade'
+import StudentListSelect from '../components/ui/StudentlistSelect'
+
 
 const page = () => {
   const { userAccess } = useContext(dashboardContext);
@@ -36,10 +39,13 @@ const page = () => {
         
         {
            userAccess === "instructor" && <>
+                <SelectGrade />
                 <GradeEntry />
+                 <StudentListSelect/>
                 <StudentList />
                 <InstructorSchedule />
                 <ProfileForm />
+                
              </>
         } 
         

@@ -6,9 +6,11 @@ import { ObjectId } from "mongodb";
 
 export const GET = async (req) => {
   await connection();
-  
 
-  const token = req.cookies.get('accessToken')?.value;
+  const cookieToken = req.cookies.get('accessToken')?.value;
+  const authHeader = req.headers.get('authorization');
+  const headerToken = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
+  const token = cookieToken || headerToken;
 
   if (!token) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
@@ -16,8 +18,8 @@ export const GET = async (req) => {
 
   try {
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
-    console.log(decoded);
-    const id = decoded.instructorID
+    const id = decoded.instructorID;
+
     const data = await Schedule.aggregate([
       {
         $match: { instructorID: new ObjectId(id) }
@@ -59,9 +61,7 @@ export const GET = async (req) => {
                 $expr: {
                   $and: [
                     { $eq: ["$year_sectionID", "$$ysid"] },
-                    { $in: ["$$cid", "$courseIDs"] },
-                      { $eq: ["$approve",true] }
-                   
+                    { $in: ["$$cid", "$courseIDs"] },            
                   ]
                 }
               }
@@ -72,8 +72,8 @@ export const GET = async (req) => {
       },
       {
         $addFields: {
-          enrolled: { $size: "$enrolled" },
-          section: "$yearSection.value",          // Full section like "BSIT-2B"
+          
+          section: "$yearSection.value",
           yearLevel: {
             $toInt: {
               $substrCP: [
@@ -93,7 +93,7 @@ export const GET = async (req) => {
           program: "$program.programName",
           section: 1,
           yearLevel: 1,
-          enrolled: 1,
+          enrolled: { $size: "$enrolled" },
           year_sectionID: 1,
           room: 1,
           dayOfWeek: 1,
@@ -103,7 +103,7 @@ export const GET = async (req) => {
       }
     ]);
 
-    return NextResponse.json(data);
+    return NextResponse.json(data); 
   } catch (error) {
     console.error("Aggregation Error:", error);
     return NextResponse.json({ error: "Server Error" }, { status: 500 });
