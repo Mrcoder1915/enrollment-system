@@ -1,5 +1,5 @@
 import connection from '@/app/lib/config/connection';
-import Schedule from '@/app/models/StudentSchedule.model';
+import Schedule from '@/app/models/studentSchedeule.model';
 
 export async function GET() {
   try {
