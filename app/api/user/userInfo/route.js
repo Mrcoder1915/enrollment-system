@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import connection from '@/lib/connection';
-import Student from '@/models/Student';
+import connection from '@/app/lib/config/connection';
+import Student from '@/app/models/student.model';
 
 export async function GET(req) {
   try {
