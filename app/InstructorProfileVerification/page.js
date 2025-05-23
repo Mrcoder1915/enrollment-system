@@ -148,7 +148,7 @@ const router = useRouter()
     </div>
   );
 }
-Recelyn
+
 import { NextResponse } from 'next/server';
 import connection from "@/app/lib/config/connection";
 import Instructor from '@/app/models/instructor.model';
