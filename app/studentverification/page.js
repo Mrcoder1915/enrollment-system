@@ -42,7 +42,7 @@ console.log(lastName);
       
       <div className="bg-auto bg-gray-100 p-6 rounded-lg shadow-md w-full max-w-md">
         <div className="text-center mb-4">
-          <img src="/neustlogo-nobg.png" className="mx-auto w-24 my-2" />
+          <img src="/USNE.png" className="mx-auto w-24 my-2" />
           <p className="text-red-800 font-bold text-md leading-tight">
             UNIVERSITY OF SOUTHERN<br />NUEVA ECIJA
           </p>
