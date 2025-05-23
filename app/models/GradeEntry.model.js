@@ -11,6 +11,10 @@ const gradeSchema = new mongoose.Schema({
     ref: "Instructor",
     required: true
   },
+  year_sectionID: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "YearAndSection"
+  },
   courseID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Course",

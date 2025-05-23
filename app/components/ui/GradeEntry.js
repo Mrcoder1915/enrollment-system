@@ -4,18 +4,49 @@ import { dashboardContext } from '@/app/providers/dashboardProvider';
 
 
 const GradeTable = () => {
-  const { show } = useContext(dashboardContext);
+  const { show, view, gradeList} = useContext(dashboardContext);
   const [selectedSemester, setSelectedSemester] = useState('');
-  const [grades, setGrades] = useState([]);
-  const [loading, setLoading] = useState(false)
+  const [grades, setGrades] = useState([]); 
 
-    const handleChange = (index, field,  value) => {
-    const newGrades = [...grades];
-    newGrades[index][field] = value;
-    setGrades(newGrades);
-  };
+  const [loading, setLoading] = useState(false)
+  console.log("gradelist:", grades.students);
+
+ useEffect(() => {
+  if (gradeList?.length > 0) {
+    const allStudents = gradeList.flatMap(item =>
+      item.students.map(student => ({
+        ...student,
+        courseID: item.courseID,
+        instructorID: item.instructorID,
+        year_sectionID: item.year_sectionID,
+        lastName: student.lastName || item.lastName, // fix fallback
+        midtermGrade: student.midtermGrade ?? 0,
+        finalGrade: student.finalGrade ?? 0,
+        calculatedGrade: student.calculatedGrade ?? 0,
+        remarks: student.remarks ?? ''
+      }))
+    );
+    setGrades(allStudents);
+  }
+}, [gradeList]);
 
   
+    const handleChange = (index, field, value) => {
+  const updated = [...grades];
+  updated[index][field] = value;
+
+  // Optional: auto-calculate grade
+  const midterm = updated[index].midtermGrade ?? 0;
+  const final = updated[index].finalGrade ?? 0;
+  const calculated = ((midterm + final) / 2).toFixed(2);
+
+  updated[index].calculatedGrade = calculated;
+  updated[index].remarks =
+    calculated <= 3.0 ? 'Passed' : calculated > 3.0 ? 'Failed' : 'Incomplete';
+
+  setGrades(updated);
+  console.log("Updated student:", updated[index]);
+};
 
 
   const getRemarks = (gradeData) => {
@@ -29,21 +60,12 @@ const GradeTable = () => {
         return {color: "text-yellow-600"}
   };
 console.log(grades);
-useEffect(() => {
-   const fetchGrade = async () => {
-    try {
-      const res = await fetch(`/api/instructor/grades`);
-      const data = await res.json();
-      setGrades(data);
-    } catch (err) {
-      console.error("Failed to fetch grades:", err);
-    }
-  };
-  fetchGrade()
-},[])
+
 
 
   const uploadGrade = async () => {
+    console.log("Uploading grades: ", grades);
+    
     setLoading(true)
     try {
        await fetch(`/api/instructor/grades`,{
@@ -58,22 +80,24 @@ useEffect(() => {
        
       setLoading(false)
     }
-    const res = await fetch(`/api/instructor/grades`);
-    const data = await res.json();
-    setGrades(data);
   };
-  
-
- 
-
-
-
+      const ViewDetails = () => {
+        if(show === 4 && view === 4){
+            return "translate-x-[0] visible"
+        }
+        return "translate-x-[-200%]"
+    }
   return (
-    <div className={`w-full h-[80vh]  absolute flex items-center justify-center flex-col transition-all ease-in duration-300 ${
-      show === 4 ? 'translate-x-0 visible' : '-translate-x-[200%]'
-    }`}>
+    <div
+    className={   
+        `w-full h-[80vh] absolute
+        flex-icenter flex-col transition-all
+        ease-in duration-300
+        z-20
+        ${ViewDetails()}`
+    }>
       <div className='flex flex-col w-[95%]'>
-      <div className='w-full[ h-full'>
+      <div className='w-full h-full'>
         <div className='w-full mb-3'>
           <label htmlFor="semester" className="font-bold mr-2">Semester:</label>
           <select
@@ -94,9 +118,9 @@ useEffect(() => {
         </div>
 
         <div className="w-full bg-gray-100 p-3 text-lg font-medium border-collapse shadow-[4px_4px_10px_rgba(0,0,0,0.2),_-4px_4px_10px_rgba(0,0,0,0.2)]">
-          Course: CC100 - Introduction to Computing
+          Course: 
         </div>
-    <div className='w-full h-[90%]overflow-y-scroll'>
+    <div className='w-full h-[90%] overflow-scroll '>
       <table className="w-full relative  border-collapse shadow-[4px_4px_10px_rgba(0,0,0,0.2),_-4px_4px_10px_rgba(0,0,0,0.2)] ">
 
         <thead>
@@ -110,60 +134,42 @@ useEffect(() => {
           </tr>
         </thead>
         <tbody>
-  {
-    grades?.map((Data, i) => {
-         const { color } = getRemarks({semester: Data.calculatedGrade});
-      return( 
-      <tr key={Data.studentID}>
-        <td className="border px-4 text-center min-h-[80px]">{Data.studentID}</td>
-        <td className="border px-4 text-center">{`${Data.studentFirstName} ${Data.studentLastName}`}</td>
+  {grades.map((student, index) => {
+    const { color } = getRemarks({ semester: student.calculatedGrade });
+
+    return (
+      <tr key={student.studentID}>
+        <td className="border px-4 text-center">{student.studentID}</td>
+        <td className="border px-4 text-center">{`${student.firstName} ${student.lastName}`}</td>
         <td className="border px-4 text-center">
           <input
             type="number"
-            defaultValue={Data.midtermGrade}
-            onChange={(e) => handleChange(i, "midtermGrade", Number(e.target.value))}
+            value={student.midtermGrade ?? ''}
+            onChange={(e) => handleChange(index, "midtermGrade", Number(e.target.value))}
             className="w-16 border border-gray-400 px-1 py-1 rounded m-auto text-center bg-gray-200"
           />
         </td>
-        <td className="border px-4 py-4 text-center">
+        <td className="border px-4 text-center">
           <input
             type="number"
-            name="finals"
-            defaultValue={Data.finalGrade}
-            onChange={(e) => handleChange(i, "finalGrade", Number(e.target.value))}
+            value={student.finalGrade ?? ''}
+            onChange={(e) => handleChange(index, "finalGrade", Number(e.target.value))}
             className="w-16 border border-gray-400 px-1 py-1 rounded m-auto text-center bg-gray-200"
           />
         </td>
-        <td className="border px-4 py-4 text-center">
-          <div  className="w-16 border border-gray-400 px-1 py-1 rounded m-auto text-center bg-gray-100">
-           {Data.calculatedGrade} 
-           
+        <td className="border px-4 text-center">
+          <div className="w-16 border border-gray-400 px-1 py-1 rounded m-auto text-center bg-gray-100">
+            {student.calculatedGrade ?? ''}
           </div>
         </td>
-        <td className={`border px-4 py-4 text-center font-bold ${color}`}>
-          {Data.remarks}
+        <td className={`border px-4 text-center font-bold ${color}`}>
+          {student.remarks ?? ''}
         </td>
       </tr>
-    )
-    }
-    )}
-  <tr>
-    <td className="border px-4 py-25 text-center min-h-[80px]"></td>
-    <td className="border px-4 py-25 text-center"></td>
-    <td className="border px-4 py-25 text-center">
-     
-    </td>
-    <td className="border px-4 py-4 text-center">
-   
-    </td>
-    <td className="border px-4 py-4 text-center">
-     
-    </td>
-    <td className={`border px-4 py-4 text-center font-bold }`}>
-     
-    </td>
-  </tr>
+    );
+  })}
 </tbody>
+
 
       </table>
       </div>

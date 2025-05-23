@@ -1,43 +1,30 @@
 "use client";
 
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { dashboardContext } from '@/app/providers/dashboardProvider';
 
 export default function InstructorSchedule() {
   const { show } = useContext(dashboardContext);
+  const [Sched, setSched] = useState([])
 
-  useEffect(() => {
+  useEffect(()  => {
+    const schedule = async () => {
+    const sched = await fetch("/api/instructor/instructorSchedule")
+    const data = await sched.json();
+    setSched(data)
+    }
+    schedule()
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "auto";
     };
+    
+
   }, []);
 
-  const scheduleData = [
-    { program: "BSIT", subject: "CC-101 (Computer Programming 1, Fundamentals)", day: "Tuesday", start: "9:00AM", end: "2:00PM", section: "BSIT 1A", room: "TBA" },
-    { program: "BSIT", subject: "CC-101 (Computer Programming 1, Fundamentals)", day: "Monday", start: "12:00PM", end: "5:00PM", section: "BSIT 1B", room: "TBA" },
-    { program: "BSIT", subject: "GE-04 (Mathematics in the Modern World)", day: "Monday", start: "5:30PM", end: "8:30PM", section: "BSIT 1A", room: "TBA" },
-    { program: "BSIT", subject: "GE-04 (Mathematics in the Modern World)", day: "Thursday", start: "5:30PM", end: "8:30PM", section: "BSIT 1B", room: "TBA" },
+const dayOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+console.log("Schedule: ", Sched);
 
-    { program: "BSHM", subject: "THC 1 (Philippine Culture and Tourism Geography)", day: "Tuesday", start: "5:30PM", end: "8:30PM", section: "BSHM 1A", room: "TBA" },
-    { program: "BSHM", subject: "THC 1 (Philippine Culture and Tourism Geography)", day: "Friday", start: "5:30PM", end: "8:30PM", section: "BSHM 1B", room: "TBA" },
-    { program: "BSHM", subject: "THC 1 (Philippine Culture and Tourism Geography)", day: "Monday", start: "5:30PM", end: "8:30PM", section: "BSHM 1C", room: "TBA" },
-
-    { program: "BSHM", subject: "GE Fil 1 (Kontekstwalisadong Komunikasyon sa Filipino)", day: "Saturday", start: "8:00AM", end: "11:00AM", section: "BSHM 1A", room: "TBA" },
-    { program: "BSHM", subject: "GE Fil 1 (Kontekstwalisadong Komunikasyon sa Filipino)", day: "Saturday", start: "12:00PM", end: "3:00PM", section: "BSHM 1B", room: "TBA" },
-    { program: "BSHM", subject: "GE Fil 1 (Kontekstwalisadong Komunikasyon sa Filipino)", day: "Saturday", start: "3:00PM", end: "6:00PM", section: "BSHM 1C", room: "TBA" },
-
-    { program: "BSE", subject: "GEN ED 1 (Understanding the Self)", day: "Monday", start: "2:00PM", end: "5:00PM", section: "BSE 1A", room: "TBA" },
-    { program: "BSE", subject: "PROF ED 1 (The Teaching Profession)", day: "Tuesday", start: "5:30PM", end: "8:30PM", section: "BSE 1A", room: "TBA" },
-
-    { program: "BSBA", subject: "GE 5 (Purposive Communication)", day: "Thursday", start: "12:00PM", end: "3:00PM", section: "BSBA 1A", room: "TBA" },
-    { program: "BSBA", subject: "GE 5 (Purposive Communication)", day: "Tuesday", start: "2:00PM", end: "5:00PM", section: "BSBA 1B", room: "TBA" },
-    { program: "BSBA", subject: "GE 5 (Purposive Communication)", day: "Friday", start: "5:30PM", end: "8:30PM", section: "BSBA 1C", room: "TBA" },
-
-    { program: "BSBA", subject: "BA CORE 1 (Basic Microeconomics)", day: "Monday", start: "8:00AM", end: "11:00AM", section: "BSBA 1A", room: "TBA" },
-    { program: "BSBA", subject: "BA CORE 1 (Basic Microeconomics)", day: "Monday", start: "12:00PM", end: "3:00PM", section: "BSBA 1B", room: "TBA" },
-    { program: "BSBA", subject: "BA CORE 1 (Basic Microeconomics)", day: "Tuesday", start: "8:00AM", end: "11:00AM", section: "BSBA 1C", room: "TBA" },
-  ];
 
   return (
     <div
@@ -91,15 +78,15 @@ export default function InstructorSchedule() {
                   </tr>
                 </thead>
                 <tbody>
-                  {scheduleData.map((item, index) => (
+                  {Sched.map((item, index) => (
                     <tr key={index} className="text-center">
-                      <td className="px-4 py-2 border">{item.program}</td>
-                      <td className="px-4 py-2 border">{item.subject}</td>
-                      <td className="px-4 py-2 border">{item.day}</td>
-                      <td className="px-4 py-2 border">{item.start}</td>
-                      <td className="px-4 py-2 border">{item.end}</td>
+                      <td className="px-4 py-2 border">{item.programCode}</td>
+                      <td className="px-4 py-2 border">{item.course}</td>
+                      <td className="px-4 py-2 border">{dayOfWeek[item.day]}</td>
+                      <td className="px-4 py-2 border">{item.startTime}</td>
+                      <td className="px-4 py-2 border">{item.endTime}</td>
                       <td className="px-4 py-2 border">{item.section}</td>
-                      <td className="px-4 py-2 border">{item.room}</td>
+                      <td className="px-4 py-2 border">{item.roomNumber}</td>
                     </tr>
                   ))}
                 </tbody>

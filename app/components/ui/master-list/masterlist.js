@@ -7,7 +7,7 @@ const Masterlist = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedDepartment, setSelectedDepartment] = useState('');
   const [enrollDetails, setEnrollDetails] = useState([])
-  const [filteredStudents, setFilteredStudents] = useState([])
+
 
   useEffect(() => {
     async function enroll() {
@@ -19,14 +19,15 @@ const Masterlist = () => {
   }, [])
 
   const masterList = enrollDetails.filter((student) => student.approve === true);
-
-  useEffect(() => {
-    const term = searchTerm.toLowerCase();
+  console.log(masterList);
+  
+    
 
     const filtered = masterList.filter((student) => {
       const { studentID } = student;
-
+      const term = searchTerm.toLowerCase();
       const matchesSearch = (
+
         studentID?.firstName?.toLowerCase().includes(term) ||
         studentID?.lastName?.toLowerCase().includes(term) ||
         studentID?.middleName?.toLowerCase().includes(term) ||
@@ -40,6 +41,7 @@ const Masterlist = () => {
         BSCS: 'CICT',
         BSBA: 'CMBT',
         BSE: 'COE',
+        BSHM: 'CMBT'
       };
 
       const matchesDepartment = selectedDepartment
@@ -49,8 +51,7 @@ const Masterlist = () => {
       return matchesSearch && matchesDepartment;
     });
 
-    setFilteredStudents(filtered);
-  }, [searchTerm, selectedDepartment]);
+
 
   return (
     <div
@@ -105,8 +106,8 @@ const Masterlist = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredStudents.length > 0 ? (
-                filteredStudents.map((student, index) => (
+              {filtered.length > 0 ? (
+                filtered.map((student, index) => (
                   <tr key={index} className="border-t hover:bg-gray-50">
                     <td className="px-4 py-2">{index + 1}</td>
                     <td className="px-4 py-2">{student?.studentID?.lastName}</td>
