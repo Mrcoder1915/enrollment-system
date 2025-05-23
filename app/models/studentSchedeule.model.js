@@ -1,23 +1,21 @@
 import mongoose from "mongoose";
-import { unique } from "next/dist/build/utils";
-import { stringifyCookie } from "next/dist/compiled/@edge-runtime/cookies";
 
 const scheduleSchema = new mongoose.Schema({
   scheduleId: {
     type: Number,
-    required: unique
+    required: true
   },
   courseID: {
     type: Number,
-    required: unique
+    required: true
   },
   instructorID: {
     type: Number,
-    require: unique
+    require: true
   },
   year_sectionID:{
     type: Number,
-    required: unique
+    required: true
   },
   room: {
     type: Number,

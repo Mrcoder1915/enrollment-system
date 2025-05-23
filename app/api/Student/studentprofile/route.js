@@ -1,4 +1,3 @@
-import express from "express";
 import connect from "@/app/lib/config/connection.js";
 import Student from "@/app/models/student.model.js";
 import { NextResponse } from "next/server.js";
