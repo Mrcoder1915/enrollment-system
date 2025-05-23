@@ -14,7 +14,8 @@ console.log(lastName);
 
 
 
- async function student(){
+ async function student(e){
+  e.preventDefault()
     const result=await fetch("/api/Student/studentverification",{
       method:"POST",
       headers:{
@@ -41,7 +42,7 @@ console.log(lastName);
         </div>
         <form onSubmit={student} className="text-sm">
           <label className="font-semibold block mt-2">Last Name:</label>
-          <input type="text" name="lastName" onChange={(e)=>setlastName(e.target.value)} className="w-full p-2 mt-1 border border-black-400 rounded" placeholder="Last Name" />
+          <input type="text" onChange={(e)=>setlastName(e.target.value)} className="w-full p-2 mt-1 border border-black-400 rounded" placeholder="Last Name" />
 
           <label className="font-semibold block mt-2">First Name:</label>
           
@@ -49,15 +50,15 @@ console.log(lastName);
           onChange={(e) => setfirstName(e.target.value)} className="w-full p-2 mt-1 border border-black-400 rounded" placeholder="First Name" />
 
           <label className="font-semibold block mt-2">Middle Name:</label>
-          <input type="text" name="middleName"  disabled={check}  className="w-full p-2 mt-1 border border-black-400 rounded" placeholder="Middle Name" />
+          <input type="text"  disabled={check}  className="w-full p-2 mt-1 border border-black-400 rounded" placeholder="Middle Name" />
           
           <label className="block mt-1">
-            <input type="checkbox" name="noMiddleName" checked={check} onClick={() => setChecked(prev => !prev)} className="mr-2" />
+            <input type="checkbox"  checked={check} onChange={() => setChecked(prev => !prev)} className="mr-2" />
             I don't have a middle name.
           </label>
 
           <label className="font-semibold block mt-2">Email Address:</label>
-          <input type="email" name="emailAddress" onChange={(e)=>setemailAddress(e.target.value)} className="w-full p-2 mt-1 border border-black-400 rounded" placeholder="Email Address" />
+          <input type="email"  onChange={(e)=>setemailAddress(e.target.value)} className="w-full p-2 mt-1 border border-black-400 rounded" placeholder="Email Address" />
 
           <label className="font-semibold block mt-2">Contact:</label>
           <input type="number" maxLength={11} name="contact" className="w-full p-2 mt-1 border border-black-400 rounded" placeholder="Contact" />
