@@ -14,14 +14,14 @@ const [enterotp, setenterotp] = useState(0);
  
 
   async function otp(){
-   const verification = await fetch("/api/Student/verifyOtp",{
+   const verification = await fetch("/api/Student/otp",{
     method:"POST",
     headers:{"content-Type":"application/json"},
     body:JSON.stringify({userotp:enterotp})
 
    })
    if(verification.ok){
-    router.push("/")
+    router.push("/StudentAdmission")
     console.log("done");
     
    }else{

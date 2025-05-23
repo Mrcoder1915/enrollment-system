@@ -16,14 +16,21 @@ console.log(lastName);
 
  async function student(e){
   e.preventDefault()
-    const result=await fetch("/api/Student/studentverification",{
+     const result=await fetch("/api/Student/studentverification",{
       method:"POST",
       headers:{
-        "content-Type":"application/json" 
+        "Content-Type":"application/json" 
       },
-      body:JSON.stringify({firstName:firstName,lastName:lastName,emailAddress:emailAddress})
+      body: JSON.stringify({firstName:firstName,lastName:lastName,emailAddress:emailAddress})
     })
     if(result.ok){
+      await fetch("/api/Student/otpverify",{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json" 
+        },
+        body: JSON.stringify({Email:emailAddress})
+      })
       router.push("/otp")
       console.log("ok")
     }
