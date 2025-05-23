@@ -77,36 +77,36 @@ const FacultyAccount = () => {
         </div>
 
         {/* Table Header */}
-        <div className="overflow-hidden">
-          <table className="table table-fixed w-full border-collapse border border-gray-300 rounded-t-lg">
+        <div className='flex w-full   absolute overflow-y-scroll hide-scrollbar' >
+          <table className="table overflow-y-hidden">
             <thead className="sticky top-0 bg-white z-10 shadow-md">
               <tr>
-                <th className="w-[5%]">ID</th>
-                <th className="w-[15%]">Last Name</th>
-                <th className="w-[15%]">First Name</th>
-                <th className="w-[15%]">Middle Name</th>
-                <th className="w-[15%]">Contact</th>
-                <th className="w-[20%]">Email</th>
-                <th className="w-[15%]">Action</th>
+                <th className="">ID</th>
+                <th className="">Last Name</th>
+                <th className="">First Name</th>
+                <th className="">Middle Name</th>
+                <th className="">Contact</th>
+                <th className="">Email</th>
+                <th className="">Action</th>
               </tr>
             </thead>
-          </table>
-        </div>
+         
+        
 
         {/* Table Body */}
-        <div className="overflow-y-scroll max-h-[60vh] hide-scrollbar">
-          <table className="table table-fixed w-full border-collapse border border-gray-300 rounded-b-lg">
+
+
             <tbody>
               {pendingFaculty.length > 0 ? (
                 pendingFaculty.map((faculty, index) => (
                   <tr key={faculty._id || index}>
-                    <td className="w-[5%]">{faculty.instructorID}</td>
-                    <td className="w-[15%]">{faculty.lastName}</td>
-                    <td className="w-[15%]">{faculty.firstName}</td>
-                    <td className="w-[15%]">{faculty.middleName}</td>
-                    <td className="w-[15%]">{faculty.contactNumber}</td>
-                    <td className="w-[20%]">{faculty.emailAddress}</td>
-                    <td className="w-[15%]">
+                    <td className="">{faculty._id}</td>
+                    <td className="">{faculty.lastName}</td>
+                    <td className="">{faculty.firstName}</td>
+                    <td className="">{faculty.middleName}</td>
+                    <td className="">{faculty.contactNumber}</td>
+                    <td className="">{faculty.emailAddress}</td>
+                    <td className="">
                       <div className="flex gap-2 justify-center">
                         <button
                           className="w-[80px] border border-[#8b0606] hover:opacity-90 active:scale-95 transition-all duration-150 text-info font-medium rounded-[5px] btn-success"
