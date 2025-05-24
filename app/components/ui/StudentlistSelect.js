@@ -4,7 +4,8 @@ import { dashboardContext } from "@/app/providers/dashboardProvider";
 
 const StudentListSelect = ({ selectedGroup }) => {
       const { show , view, studentlist} = useContext(dashboardContext);
-
+      console.log("StudentList: ", studentlist);
+      
       const ViewDetails = () => {
         if(show === 3 && view === 3){
             return "translate-x-[0] visible"
@@ -53,11 +54,11 @@ const StudentListSelect = ({ selectedGroup }) => {
           
             studentlist.map((student, index) => (
               student.student.map((studentInfo) => (
-                <tr key={`${student._id}-${studentInfo.studentID || sIndex}`} className="hover:bg-gray-50">
+                <tr key={`${student._id}-${studentInfo.studentID || index}`} className="hover:bg-gray-50">
                   <td className="px-4 py-2 border">{index + 1}</td>
-                  <td className="px-4 py-2 border">{studentInfo.lastName}</td>
-                  <td className="px-4 py-2 border">{studentInfo.firstName}</td>
-                  <td className="px-4 py-2 border">{studentInfo.middleName}</td>
+                  <td className="px-4 py-2 border">{studentInfo.student.lastName}</td>
+                  <td className="px-4 py-2 border">{studentInfo.student.firstName}</td>
+                  <td className="px-4 py-2 border">{studentInfo.student?.middleName}</td>
                   <td className="px-4 py-2 border">{studentInfo.studentID}</td>
                   <td className="px-4 py-2 border">{student.yearLevel}</td>
                   <td className="px-4 py-2 border">{student.program}</td>

@@ -32,7 +32,7 @@ export async function GET(Req){
                 }
             const res = NextResponse.json("accessToken refresh")
             
-            res.cookies.set("accessToken", accessToken, {httpOnly: true, path: "/"})
+            res.cookies.set("accessToken", accessToken, {httpOnly: true, path: "/", secure: process.env.NODE_ENV === "production", sameSite: "Strict"})
             console.log("TOKEN REFRESH SUCCESS: ", accessToken);
             
             return res

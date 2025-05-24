@@ -141,6 +141,7 @@ export const GET = async (req) => {
           programName: "$program.programName",
           studentID: '$student._id',
           students: "$enrolled",
+          sem: "$course.semester",
           section: 1,
           yearLevel: 1,
           enrolled: "$enrolledCount" ,

@@ -7,6 +7,7 @@ const GradeEntry = () => {
 
   const [studentData, setStudentData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [selectedTerm, setSelectedTerm] = useState(0);
 
   useEffect(() => {
     const fetchSelectGrade = async () => {
@@ -33,16 +34,25 @@ const GradeEntry = () => {
           return "translate-x-[-200%]"
       }
     }
+
+      const filterdstudents = studentData.filter((student) => {
+      const filterBySemester = selectedTerm
+        ? student?.sem == selectedTerm
+        : false;
+
+      return filterBySemester;
+    });
+
   return (
      <div className={`w-full h-[80vh] absolute  flex-icenter flex-col transition-all ease-in duration-300 ${showStudent()}
     `}>
         <div className="w-[95%]">
       <div className=" flex items-center gap-2">
         <label htmlFor="term" className="font-lg text-2xl">Term:</label>
-        <select id="term" className="border border-black-300 p-0.5 rounded-md w-45">
+        <select id="term" onChange={(e) => setSelectedTerm(e.target.value)} className="border border-black-300 p-0.5 rounded-md w-45">
           <option value="" hidden></option>
-          <option value="1st">1st Semester</option>
-          <option value="2nd">2nd Semester</option>
+          <option value={1}>1st Semester</option>
+          <option value={2}>2nd Semester</option>
         </select>
       </div>
       <h1 className="w-full   bg-red-800 text-white py-3 text-3xl font-lg text-left pl-5 rounded-t-lg">
@@ -65,7 +75,7 @@ const GradeEntry = () => {
                 </tr>
               </thead>
               <tbody>
-                {studentData.map((courseData, index) => (
+                {filterdstudents.map((courseData, index) => (
                   <tr key={index} className="border-b">
                     <td className="px-5 py-3 text-center border-r">{courseData.programName}</td>
                     <td className="px-5 py-3 text-center border-r">{courseData.yearLevel} Year</td>
