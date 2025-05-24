@@ -12,7 +12,7 @@ const AdmissionTable = () => {
           await fetch("http://localhost:3000/api/registrar/deleteadmission",{
             method: "POST",
             headers: {
-              "content-type":"application/json"
+              "Content-Type":"application/json"
             },
             body: JSON.stringify({studentID: ID})
           })
@@ -24,7 +24,7 @@ const AdmissionTable = () => {
           await fetch("http://localhost:3000/api/registrar/approvedadmission",{
             method: "POST",
             headers: {
-              "content-type":"application/json"
+              "Content-Type":"application/json"
             },
             body: JSON.stringify({studentID: ID, remarks: "approve"})
           })
