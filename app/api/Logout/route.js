@@ -7,11 +7,13 @@ export async function GET() {
     response.cookies.set("accessToken", "", {
       httpOnly: true,
       path: "/",
+     secure: process.env.NODE_ENV === "production", sameSite: "Strict"
     });
 
     response.cookies.set("refreshToken", "", {
       httpOnly: true,
       path: "/",
+      secure: process.env.NODE_ENV === "production", sameSite: "Strict"
     });
 
     return response;

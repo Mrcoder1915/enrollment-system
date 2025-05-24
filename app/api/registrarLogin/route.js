@@ -32,8 +32,8 @@ export async function POST(Req) {
 
         const res = NextResponse.json({message: "login"}, {status: 200})
 
-        res.cookies.set("accessToken", accessToken, {httpOnly: true, path: "/"} )
-        res.cookies.set("refreshToken", refreshToken, {httpOnly: true, path: "/"} )
+        res.cookies.set("accessToken", accessToken, {httpOnly: true, path: "/", secure: process.env.NODE_ENV === "production", sameSite: "Strict"} )
+        res.cookies.set("refreshToken", refreshToken, {httpOnly: true, path: "/", secure: process.env.NODE_ENV === "production", sameSite: "Strict"} )
         
         return res;
     } catch (error) {

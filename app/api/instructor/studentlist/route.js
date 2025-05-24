@@ -30,7 +30,7 @@ export const GET = async (req) => {
           as: "course"
         }
       },
-      { $unwind: "$course" },
+      { $unwind: { path: "$course",       preserveNullAndEmptyArrays: true } },
       {
         $lookup: {
           from: "programs",
@@ -39,7 +39,7 @@ export const GET = async (req) => {
           as: "program"
         }
       },
-      { $unwind: "$program" },
+      { $unwind: { path: "$program",     preserveNullAndEmptyArrays: true } },
       {
         $lookup: {
           from: "yearandsections",
@@ -48,7 +48,7 @@ export const GET = async (req) => {
           as: "yearSection"
         }
       },
-      { $unwind: "$yearSection" },
+      { $unwind: { path: "$yearSection", preserveNullAndEmptyArrays: true } },
       {
   $lookup: {
     from: "enrollments",
