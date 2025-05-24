@@ -14,7 +14,7 @@ const Studentuser = () => {
 useEffect( () => {
   const showdata = async ()=>{
     try{
-      const response=await fetch('http://localhost:3000/api/Student/studentprofile', {
+      const response=await fetch('/api/Student/studentprofile', {
         method: 'GET' 
       })
       const data= await response.json();

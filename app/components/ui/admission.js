@@ -9,33 +9,33 @@ const AdmissionTable = () => {
   const [departmentProgram, setDeparmentProgram] = useState({})
 
   const deleteAdmission =  useCallback(async (ID) => {
-          await fetch("http://localhost:3000/api/registrar/deleteadmission",{
+          await fetch("/api/registrar/deleteadmission",{
             method: "POST",
             headers: {
               "Content-Type":"application/json"
             },
             body: JSON.stringify({studentID: ID})
           })
-          const result = await fetch("http://localhost:3000/api/registrar/approvedadmission")
+          const result = await fetch("/api/registrar/approvedadmission")
          const data = await result.json()
          setData(prev => prev = data)
         },)
   const approveAdmission =  useCallback(async (ID) => {
-          await fetch("http://localhost:3000/api/registrar/approvedadmission",{
+          await fetch("/api/registrar/approvedadmission",{
             method: "POST",
             headers: {
               "Content-Type":"application/json"
             },
             body: JSON.stringify({studentID: ID, remarks: "approve"})
           })
-          const result = await fetch("http://localhost:3000/api/registrar/approvedadmission")
+          const result = await fetch("/api/registrar/approvedadmission")
          const data = await result.json()
          setData(prev => prev = data)
         },)
 
   useEffect(() => {
     const student = async () => {
-      const result = await fetch("http://localhost:3000/api/registrar/approvedadmission")
+      const result = await fetch("/api/registrar/approvedadmission")
       const data = await result.json()
       setData(prev => prev = data)
       const department = await fetch("/api/registrar/studentenrollment/department");

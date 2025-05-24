@@ -11,7 +11,7 @@ const Masterlist = () => {
 
   useEffect(() => {
     async function enroll() {
-      const enrollStudent = await fetch("http://localhost:3000/api/registrar/dashboard/totalEnrollment");
+      const enrollStudent = await fetch("/api/registrar/dashboard/totalEnrollment");
       const data = await enrollStudent.json();
       setEnrollDetails(data);
     }
