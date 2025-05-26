@@ -8,14 +8,14 @@ const ROLE_API_ACCESS = {
   instructor: ['/api/instructor'],
   student: ['/api/Student'],
 };
-const EXCLUDED_API_PATHS = ['/api/refreshToken', '/api/registrarLogin', "/api/studentLogin","/api/Student/studentverification","/api/Student/otpverify", "/api/Student/otp",  "/api/Logout", "/api/getUser", "/api/instructorLogin"];
+const EXCLUDED_API_PATHS = ['/api/refreshToken', '/api/registrarLogin', "/api/studentLogin", ,"/api/instructor/instructorprofileverification","/api/Student/otpverify", "/api/Student/otp",  "/api/Logout", "/api/getUser", "/api/instructorLogin"];
 async function verifyJWT(token) {
   const secret = new TextEncoder().encode(process.env.SECRET_KEY);
   return await jwtVerify(token, secret);
 }
 
 export default async function middleware(req) {
-  const { pathname } = req.nextUrl;
+  const { pathname } = req.nextUrl; 
   const token = req.cookies.get('accessToken')?.value;
   const Reftoken = req.cookies.get('refreshToken')?.value;
     const isPublicPage = PUBLIC_ROUTES.includes(pathname)
