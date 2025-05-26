@@ -90,7 +90,7 @@ const router = useRouter()
       
       <div className="bg-auto bg-gray-100 p-6 rounded-lg shadow-md w-full max-w-md">
         <div className="text-center mb-4">
-           <img src="/usneLogo.png" className="mx-auto w-24 my-2" alt="NEUST Logo" /> 
+           <img src="/USNE.png" className="mx-auto w-24 my-2" alt="NEUST Logo" /> 
           <p className="text-red-800 font-bold text-md leading-tight">
             UNIVERSITY OF SOUTHERN<br />NUEVA ECIJA
           </p>
