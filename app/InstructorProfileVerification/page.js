@@ -90,7 +90,7 @@ const router = useRouter()
       
       <div className="bg-auto bg-gray-100 p-6 rounded-lg shadow-md w-full max-w-md">
         <div className="text-center mb-4">
-           <img src="/usneLogo.png" className="mx-auto w-24 my-2" alt="NEUST Logo" /> 
+           <img src="/USNE.png" className="mx-auto w-24 my-2" alt="NEUST Logo" /> 
           <p className="text-red-800 font-bold text-md leading-tight">
             UNIVERSITY OF SOUTHERN<br />NUEVA ECIJA
           </p>
@@ -149,28 +149,3 @@ const router = useRouter()
   );
 }
 
-import { NextResponse } from 'next/server';
-import connection from "@/app/lib/config/connection";
-import Instructor from '@/app/models/instructor.model';
-
-export async function POST(Req) {
-  const {firstName, lastName, middleName, emailAddress,contactNumber} = await Req.json()
-     
-    if(!firstName) return NextResponse.json({message: "s"}, {status: 404})
-    try {
-      await connection();
-          await Instructor.insertOne({
-            firstName,
-            lastName,
-            middleName,
-            emailAddress,
-            contactNumber
-          })
-          return NextResponse.json({message: "inserted"}, {status: 201})
-    } catch (error) {
-      return NextResponse.json(
-        { success: false, message: 'Invalid JSON input', error: error.message },
-        { status: 400 }
-      );
-    }   
-}
