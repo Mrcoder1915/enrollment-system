@@ -51,7 +51,7 @@ const router = useRouter()
       };
       console.log("payload: ",payload);
       
-      const response = await fetch('/api/instructorprofileverification', {
+      const response = await fetch('/api/instructor/profileverification', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
