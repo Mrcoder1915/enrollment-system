@@ -8,7 +8,7 @@ const ROLE_API_ACCESS = {
   instructor: ['/api/instructor'],
   student: ['/api/Student'],
 };
-const EXCLUDED_API_PATHS = ['/api/refreshToken', '/api/registrarLogin', "/api/studentLogin", ,"/api/instructor/instructorprofileverification","/api/Student/otpverify", "/api/Student/otp",  "/api/Logout", "/api/getUser", "/api/instructorLogin"];
+const EXCLUDED_API_PATHS = ['/api/refreshToken', '/api/registrarLogin', "/api/studentLogin", ,"/api/instructor/instructorprofileverification","/api/Student/otpverify", "/api/Student/otp", "/api/Student/studentverification",  "/api/Logout", "/api/getUser", "/api/instructorLogin"];
 async function verifyJWT(token) {
   const secret = new TextEncoder().encode(process.env.SECRET_KEY);
   return await jwtVerify(token, secret);
