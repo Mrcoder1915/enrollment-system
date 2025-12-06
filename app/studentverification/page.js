@@ -17,7 +17,8 @@ console.log(lastName);
 
  async function student(e){
   e.preventDefault()
-    setLoading(true)
+  try {
+     setLoading(true)
      const result=await fetch("/api/Student/studentverification",{
       method:"POST",
       headers:{
@@ -37,6 +38,11 @@ console.log(lastName);
       router.push("/otp")
       console.log("ok")
     }
+  } catch (error) {
+      
+  } finally{
+    setLoading(false)
+  }
   }
 
   return (
